@@ -17,16 +17,17 @@ namespace ThemisWorkshop.Models
 
     public Cliente(string Nombre, string Apellido, string cedula, string lugarNacimiento,DateTime FechaNacimiento, string nacionalidad,char sexo, string estadoCivil,string correo,string telefono)
     {
-        Nombre = Nombre;
-        Apellido = Apellido;
-        cedula =cedula;
-        lugarNacimiento = lugarNacimiento;
-        FechaNacimiento = FechaNacimiento;
-        nacionalidad = nacionalidad;
-        sexo = sexo;
-        estadoCivil = estadoCivil;
-        correo =correo;
-        telefono= telefono;
+        this.Nombre = Nombre;
+        this.Apellido = Apellido;
+        this.cedula =cedula;
+        this.lugarNacimiento = lugarNacimiento;
+        this.FechaNacimiento = FechaNacimiento;
+        this.nacionalidad = nacionalidad;
+        this.sexo = sexo;
+        this.estadoCivil = estadoCivil;
+        this.correo =correo;
+        this.telefono = telefono;
+        this.credito = 0;
     }
 
    } 
