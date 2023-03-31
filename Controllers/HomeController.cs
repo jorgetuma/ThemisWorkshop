@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using ThwmisWorkshop.Models;
+using ThemisWorkshop.Models;
 
-namespace ThwmisWorkshop.Controllers
+namespace ThemisWorkshop.Controllers
 {
     public class HomeController : Controller
     {

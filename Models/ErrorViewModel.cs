@@ -1,4 +1,4 @@
-namespace ThwmisWorkshop.Models
+namespace ThemisWorkshop.Models
 {
     public class ErrorViewModel
     {
