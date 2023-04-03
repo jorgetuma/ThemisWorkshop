@@ -4,7 +4,7 @@ namespace ThemisWorkshop.Models
 {
     public class FakeDB
     {
-        private List<Cliente> clientes;
+        private List<Cliente> clientes { get; set; }
         private static FakeDB? instance = null; 
 
         private FakeDB()

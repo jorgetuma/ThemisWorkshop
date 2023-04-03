@@ -5,27 +5,31 @@ namespace ThemisWorkshop.Controllers
 {
     public class ClienteController : Controller
     {
-        private List<Cliente> clientes = FakeDB.getInstance().ObtenerClientes();
 
         // Acción GET para listar todos los clientes
         [HttpGet]
         public ActionResult ListarClientes()
         {
+
+            List<Cliente> clientes = FakeDB.getInstance().ObtenerClientes();
+
             // Devolver una vista con la lista de clientes
-            return View(clientes);
+            return View("ListarClientes",clientes);
         }
 
         // Acción GET para mostrar los detalles de un cliente por ID
         [HttpGet]
         public ActionResult MostrarCliente(int id)
         {
+            List<Cliente> clientes = FakeDB.getInstance().ObtenerClientes();
+
             // Código para obtener el cliente con el ID dado
-            Cliente cliente = clientes.FirstOrDefault(c => c.Id == id);
+            Cliente cliente = clientes.FirstOrDefault(c => c.id == id);
 
             if (cliente != null)
             {
                 // Devolver una vista con los detalles del cliente
-                return View(cliente);
+                return View("ListarClientes",cliente);
             }
             else
             {
@@ -39,26 +43,29 @@ namespace ThemisWorkshop.Controllers
         public ActionResult AgregarCliente()
         {
             // Devolver una vista con el formulario de agregar cliente vacío
-            return View(new Cliente());
+            return View("AgregarCliente");
         }
 
         // Acción POST para agregar un nuevo cliente
         [HttpPost]
         public ActionResult AgregarCliente(Cliente nuevoCliente)
         {
+
+            List<Cliente> clientes = FakeDB.getInstance().ObtenerClientes();
             if (ModelState.IsValid)
             {
                 // Generar un nuevo ID para el cliente y agregarlo a la lista
                 nuevoCliente.id = clientes.Count + 1;
                 clientes.Add(nuevoCliente);
+                FakeDB.getInstance().AgregarCliente(nuevoCliente);
 
                 // Redirigir a una vista que muestre los detalles del nuevo cliente
-                return RedirectToAction("MostrarCliente", new { id = nuevoCliente.id });
+                return RedirectToAction("ListarCliente", clientes);
             }
             else
             {
-                // Devolver la vista de agregar cliente con los errores de validación
-                return View("AgregarCliente", nuevoCliente);
+                // Error
+                return View("Error");
             }
         }
 
@@ -66,13 +73,15 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult ModificarCliente(int id)
         {
+            List<Cliente> clientes = FakeDB.getInstance().ObtenerClientes();
+
             // Código para obtener el cliente con el ID dado
             Cliente cliente = clientes.FirstOrDefault(c => c.id == id);
 
             if (cliente != null)
             {
                 // Devolver una vista con el formulario de modificar cliente y los detalles del cliente
-                return View(cliente);
+                return View("ModificarCliente",cliente);
             }
             else
             {
@@ -85,50 +94,44 @@ namespace ThemisWorkshop.Controllers
         [HttpPost]
         public ActionResult ModificarCliente(Cliente clienteModificado)
         {
+            List<Cliente> clientes = FakeDB.getInstance().ObtenerClientes();
+
             if (ModelState.IsValid)
             {
                 // Código para modificar el cliente existente en la lista
                 int indice = clientes.FindIndex(c => c.id == clienteModificado.id);
                 clientes[indice] = clienteModificado;
+                FakeDB.getInstance().ModificarCliente(clienteModificado);
 
                 // Redirigir a una vista que muestre los detalles del cliente modificado
-                return RedirectToAction("MostrarCliente", new { id = clienteModificado.id });
+                return RedirectToAction("ListarClientes",clientes);
             }
             else
             {
-                // Devolver la vista de modificar cliente con los errores de validación
-                return View("ModificarCliente", clienteModificado);
-            }
-        }
-        // Acción GET para mostrar el formulario de eliminar un cliente existente por ID
-        [HttpGet]
-        public ActionResult EliminarCliente(int id)
-        {
-            // Código para obtener el cliente con el ID dado
-            Cliente cliente = clientes.FirstOrDefault(c => c.id == id);
-
-            if (cliente != null)
-            {
-                // Devolver una vista con el formulario de eliminar cliente y los detalles del cliente
-                return View(cliente);
-            }
-            else
-            {
-                // Devolver una vista de error si no se encontró el cliente
+                // Error
                 return View("Error");
             }
         }
 
-        // Acción POST para eliminar un cliente existente por ID
-        [HttpPost]
+        // Acción GET para eliminar un cliente existente por ID
+        [HttpGet]
         public ActionResult EliminarCliente(int id, FormCollection form)
         {
+            List<Cliente> clientes = FakeDB.getInstance().ObtenerClientes();
+
             // Código para eliminar el cliente existente de la lista
             Cliente cliente = clientes.FirstOrDefault(c => c.id == id);
-            clientes.Remove(cliente);
-
-            // Redirigir a una vista que liste todos los clientes
-            return RedirectToAction("ListarClientes");
+            if (cliente != null)
+            {
+                FakeDB.getInstance().EliminarCliente(cliente.id);
+                clientes.Remove(cliente);
+                return View("ListarClientes", clientes);
+            }
+            else
+            {
+                // Redirigir a una vista que liste todos los clientes
+                return RedirectToAction("Error");
+            }
         }
     }
 }
