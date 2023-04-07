@@ -5,7 +5,7 @@ namespace ThemisWorkshop.Models
     public string id {get;set;}
     public string Nombre{get;set;}
     public string Apellido{get;set;}
-    public string cedula{get;set;}
+    public string docIdentidad{get;set;}
     public string lugarNacimiento{get;set;}
     public DateTime FechaNacimiento{get;set;}
     public char sexo{get;set;}
@@ -14,12 +14,12 @@ namespace ThemisWorkshop.Models
     public string telefono{get;set;}
     public float credito{get;set;}
 
-    public Cliente(string Nombre, string Apellido, string cedula, string lugarNacimiento,DateTime FechaNacimiento,char sexo, string estadoCivil,string correo,string telefono)
+    public Cliente(string Nombre, string Apellido, string docIndentidad, string lugarNacimiento,DateTime FechaNacimiento,char sexo, string estadoCivil,string correo,string telefono)
     {
         this.id = System.Guid.NewGuid().ToString();
         this.Nombre = Nombre;
         this.Apellido = Apellido;
-        this.cedula = cedula;
+        this.docIdentidad = docIndentidad;
         this.lugarNacimiento = lugarNacimiento;
         this.FechaNacimiento = FechaNacimiento;
         this.sexo = sexo;
