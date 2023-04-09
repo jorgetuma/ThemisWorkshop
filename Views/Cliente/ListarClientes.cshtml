@@ -56,7 +56,7 @@
                 <td>@Html.DisplayFor(m=>cliente.Cedula)</td>
                 <td>@Html.DisplayFor(m=>cliente.Correo)</td>
                 <td>@Html.DisplayFor(m=>cliente.Telefono)</td>
-                <td>@Html.DisplayFor(m=>cliente.Fechanacimiento.ToString("yyy/MM/dd"))</td>
+                <td>@Html.DisplayFor(m=>cliente.Fechanacimiento,new { format = "dd-MM-yyyy" })</td>
                 <td>@Html.DisplayFor(m=>cliente.Pais)</td>
                 <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
                 <td>@Html.DisplayFor(m=>cliente.Estadocivil)</td>
