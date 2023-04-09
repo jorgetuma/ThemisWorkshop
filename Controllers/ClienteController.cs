@@ -34,12 +34,12 @@ namespace ThemisWorkshop.Controllers
         // Acción POST para agregar un nuevo cliente
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AgregarCliente(String nombre,String apellido,String docIdentidad,char sexo,String nacionalidad,String correo,String telefono,DateTime fechanacimiento)
+        public ActionResult AgregarCliente(String nombre,String apellido,String cedula,char sexo,String pais,String correo,String telefono,DateTime fechanacimiento)
         {
 
             if (ModelState.IsValid)
             {
-                var cliente = new Cliente(nombre,apellido,docIdentidad,sexo,nacionalidad,correo,telefono, fechanacimiento);
+                var cliente = new Cliente(nombre,apellido,cedula,sexo,pais,correo,telefono, fechanacimiento);
 
                 _context.Clientes.Add(cliente);
 
