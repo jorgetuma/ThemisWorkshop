@@ -20,28 +20,7 @@ namespace ThemisWorkshop.Controllers
             List<Cliente> clientes = _context.Clientes.ToList();
 
             // Devolver una vista con la lista de clientes
-            return View("ListarClientes",clientes);
-        }
-
-        // Acción GET para mostrar los detalles de un cliente por ID
-        [HttpGet]
-        public ActionResult MostrarCliente(String id)
-        {
-            List<Cliente> clientes = null;
-
-            // Código para obtener el cliente con el ID dado
-            Cliente cliente = clientes.FirstOrDefault(c => c.IdClientes.Equals(id));
-
-            if (cliente != null)
-            {
-                // Devolver una vista con los detalles del cliente
-                return View("ListarClientes",cliente);
-            }
-            else
-            {
-                // Devolver una vista de error si no se encontró el cliente
-                return View("Error");
-            }
+            return View("ListarClientes", clientes);
         }
 
         // Acción GET para mostrar el formulario de agregar un nuevo cliente
@@ -54,17 +33,19 @@ namespace ThemisWorkshop.Controllers
 
         // Acción POST para agregar un nuevo cliente
         [HttpPost]
-        public ActionResult AgregarCliente(Cliente nuevoCliente)
+        [ValidateAntiForgeryToken]
+        public ActionResult AgregarCliente(String nombre,String apellido,String docIdentidad,char sexo,String nacionalidad,String correo,String telefono,DateTime fechanacimiento)
         {
 
-            List<Cliente> clientes = null;
             if (ModelState.IsValid)
             {
-                // Generar un nuevo ID para el cliente y agregarlo a la lista
-                clientes.Add(nuevoCliente);
+                var cliente = new Cliente(nombre,apellido,docIdentidad,sexo,nacionalidad,correo,telefono, fechanacimiento);
 
-                // Redirigir a una vista que muestre los detalles del nuevo cliente
-            return RedirectToAction("ListarCliente", clientes);            }
+                _context.Clientes.Add(cliente);
+
+                // Redirigir a la vista para registrar otro cliente
+                return RedirectToAction("AgregarCliente");            
+            }
             else
             {
                 // Error
@@ -76,10 +57,8 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult ModificarCliente(String id)
         {
-            List<Cliente> clientes = null;
 
-            // Código para obtener el cliente con el ID dado
-            Cliente cliente = clientes.FirstOrDefault(c => c.IdClientes.Equals(id));
+            Cliente cliente = null;
 
             if (cliente != null)
             {
@@ -95,17 +74,15 @@ namespace ThemisWorkshop.Controllers
 
         // Acción POST para modificar un cliente existente por ID
         [HttpPost]
-        public ActionResult ModificarCliente(Cliente clienteModificado)
+        [ValidateAntiForgeryToken]
+        public ActionResult ModCliente(String id)
         {
-            List<Cliente> clientes = null;
-
-            if (ModelState.IsValid)
+            Cliente cliente = null;
+            if (cliente!=null)
             {
-                // Código para modificar el cliente existente en la lista
-                int indice = clientes.FindIndex(c => c.IdClientes == clienteModificado.IdClientes);
-                clientes[indice] = clienteModificado;
-
-                // Redirigir a una vista que muestre los detalles del cliente modificado
+                _context.Clientes.Update(cliente);
+                List<Cliente> clientes = _context.Clientes.ToList();
+                // Redirigir a la vista de listar clientes
                 return RedirectToAction("ListarClientes",clientes);
             }
             else
@@ -119,13 +96,11 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult EliminarCliente(String id, FormCollection form)
         {
-            List<Cliente> clientes = null;
-
-            // Código para eliminar el cliente existente de la lista
-            Cliente cliente = clientes.FirstOrDefault(c => c.IdClientes.Equals(id));
+            Cliente cliente = null;
             if (cliente != null)
             {
-                clientes.Remove(cliente);
+                _context.Remove(cliente);
+                List<Cliente> clientes = _context.Clientes.ToList();
                 return View("ListarClientes", clientes);
             }
             else
