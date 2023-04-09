@@ -2,51 +2,97 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Listar cliente";
+    ViewData["Title"] = "Clientes";
 }
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Listar clientes</title>
+    <title>Clientes</title>
+
+    <style>
+        .btn-crear {
+            background-color: #0E58C4;
+            color: #FFFFFF;
+            width: 8rem;
+            height: 2.5rem;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Lista de clientes</h1>
+    <div style="height: 4rem; padding-top: 1rem">
+        <h1 style="float: left"><b>C</b>lientes</h1>
+        <a href="" type="button" class="btn btn-crear" style="float: right; margin-top: 0.25rem">+ Registrar</a>
+    </div>
 
-    <table class="table table-striped table-hover">
+    <div class="form-group">
+        <input type="text" class="form-control" id="myInput" onkeyup="filterTable()" placeholder="Escribe para buscar...">
+    </div>
+
+    <table class="table table-hover table-responsive" style="max-width: 100%; overflow-x: auto;" id="myTable">
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Cedula</th>
+                <th>Documento de Identidad</th>
                 <th>Correo</th>
-                <th>Telefono</th>
-                <th>Fecha nacimiento</th>
-                <th>Lugar nacimiento</th>
+                <th>Teléfono</th>
+                <th>Fecha De Nacimiento</th>
+                <th>Nacionalidad</th>
                 <th>Sexo</th>
-                <th>Estado civil</th>
-                <th>Credito</th>
-                <th>Accion</th>
+                <th>Estado Cívil</th>
+                <th>Crédito</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-                <tr>
-                <td>Nombre</td>
-                <td>Apellido</td>
-                <td>Cedula</td>
-                <td>Correo</td>
-                <td>Telefono</td>
-                <td>Fecha nacimiento</td>
-                <td>Lugar nacimiento</td>
-                <td>Sexo</td>
-                <td>Estado civil</td>
-                <td>Credito</td>
-                    <td>
-                        <a href="#" class="settings" title="" data-toggle="tooltip" data-original-title="Settings"><i class="material-icons"><img src="/img/edit_icon.jpg" width="20" height="20"></i></a>
-                        <a href="#" class="delete" title="" data-toggle="tooltip" data-original-title="Delete"><i class="material-icons"><img src="/img/delete_icon.jpg" width="20" height="20"></i></a>
-                    </td>
+            <tr>
+                <td>Marcos</td>
+                <td>Blanco</td>
+                <td>123-456789-1</td>
+                <td>marcosblanco@gmail.com</td>
+                <td>+1 (123) 4567-890</td>
+                <td>01/01/2000</td>
+                <td>República Domínicana</td>
+                <td>Masculino</td>
+                <td>Soltero</td>
+                <td>2500</td>
+                <td><a href="../crear"><img src="~/img/edit_icon.png" width="16" height="16" /></a></td>
+                <td><a href="../${cliente.id}"><img src="~/img/delete_icon.png" width="16" height="16" /></a></td>
+            </tr>
         </tbody>
     </table>
+
+    <script>
+        function filterTable() {
+            var input, filter, table, tr, td, i, j, visible;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                visible = false;
+                if (tr[i].getElementsByTagName("th").length == 0) { // skip the header row
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            visible = true;
+                        }
+                    }
+                } else { // make sure the header row is visible
+                    visible = true;
+                }
+                if (visible) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
 </body>
 </html>
