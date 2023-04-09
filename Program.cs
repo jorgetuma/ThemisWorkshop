@@ -1,9 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using ThemisWorkshop.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ThemisworkshopContext>(options => {
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ThemisContex"));
+});
 
 var app = builder.Build();
 
