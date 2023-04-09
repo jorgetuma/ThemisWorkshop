@@ -71,7 +71,7 @@ namespace ThemisWorkshop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ModCliente(String id)
         {
-            Cliente cliente = null;
+            Cliente cliente = _context.Clientes.Find(id);
             if (cliente!=null)
             {
                 _context.Clientes.Update(cliente);
@@ -87,10 +87,10 @@ namespace ThemisWorkshop.Controllers
         }
 
         // Acción GET para eliminar un cliente existente por ID
-        [HttpGet]
-        public ActionResult EliminarCliente(String id, FormCollection form)
+        [HttpGet("EliminarCliente/{id}")]
+        public ActionResult EliminarCliente(String id)
         {
-            Cliente cliente = null;
+            Cliente cliente = _context.Clientes.Find(id);
             if (cliente != null)
             {
                 _context.Remove(cliente);
