@@ -5,13 +5,19 @@ namespace ThemisWorkshop.Controllers
 {
     public class ClienteController : Controller
     {
+        private readonly ThemisworkshopContext _context;
+
+        public ClienteController(ThemisworkshopContext context)
+        {
+            _context = context;
+        }
 
         // Acción GET para listar todos los clientes
         [HttpGet]
         public ActionResult ListarClientes()
         {
 
-            List<Cliente> clientes = null;
+            List<Cliente> clientes = _context.Clientes.ToList();
 
             // Devolver una vista con la lista de clientes
             return View("ListarClientes",clientes);

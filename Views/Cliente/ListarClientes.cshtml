@@ -3,6 +3,7 @@
 *@
 @{
     ViewData["Title"] = "Clientes";
+    @model  List<Cliente> 
 }
 <html>
 <head>
@@ -48,20 +49,22 @@
             </tr>
         </thead>
         <tbody>
+            @foreach(var cliente in Model) {
             <tr>
-                <td>Marcos</td>
-                <td>Blanco</td>
-                <td>123-456789-1</td>
-                <td>marcosblanco@gmail.com</td>
-                <td>+1 (123) 4567-890</td>
-                <td>01/01/2000</td>
-                <td>República Domínicana</td>
-                <td>Masculino</td>
-                <td>Soltero</td>
-                <td>2500</td>
+                <td>@Html.DisplayFor(m=>cliente.Nombre)</td>
+                <td>@Html.DisplayFor(m=>cliente.Apellido)</td>
+                <td>@Html.DisplayFor(m=>cliente.Cedula)</td>
+                <td>@Html.DisplayFor(m=>cliente.Correo)</td>
+                <td>@Html.DisplayFor(m=>cliente.Telefono)</td>
+                <td>@Html.DisplayFor(m=>cliente.Fechanacimiento)</td>
+                <td>@Html.DisplayFor(m=>cliente.Pais)</td>
+                <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
+                <td>@Html.DisplayFor(m=>cliente.Estadocivil)</td>
+                <td>@Html.DisplayFor(m=>cliente.Credito)</td>
                 <td><a href="../crear"><img src="~/img/edit_icon.png" width="16" height="16" /></a></td>
                 <td><a href="../${cliente.id}"><img src="~/img/delete_icon.png" width="16" height="16" /></a></td>
             </tr>
+            }
         </tbody>
     </table>
 
