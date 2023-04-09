@@ -61,8 +61,8 @@
                 <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
                 <td>@Html.DisplayFor(m=>cliente.Estadocivil)</td>
                 <td>@Html.DisplayFor(m=>cliente.Credito)</td>
-                <td><a href="../crear"><img src="~/img/edit_icon.png" width="16" height="16" /></a></td>
-                <td><a href="../${cliente.id}"><img src="~/img/delete_icon.png" width="16" height="16" /></a></td>
+                <td><a href=""><img src="~/img/edit_icon.png" width="16" height="16" /></a></td>
+                <td><a asp-controller="Cliente" asp-action="EliminarCliente/{@cliente.IdClientes}"><img src="~/img/delete_icon.png" width="16" height="16" /></a></td>
             </tr>
             }
         </tbody>
