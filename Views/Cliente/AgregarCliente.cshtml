@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group col">
                                 <label for="docIdentidad">Documento de Identidad</label>
-                                <input type="text" class="form-control" id="cedula" placeholder="" name="cedula">
+                                <input type="text" class="form-control" id="docIdentidad" placeholder="" name="docIdentidad">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -65,8 +65,8 @@
                             </div>
                             <div class="form-group col">
                                 <label for="nacionalidad">Nacionalidad</label>
-                                <select name="pais" class="form-select" id="pais">
-                                    <option value="${pais}">${pais}</option>
+                                <select name="nacionalidad" class="form-select" id="nacionalidad">
+                                    <option value="pais">pais</option>
                                 </select>
                             </div>
                         </div>
@@ -91,6 +91,11 @@
                                 <input type="date" class="form-control" id="fecha" name="fecha">
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="form-group col">
+                                <label for="nombre">Dirección</label>
+                                <input type="text" class="form-control" id="direccion" placeholder="" name="direccion">
+                            </div>
                         </div>
                         <div class="row mb-3 border-bottom"></div>
                         <div class="row mb-3">
@@ -102,13 +107,13 @@
                                 <label for="telefono">Teléfono</label>
                                 <input type="tel" class="form-control" id="telefono" placeholder="" name="telefono">
                             </div>
-                    </form>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-cancelar" style="float: right; margin-right: -0.5rem;">Cancelar</a>
-                        <a href="#" class="btn btn-crear" style="float: right; margin-right: 0.5rem;">Registrar</a>
+                    <div class="card-footer mb-3">
+                        <a href="#" class="btn btn-cancelar" style="float: right; margin-right: -0.5rem; margin-bottom: 0.5rem">Cancelar</a>
+                        <button type="submit" class="btn btn-crear" style="float: right; margin-right: 0.5rem;">Registrar</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
