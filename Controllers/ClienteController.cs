@@ -24,7 +24,7 @@ namespace ThemisWorkshop.Controllers
             List<Cliente> clientes = null;
 
             // Código para obtener el cliente con el ID dado
-            Cliente cliente = clientes.FirstOrDefault(c => c.id.Equals(id));
+            Cliente cliente = clientes.FirstOrDefault(c => c.IdClientes.Equals(id));
 
             if (cliente != null)
             {
@@ -58,8 +58,7 @@ namespace ThemisWorkshop.Controllers
                 clientes.Add(nuevoCliente);
 
                 // Redirigir a una vista que muestre los detalles del nuevo cliente
-                return RedirectToAction("ListarCliente", clientes);
-            }
+            return RedirectToAction("ListarCliente", clientes);            }
             else
             {
                 // Error
@@ -74,7 +73,7 @@ namespace ThemisWorkshop.Controllers
             List<Cliente> clientes = null;
 
             // Código para obtener el cliente con el ID dado
-            Cliente cliente = clientes.FirstOrDefault(c => c.id.Equals(id));
+            Cliente cliente = clientes.FirstOrDefault(c => c.IdClientes.Equals(id));
 
             if (cliente != null)
             {
@@ -97,7 +96,7 @@ namespace ThemisWorkshop.Controllers
             if (ModelState.IsValid)
             {
                 // Código para modificar el cliente existente en la lista
-                int indice = clientes.FindIndex(c => c.id == clienteModificado.id);
+                int indice = clientes.FindIndex(c => c.IdClientes == clienteModificado.IdClientes);
                 clientes[indice] = clienteModificado;
 
                 // Redirigir a una vista que muestre los detalles del cliente modificado
@@ -117,7 +116,7 @@ namespace ThemisWorkshop.Controllers
             List<Cliente> clientes = null;
 
             // Código para eliminar el cliente existente de la lista
-            Cliente cliente = clientes.FirstOrDefault(c => c.id.Equals(id));
+            Cliente cliente = clientes.FirstOrDefault(c => c.IdClientes.Equals(id));
             if (cliente != null)
             {
                 clientes.Remove(cliente);

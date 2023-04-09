@@ -1,34 +1,29 @@
-namespace ThemisWorkshop.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace ThemisWorkshop.Models;
+
+public partial class Cliente
 {
-   public class Cliente 
-   {
-    public string id {get;set;}
-    public string Nombre{get;set;}
-    public string Apellido{get;set;}
-    public string docIdentidad{get;set;}
-    public string lugarNacimiento{get;set;}
-    public DateTime FechaNacimiento{get;set;}
-    public char sexo{get;set;}
-    public string estadoCivil{get;set;}
-    public string correo{get;set;}
-    public string telefono{get;set;}
-    public float credito{get;set;}
+    public int IdClientes { get; set; }
 
-    public Cliente(string Nombre, string Apellido, string docIndentidad, string lugarNacimiento,DateTime FechaNacimiento,char sexo, string estadoCivil,string correo,string telefono)
-    {
-        this.id = System.Guid.NewGuid().ToString();
-        this.Nombre = Nombre;
-        this.Apellido = Apellido;
-        this.docIdentidad = docIndentidad;
-        this.lugarNacimiento = lugarNacimiento;
-        this.FechaNacimiento = FechaNacimiento;
-        this.sexo = sexo;
-        this.estadoCivil = estadoCivil;
-        this.correo =correo;
-        this.telefono = telefono;
-        this.credito = 0;
-    }
+    public string Nombre { get; set; } = null!;
 
-   } 
+    public string Apellido { get; set; } = null!;
 
+    public string Cedula { get; set; } = null!;
+
+    public string Pais { get; set; } = null!;
+
+    public DateOnly Fechanacimiento { get; set; }
+
+    public char Sexo { get; set; }
+
+    public string Estadocivil { get; set; } = null!;
+
+    public string? Correo { get; set; }
+
+    public string Telefono { get; set; } = null!;
+
+    public decimal? Credito { get; set; }
 }
