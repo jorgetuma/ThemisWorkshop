@@ -36,21 +36,15 @@ namespace ThemisWorkshop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AgregarCliente(String nombre,String apellido,String cedula,char sexo,String pais,String correo,String telefono,DateTime fechanacimiento)
         {
-
-            if (ModelState.IsValid)
-            {
                 var cliente = new Cliente(nombre,apellido,cedula,sexo,pais,correo,telefono, fechanacimiento);
 
                 _context.Clientes.Add(cliente);
+                _context.SaveChanges();
 
-                // Redirigir a la vista para registrar otro cliente
-                return RedirectToAction("AgregarCliente");            
-            }
-            else
-            {
-                // Error
-                return View("Error");
-            }
+
+            // Redirigir a la vista para registrar otro cliente
+            return RedirectToAction("AgregarCliente");            
+            
         }
 
         // Acción GET para mostrar el formulario de modificar un cliente existente por ID
