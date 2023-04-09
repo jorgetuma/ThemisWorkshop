@@ -34,7 +34,7 @@ namespace ThemisWorkshop.Controllers
         // Acción POST para agregar un nuevo cliente
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AgregarCliente(String nombre,String apellido,String cedula,char sexo,String pais,String correo,String telefono,DateTime fechanacimiento)
+        public ActionResult addCliente(String nombre,String apellido,String cedula,char sexo,String pais,String correo,String telefono,DateTime fechanacimiento)
         {
                 var cliente = new Cliente(nombre,apellido,cedula,sexo,pais,correo,telefono, fechanacimiento);
 
