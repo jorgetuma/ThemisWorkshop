@@ -35,7 +35,6 @@ public partial class Cliente
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
     public DateTime Fechanacimiento { get; set; }
     
-
     public char Sexo { get; set; }
 
     public string EstadoCivil { get; set; } 
