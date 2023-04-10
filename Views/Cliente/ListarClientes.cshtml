@@ -48,6 +48,7 @@
                 <th></th>
             </tr>
         </thead>
+
         <tbody>
             @foreach(var cliente in Model) {
             <tr>
@@ -61,22 +62,14 @@
                 <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
                 <td>@Html.DisplayFor(m=>cliente.EstadoCivil)</td>
                 <td>@Html.DisplayFor(m=>cliente.Credito)</td>
-                <td>
-                    <form asp-controller="TEXT" asp-action="TEXT" method="post">
-                        <input type="hidden" value="ID" />
-                        <input type="submit" value="" />
-                        <img src="~/img/edit_icon.png" width="16" height="16" />
-                        <!--<a href="#"><img src="~/img/edit_icon.png" width="16" height="16" /></a>-->
+                <form method="post" asp-controller="Cliente" asp-action="EliminarCliente">
+                 <td><input type="submit" name="idc" id="idc" value="@cliente.IdClientes"><img src="/img/delete_icon.png" width="16" height="16" /></td>
                     </form>
-                </td>
-                <td>
-                    <form asp-controller="TEXT" asp-action="TEXT" method="post">
-                        <input type="hidden" value="ID"/>
-                        <input type="submit" value=""/>
-                        <img src="~/img/delete_icon.png" width="16" height="16" />
-                    </form>
-                    <!--<a href="#"><img src="~/img/delete_icon.png" width="16" height="16" /></a>-->
-                </td>
+
+                    <form method="post" asp-controller="Cliente"  asp-action="ModificarCliente">
+                    <td><input type="submit" name="id" id="id" value="@cliente.IdClientes"><img src="/img/edit_icon.png" width="16" height="16" /></td>
+                   </form>
+                
             </tr>
             }
         </tbody>
