@@ -54,7 +54,7 @@ namespace ThemisWorkshop.Controllers
              String nombre = Request.Form["nombre"].ToString();
              String apellido = Request.Form["apellido"].ToString(); 
              String cedula = Request.Form["cedula"].ToString(); 
-             char sexo = char.Parse(Request.Form["sexo"].ToString()); 
+             char sexo = Request.Form["sexo"].ToString().First(); 
              String pais = Request.Form["pais"].ToString(); 
              String correo = Request.Form["email"].ToString(); 
              String telefono = Request.Form["telefono"].ToString(); 
