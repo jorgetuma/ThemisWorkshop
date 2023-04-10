@@ -1,0 +1,124 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Modificar Cliente";
+}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registrar Cliente</title>
+
+    <style>
+        .btn-crear {
+            background-color: #0E58C4;
+            color: #FFFFFF;
+            width: 8rem;
+            height: 2.5rem;
+        }
+
+        .btn-cancelar {
+            background-color: #7F7F7F;
+            color: #FFFFFF;
+            width: 8rem;
+            height: 2.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container position-absolute top-50 start-50 translate-middle">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3 class="card-title"><b>N</b>uevo <b>C</b>liente</h3>
+                    </div>
+                    <form asp-controller="Cliente" asp-action="ModCliente" method="post">
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" placeholder="" name="nombre">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="apellido">Apellido</label>
+                                    <input type="text" class="form-control" id="apellido" placeholder="" name="apellido">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="docIdentidad">Documento de Identidad</label>
+                                    <input type="text" class="form-control" id="docIdentidad" placeholder="" name="docIdentidad">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col">
+                                    <label class="mb-2" for="sexo">Sexo</label><br />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino" checked>
+                                        <label class="form-check-label" for="masculino">Masculino</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sexo" id="feminimo" value="feminimo">
+                                        <label class="form-check-label" for="feminimo">Feminimo</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="nacionalidad">Nacionalidad</label>
+                                    <select name="nacionalidad" class="form-select" id="nacionalidad">
+                                        <option value="pais">pais</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-check col">
+                                    <label class="mb-2" for="estadoCivil">Estado Cívil</label><br />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="estadoCivil" id="soltero" value="soltero" checked>
+                                        <label class="form-check-label" for="soltero">Soltero</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="estadoCivil" id="casado" value="casado">
+                                        <label class="form-check-label" for="casado">Casado</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="estadoCivil" id="viudo" value="viudo">
+                                        <label class="form-check-label" for="viudo">Viudo</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="fecha">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" id="fecha" name="fecha">
+                                </div>
+                            </div>
+                            <!--
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="nombre">Dirección</label>
+                                    <input type="text" class="form-control" id="direccion" placeholder="" name="direccion">
+                                </div>
+                            </div>
+                            -->
+                            <div class="row mb-3 border-bottom"></div>
+                            <div class="row mb-3">
+                                <div class="form-group col">
+                                    <label for="correo">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="correo" placeholder="" name="correo">
+                                </div>
+                                <div class="form-group col">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="tel" class="form-control" id="telefono" placeholder="" name="telefono">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer mb-3">
+                            <a href="/Cliente/ListarClientes" class="btn btn-cancelar" style="float: right; margin-right: -0.5rem; margin-bottom: 0.5rem">Cancelar</a>
+                            <button type="submit" class="btn btn-crear" style="float: right; margin-right: 0.5rem;">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

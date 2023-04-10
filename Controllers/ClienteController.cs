@@ -7,6 +7,8 @@ namespace ThemisWorkshop.Controllers
     {
         private readonly ThemisworkshopContext _context;
 
+        private int idClienteSelecionado = -1;
+
         public ClienteController(ThemisworkshopContext context)
         {
             _context = context;
@@ -47,38 +49,40 @@ namespace ThemisWorkshop.Controllers
 
         }*/
 
-         [HttpPost]
-         [ValidateAntiForgeryToken]
-         public ActionResult AddCliente()
-         {
-             String nombre = Request.Form["nombre"].ToString();
-             String apellido = Request.Form["apellido"].ToString(); 
-             String cedula = Request.Form["docIdentidad"].ToString(); 
-             char sexo = Request.Form["sexo"].ToString().First();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCliente()
+        {
+            String nombre = Request.Form["nombre"].ToString();
+            String apellido = Request.Form["apellido"].ToString();
+            String cedula = Request.Form["docIdentidad"].ToString();
+            char sexo = Request.Form["sexo"].ToString().First();
             String estadoCivil = Request.Form["estadoCivil"].ToString();
-            String pais = Request.Form["nacionalidad"].ToString(); 
-             String correo = Request.Form["correo"].ToString(); 
-             String telefono = Request.Form["telefono"].ToString();
+            String pais = Request.Form["nacionalidad"].ToString();
+            String correo = Request.Form["correo"].ToString();
+            String telefono = Request.Form["telefono"].ToString();
             DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString()).Date;
             DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
-            
+
             var cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc);
 
-             _context.Clientes.Add(cliente);
-             _context.SaveChanges();
+            _context.Clientes.Add(cliente);
+            _context.SaveChanges();
 
 
-             // Redirigir a la vista para registrar otro cliente
-             return RedirectToAction("AgregarCliente");
+            // Redirigir a la vista para registrar otro cliente
+            return RedirectToAction("AgregarCliente");
 
-         }
+        }
 
         // Acción GET para mostrar el formulario de modificar un cliente existente por ID
-        [HttpGet]
-        public ActionResult ModificarCliente(String id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ModificarCliente()
         {
 
-            Cliente cliente = null;
+            idClienteSelecionado = int.Parse(Request.Form["id"].ToString());
+            Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
 
             if (cliente != null)
             {
@@ -95,12 +99,15 @@ namespace ThemisWorkshop.Controllers
         // Acción POST para modificar un cliente existente por ID
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ModCliente(int id)
+        public ActionResult ModCliente()
         {
-            Cliente cliente = _context.Clientes.Find(id);
+            Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
             if (cliente != null)
             {
                 _context.Clientes.Update(cliente);
+                _context.SaveChanges(true);
+                //Falta modificar los atributos del cliente
+
                 List<Cliente> clientes = _context.Clientes.ToList();
                 // Redirigir a la vista de listar clientes
                 return RedirectToAction("ListarClientes", clientes);
@@ -112,14 +119,18 @@ namespace ThemisWorkshop.Controllers
             }
         }
 
-        // Acción GET para eliminar un cliente existente por ID
-        [HttpGet]
-        public ActionResult EliminarCliente(int id)
+        // Acción POST para eliminar un cliente existente por ID
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EliminarCliente()
         {
-            Cliente cliente = _context.Clientes.Find(id);
+            idClienteSelecionado = int.Parse(Request.Form["idc"].ToString());
+            RedirectToAction("EliminarCliente");
+            Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
             if (cliente != null)
             {
                 _context.Remove(cliente);
+                _context.SaveChanges();
                 List<Cliente> clientes = _context.Clientes.ToList();
                 return View("ListarClientes", clientes);
             }
@@ -129,6 +140,7 @@ namespace ThemisWorkshop.Controllers
                 return RedirectToAction("Error");
             }
         }
+
 
         //Vista para manejar errores
         [HttpGet]
