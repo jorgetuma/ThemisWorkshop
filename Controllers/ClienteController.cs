@@ -49,17 +49,20 @@ namespace ThemisWorkshop.Controllers
 
          [HttpPost]
          [ValidateAntiForgeryToken]
-         public ActionResult addCliente()
+         public ActionResult AddCliente()
          {
              String nombre = Request.Form["nombre"].ToString();
              String apellido = Request.Form["apellido"].ToString(); 
              String cedula = Request.Form["cedula"].ToString(); 
-             char sexo = Request.Form["sexo"].ToString().First(); 
-             String pais = Request.Form["pais"].ToString(); 
+             char sexo = Request.Form["sexo"].ToString().First();
+            String estadoCivil = Request.Form["estadoCivil"].ToString();
+            String pais = Request.Form["pais"].ToString(); 
              String correo = Request.Form["email"].ToString(); 
-             String telefono = Request.Form["telefono"].ToString(); 
-             DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString());
-             var cliente = new Cliente(nombre, apellido, cedula, sexo, pais, correo, telefono, fechanacimiento);
+             String telefono = Request.Form["telefono"].ToString();
+            DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString()).Date;
+            DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
+            
+            var cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc);
 
              _context.Clientes.Add(cliente);
              _context.SaveChanges();

@@ -48,7 +48,7 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.Credito)
                 .HasColumnType("money")
                 .HasColumnName("credito");
-            entity.Property(e => e.Estadocivil)
+            entity.Property(e => e.EstadoCivil)
                 .HasMaxLength(15)
                 .HasColumnName("estadocivil");
             entity.Property(e => e.Fechanacimiento).HasColumnName("fechanacimiento");

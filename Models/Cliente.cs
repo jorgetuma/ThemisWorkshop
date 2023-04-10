@@ -7,17 +7,19 @@ namespace ThemisWorkshop.Models;
 public partial class Cliente
 {
 
-    public Cliente(string nombre, string apellido, string cedula, char sexo, string pais, string correo, string telefono, DateTime fechanacimiento)
+    public Cliente(string nombre, string apellido, string cedula, char sexo,string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento)
     {
         this.Nombre = nombre;
         this.Apellido = apellido;
         this.Cedula = cedula;
         this.Sexo = sexo;
+        this.EstadoCivil = estadoCivil;
         this.Pais = pais;
         this.Correo = correo;
         this.Telefono = telefono;
         this.Fechanacimiento = fechanacimiento;
         this.Credito = 0;
+      
     }
 
     public int IdClientes { get; set; }
@@ -36,7 +38,7 @@ public partial class Cliente
 
     public char Sexo { get; set; }
 
-    public string Estadocivil { get; set; } = null!;
+    public string EstadoCivil { get; set; } 
 
     public string? Correo { get; set; }
 
