@@ -32,7 +32,7 @@ namespace ThemisWorkshop.Controllers
         }
 
         // Acción POST para agregar un nuevo cliente
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddCliente(String nombre, String apellido, String cedula, char sexo, String pais, String correo, String telefono, DateTime fechanacimiento)
         {
@@ -45,20 +45,20 @@ namespace ThemisWorkshop.Controllers
             // Redirigir a la vista para registrar otro cliente
             return RedirectToAction("AgregarCliente");
 
-        }
+        }*/
 
-        /* [HttpPost]
+         [HttpPost]
          [ValidateAntiForgeryToken]
          public ActionResult addCliente()
          {
-             String nombre = Request.Form["nombre"];
-             String apellido = Request.Form["apellido"]; 
-             String cedula = Request.Form["cedula"]; 
-             char sexo = char.Parse(Request.Form["sexo"]); 
-             String pais = Request.Form["pais"]; 
-             String correo = Request.Form["email"]; 
-             String telefono = Request.Form["telefono"]; 
-             DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"]);
+             String nombre = Request.Form["nombre"].ToString();
+             String apellido = Request.Form["apellido"].ToString(); 
+             String cedula = Request.Form["cedula"].ToString(); 
+             char sexo = char.Parse(Request.Form["sexo"].ToString()); 
+             String pais = Request.Form["pais"].ToString(); 
+             String correo = Request.Form["email"].ToString(); 
+             String telefono = Request.Form["telefono"].ToString(); 
+             DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString());
              var cliente = new Cliente(nombre, apellido, cedula, sexo, pais, correo, telefono, fechanacimiento);
 
              _context.Clientes.Add(cliente);
@@ -68,7 +68,7 @@ namespace ThemisWorkshop.Controllers
              // Redirigir a la vista para registrar otro cliente
              return RedirectToAction("AgregarCliente");
 
-         }*/
+         }
 
         // Acción GET para mostrar el formulario de modificar un cliente existente por ID
         [HttpGet]
