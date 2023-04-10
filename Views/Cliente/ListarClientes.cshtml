@@ -61,8 +61,22 @@
                 <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
                 <td>@Html.DisplayFor(m=>cliente.EstadoCivil)</td>
                 <td>@Html.DisplayFor(m=>cliente.Credito)</td>
-                <td><a href="#"><img src="~/img/edit_icon.png" width="16" height="16" /></a></td>
-                <td><a href="#"><img src="~/img/delete_icon.png" width="16" height="16" /></a></td>
+                <td>
+                    <form asp-controller="TEXT" asp-action="TEXT" method="post">
+                        <input type="hidden" value="ID" />
+                        <input type="submit" value="" />
+                        <img src="~/img/edit_icon.png" width="16" height="16" />
+                        <!--<a href="#"><img src="~/img/edit_icon.png" width="16" height="16" /></a>-->
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="TEXT" asp-action="TEXT" method="post">
+                        <input type="hidden" value="ID"/>
+                        <input type="submit" value=""/>
+                        <img src="~/img/delete_icon.png" width="16" height="16" />
+                    </form>
+                    <!--<a href="#"><img src="~/img/delete_icon.png" width="16" height="16" /></a>-->
+                </td>
             </tr>
             }
         </tbody>
@@ -78,14 +92,14 @@
 
             for (i = 0; i < tr.length; i++) {
                 visible = false;
-                if (tr[i].getElementsByTagName("th").length == 0) { // skip the header row
+                if (tr[i].getElementsByTagName("th").length == 0) {
                     td = tr[i].getElementsByTagName("td");
                     for (j = 0; j < td.length; j++) {
                         if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
                             visible = true;
                         }
                     }
-                } else { // make sure the header row is visible
+                } else {
                     visible = true;
                 }
                 if (visible) {
