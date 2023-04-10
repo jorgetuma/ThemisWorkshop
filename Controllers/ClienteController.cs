@@ -53,11 +53,11 @@ namespace ThemisWorkshop.Controllers
          {
              String nombre = Request.Form["nombre"].ToString();
              String apellido = Request.Form["apellido"].ToString(); 
-             String cedula = Request.Form["cedula"].ToString(); 
+             String cedula = Request.Form["docIdentidad"].ToString(); 
              char sexo = Request.Form["sexo"].ToString().First();
             String estadoCivil = Request.Form["estadoCivil"].ToString();
-            String pais = Request.Form["pais"].ToString(); 
-             String correo = Request.Form["email"].ToString(); 
+            String pais = Request.Form["nacionalidad"].ToString(); 
+             String correo = Request.Form["correo"].ToString(); 
              String telefono = Request.Form["telefono"].ToString();
             DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString()).Date;
             DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
@@ -95,7 +95,7 @@ namespace ThemisWorkshop.Controllers
         // Acción POST para modificar un cliente existente por ID
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ModCliente(String id)
+        public ActionResult ModCliente(int id)
         {
             Cliente cliente = _context.Clientes.Find(id);
             if (cliente != null)
@@ -114,7 +114,7 @@ namespace ThemisWorkshop.Controllers
 
         // Acción GET para eliminar un cliente existente por ID
         [HttpGet]
-        public ActionResult EliminarCliente(String id)
+        public ActionResult EliminarCliente(int id)
         {
             Cliente cliente = _context.Clientes.Find(id);
             if (cliente != null)
