@@ -47,21 +47,21 @@
                             <div class="row mb-3">
                                 <div class="form-group col">
                                     <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" placeholder="@Model.Nombre" name="nombre" value="@Model.Nombre">
+                                    <input required type="text" class="form-control" id="nombre" placeholder="@Model.Nombre" name="nombre" value="@Model.Nombre">
                                 </div>
                                 <div class="form-group col">
                                     <label for="apellido">Apellido</label>
-                                    <input type="text" class="form-control" id="apellido" placeholder="@Model.Apellido" name="apellido" value="@Model.Apellido">
+                                    <input required type="text" class="form-control" id="apellido" placeholder="@Model.Apellido" name="apellido" value="@Model.Apellido">
                                 </div>
                                 <div class="form-group col">
                                     <label for="docIdentidad">Documento de Identidad</label>
-                                    <input type="text" class="form-control" id="docIdentidad" placeholder="@Model.Cedula" name="docIdentidad" value="@Model.Cedula">
+                                    <input required type="text" class="form-control" id="docIdentidad" placeholder="@Model.Cedula" name="docIdentidad" value="@Model.Cedula">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-check col">
-                                    <label class="mb-2" for="sexo">Sexo</label><br />
-                                    @if (Model.Sexo.Equals("M"))
+                                    <label required class="mb-2" for="sexo">Sexo</label><br />
+                                    @if (Model.Sexo.Equals("m"))
                                     {
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino" checked>
@@ -84,7 +84,7 @@
                                     }
                                 </div>
                                 <div class="form-group col">
-                                    <label for="nacionalidad">Nacionalidad</label>
+                                    <label required for="nacionalidad">Nacionalidad</label>
 
                                     @{
                                         List<String> paises = new List<String>();
@@ -112,7 +112,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-check col">
-                                    <label class="mb-2" for="estadoCivil">Estado Cívil</label><br />
+                                    <label required class="mb-2" for="estadoCivil">Estado Cívil</label><br />
                                     @if (Model.EstadoCivil.Equals("soltero"))
                                     {
                                         <div class="form-check form-check-inline">
@@ -164,7 +164,7 @@
                                         DateTime date = DateTime.Parse(dateStr);
                                     }
 
-                                    <input type="date" class="form-control" id="fecha" name="fecha" value="@date.ToString("yyyy-MM-dd")">
+                                    <input required type="date" class="form-control" id="fecha" name="fecha" timezone="-240" value="@date.ToString("yyyy-MM-dd")">
                                 </div>
                             </div>
                             <!--
@@ -179,11 +179,11 @@
                             <div class="row mb-3">
                                 <div class="form-group col">
                                     <label for="correo">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="correo" placeholder="@Model.Correo" name="correo" value="@Model.Correo">
+                                    <input required type="email" class="form-control" id="correo" placeholder="@Model.Correo" name="correo" value="@Model.Correo">
                                 </div>
                                 <div class="form-group col">
                                     <label for="telefono">Teléfono</label>
-                                    <input type="tel" class="form-control" id="telefono" placeholder="@Model.Telefono" name="telefono" value="@Model.Telefono">
+                                    <input required type="tel" class="form-control" id="telefono" placeholder="@Model.Telefono" name="telefono" value="@Model.Telefono">
                                 </div>
                             </div>
                         </div>
