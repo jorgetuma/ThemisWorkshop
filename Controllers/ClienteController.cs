@@ -101,13 +101,36 @@ namespace ThemisWorkshop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ModCliente()
         {
+            idClienteSelecionado = int.Parse(Request.Form["id"].ToString());
             Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
             if (cliente != null)
             {
+                String nombre = Request.Form["nombre"].ToString();
+                String apellido = Request.Form["apellido"].ToString();
+                String cedula = Request.Form["docIdentidad"].ToString();
+                char sexo = Request.Form["sexo"].ToString().First();
+                String estadoCivil = Request.Form["estadoCivil"].ToString();
+                String pais = Request.Form["nacionalidad"].ToString();
+                String correo = Request.Form["correo"].ToString();
+                String telefono = Request.Form["telefono"].ToString();
+                DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString()).Date;
+                DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
+
+                cliente.Nombre = nombre;
+                cliente.Apellido = apellido;
+                cliente.Cedula = cedula;
+                cliente.Sexo = sexo;
+                cliente.EstadoCivil = estadoCivil;
+                cliente.Pais = pais;
+                cliente.Correo = correo;
+                cliente.Telefono = telefono;
+                cliente.Fechanacimiento = fechaUtc;
+
                 _context.Clientes.Update(cliente);
                 _context.SaveChanges(true);
-                //Falta modificar los atributos del cliente
+        
 
+                
                 List<Cliente> clientes = _context.Clientes.ToList();
                 // Redirigir a la vista de listar clientes
                 return RedirectToAction("ListarClientes", clientes);
