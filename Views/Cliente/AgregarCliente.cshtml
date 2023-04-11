@@ -73,8 +73,22 @@
                                 </div>
                                 <div class="form-group col">
                                     <label for="nacionalidad">Nacionalidad</label>
+
+                                    @{
+                                        List<String> paises = new List<String>();
+                                        paises.Add("República Dominicana");
+                                        paises.Add("Estados Unidos");
+                                        paises.Add("Cuba");
+                                        paises.Add("Venezuela");
+                                        paises.Add("Colombia");
+                                        paises.Add("Haití");
+                                    }
+
                                     <select name="nacionalidad" class="form-select" id="nacionalidad">
-                                        <option value="pais">pais</option>
+                                        @foreach (var pais in paises)
+                                        {
+                                            <option value="@pais">@pais</option>
+                                        }    
                                     </select>
                                 </div>
                             </div>

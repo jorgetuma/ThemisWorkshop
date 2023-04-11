@@ -18,6 +18,10 @@
             width: 8rem;
             height: 2.5rem;
         }
+
+        .modal-backdrop {
+            display: none;
+        }
     </style>
 </head>
 
@@ -62,14 +66,36 @@
                 <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
                 <td>@Html.DisplayFor(m=>cliente.EstadoCivil)</td>
                 <td>@Html.DisplayFor(m=>cliente.Credito)</td>
-                <form method="post" asp-controller="Cliente" asp-action="EliminarCliente">
-                 <td><input type="submit" name="idc" id="idc" value="@cliente.IdClientes"><img src="/img/delete_icon.png" width="16" height="16" /></td>
-                    </form>
+                <td>
+                    <form method="post" asp-controller="Cliente" asp-action="EliminarCliente">
+                        <input type="hidden" name="idc" id="idc" value="@cliente.IdClientes" />
+                        <a><img src="/img/delete_icon.png" style="width: 16px; height: 16px;" data-bs-toggle="modal" data-bs-target="#exampleModal" /></a>
 
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" style="text-align: center">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel"><b>E</b>liminar <b>C</b>liente</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>¿Seguro que desea eliminar este registro?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="Submit" class="btn btn-crear">Confirmar</button>
+                                            <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                </td>
+                <td>
                     <form method="post" asp-controller="Cliente"  asp-action="ModificarCliente">
-                    <td><input type="submit" name="id" id="id" value="@cliente.IdClientes"><img src="/img/edit_icon.png" width="16" height="16" /></td>
-                   </form>
-                
+                        <input type="hidden" name="id" id="id" value="@cliente.IdClientes" />
+                        <input type="image" src="/img/edit_icon.png" style="width: 16px; height: 16px;" />
+                    </form>
+                </td>
             </tr>
             }
         </tbody>

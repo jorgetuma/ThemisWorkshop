@@ -25,6 +25,11 @@
             width: 8rem;
             height: 2.5rem;
         }
+
+        .modal-backdrop {
+            display: none;
+        }
+
     </style>
 </head>
 
@@ -80,8 +85,28 @@
                                 </div>
                                 <div class="form-group col">
                                     <label for="nacionalidad">Nacionalidad</label>
+
+                                    @{
+                                        List<String> paises = new List<String>();
+                                        paises.Add("República Dominicana");
+                                        paises.Add("Estados Unidos");
+                                        paises.Add("Cuba");
+                                        paises.Add("Venezuela");
+                                        paises.Add("Colombia");
+                                        paises.Add("Haití");
+                                    }
+
                                     <select name="nacionalidad" class="form-select" id="nacionalidad">
-                                        <option value="@Model.Pais">@Model.Pais</option>
+                                        @foreach (var pais in paises)
+                                        {
+                                            @if (pais.Equals(Model.Pais))
+                                            {
+                                                <option selected value="@pais">@pais</option>
+                                            } else
+                                            {
+                                                <option value="@pais">@pais</option>    
+                                            }
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -164,7 +189,25 @@
                         </div>
                         <div class="card-footer mb-3">
                             <a href="/Cliente/ListarClientes" class="btn btn-cancelar" style="float: right; margin-right: -0.5rem; margin-bottom: 0.5rem">Cancelar</a>
-                            <button type="submit" class="btn btn-crear" style="float: right; margin-right: 0.5rem;">Modificar</button>
+                            <a class="btn btn-crear" style="float: right; margin-right: 0.5rem;" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</a>
+                        </div>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="text-align: center">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel"><b>M</b>odificar <b>C</b>liente</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Desea guardar los cambios?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="Submit" class="btn btn-crear">Confirmar</button>
+                                        <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
