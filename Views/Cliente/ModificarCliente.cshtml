@@ -37,6 +37,7 @@
                         <h3 class="card-title"><b>M</b>odificar <b>C</b>liente</h3>
                     </div>
                     <form asp-controller="Cliente" asp-action="ModCliente" method="post">
+                        <input type="hidden" value="@Model.IdClientes" name="id" id="idc" />
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="form-group col">
