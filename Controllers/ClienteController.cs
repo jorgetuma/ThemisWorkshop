@@ -19,7 +19,7 @@ namespace ThemisWorkshop.Controllers
         public ActionResult ListarClientes()
         {
 
-            List<Cliente> clientes = _context.Clientes.ToList();
+            List<Cliente> clientes = _context.Clientes.Where(e => e.Eliminado == false).ToList();
 
             // Devolver una vista con la lista de clientes
             return View("ListarClientes", clientes);
@@ -117,11 +117,8 @@ namespace ThemisWorkshop.Controllers
                 _context.Clientes.Update(cliente);
                 _context.SaveChanges(true);
 
-
-
-                List<Cliente> clientes = _context.Clientes.ToList();
                 // Redirigir a la vista de listar clientes
-                return RedirectToAction("ListarClientes", clientes);
+                return RedirectToAction("ListarClientes");
             }
             else
             {
@@ -139,7 +136,9 @@ namespace ThemisWorkshop.Controllers
             Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
             if (cliente != null)
             {
-                _context.Remove(cliente);
+                cliente.Eliminado = true;
+                cliente.Fechanacimiento = DateTime.SpecifyKind(cliente.Fechanacimiento, DateTimeKind.Utc);
+                _context.Update(cliente);
                 _context.SaveChanges();
                 return RedirectToAction("ListarClientes");
             }

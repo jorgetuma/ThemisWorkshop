@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Modificar Cliente";
     @model Cliente
+
 }
 <html>
 <head>
@@ -29,7 +30,6 @@
         .modal-backdrop {
             display: none;
         }
-
     </style>
 </head>
 
@@ -71,7 +71,8 @@
                                             <input class="form-check-input" type="radio" name="sexo" id="feminimo" value="feminimo">
                                             <label class="form-check-label" for="feminimo">Feminimo</label>
                                         </div>
-                                    } else
+                                    }
+                                    else
                                     {
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino">
@@ -102,9 +103,10 @@
                                             @if (pais.Equals(Model.Pais))
                                             {
                                                 <option selected value="@pais">@pais</option>
-                                            } else
+                                            }
+                                            else
                                             {
-                                                <option value="@pais">@pais</option>    
+                                                <option value="@pais">@pais</option>
                                             }
                                         }
                                     </select>
@@ -128,7 +130,8 @@
                                             <label class="form-check-label" for="viudo">Viudo</label>
                                         </div>
                                     }
-                                    else if (Model.EstadoCivil.Equals("casado")) {
+                                    else if (Model.EstadoCivil.Equals("casado"))
+                                    {
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="estadoCivil" id="soltero" value="soltero">
                                             <label class="form-check-label" for="soltero">Soltero</label>
@@ -141,7 +144,9 @@
                                             <input class="form-check-input" type="radio" name="estadoCivil" id="viudo" value="viudo">
                                             <label class="form-check-label" for="viudo">Viudo</label>
                                         </div>
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="estadoCivil" id="soltero" value="soltero">
                                             <label class="form-check-label" for="soltero">Soltero</label>

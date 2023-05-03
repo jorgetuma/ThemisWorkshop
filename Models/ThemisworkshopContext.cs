@@ -26,12 +26,6 @@ public partial class ThemisworkshopContext : DbContext
 
             entity.ToTable("clientes");
 
-            entity.HasIndex(e => e.Cedula, "unique_cedula").IsUnique();
-
-            entity.HasIndex(e => e.Correo, "unique_correo").IsUnique();
-
-            entity.HasIndex(e => e.Telefono, "unique_telefono").IsUnique();
-
             entity.Property(e => e.IdClientes).HasColumnName("id_clientes");
             entity.Property(e => e.Apellido)
                 .HasMaxLength(50)
@@ -61,6 +55,8 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.Telefono)
                 .HasMaxLength(15)
                 .HasColumnName("telefono");
+            entity.Property(e => e.Eliminado)
+            .HasColumnName("eliminado");
         });
 
         OnModelCreatingPartial(modelBuilder);

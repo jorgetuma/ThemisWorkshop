@@ -56,16 +56,16 @@
         <tbody>
             @foreach(var cliente in Model) {
             <tr>
-                <td>@Html.DisplayFor(m=>cliente.Nombre)</td>
-                <td>@Html.DisplayFor(m=>cliente.Apellido)</td>
-                <td>@Html.DisplayFor(m=>cliente.Cedula)</td>
-                <td>@Html.DisplayFor(m=>cliente.Correo)</td>
-                <td>@Html.DisplayFor(m=>cliente.Telefono)</td>
-                <td>@Html.DisplayFor(m=>cliente.Fechanacimiento,new { format = "dd-MM-yyyy" })</td>
-                <td>@Html.DisplayFor(m=>cliente.Pais)</td>
-                <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
-                <td>@Html.DisplayFor(m=>cliente.EstadoCivil)</td>
-                <td>@Html.DisplayFor(m=>cliente.Credito)</td>
+                    <td>@Html.DisplayFor(m=>cliente.Nombre)</td>
+                    <td>@Html.DisplayFor(m=>cliente.Apellido)</td>
+                    <td>@Html.DisplayFor(m=>cliente.Cedula)</td>
+                    <td>@Html.DisplayFor(m=>cliente.Correo)</td>
+                    <td>@Html.DisplayFor(m=>cliente.Telefono)</td>
+                    <td>@Html.DisplayFor(m=>cliente.Fechanacimiento,new { format = "dd-MM-yyyy" })</td>
+                    <td>@Html.DisplayFor(m=>cliente.Pais)</td>
+                    <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
+                    <td>@Html.DisplayFor(m=>cliente.EstadoCivil)</td>
+                    <td>@Html.DisplayFor(m=>cliente.Credito)</td>
                 <td>
                         <a href="#"><img src="/img/delete_icon.png" style="width: 16px; height: 16px;"  data-bs-toggle="modal" data-bs-target="#exampleModal-@cliente.IdClientes" /></a>
                        
