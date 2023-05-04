@@ -27,11 +27,13 @@ public partial class Cliente
 
     public string Telefono { get; set; } = null!;
 
+    public String Direccion { get; set; }
+
     public decimal? Credito { get; set; }
 
     public bool Eliminado { get; set; }
 
-    public Cliente(string nombre, string apellido, string cedula, char sexo,string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento)
+    public Cliente(string nombre, string apellido, string cedula, char sexo,string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento, string direccion)
     {
         this.Nombre = nombre;
         this.Apellido = apellido;
@@ -44,5 +46,6 @@ public partial class Cliente
         this.Fechanacimiento = fechanacimiento;
         this.Credito = 0;
         this.Eliminado = false;
+        this.Direccion = direccion;
     }
 }

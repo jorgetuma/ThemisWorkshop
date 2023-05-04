@@ -47,11 +47,12 @@ namespace ThemisWorkshop.Controllers
             String pais = Request.Form["nacionalidad"].ToString();
             String correo = Request.Form["correo"].ToString();
             String telefono = Request.Form["telefono"].ToString();
+            String direccion = Request.Form["direccion"].ToString();
             DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString());
             DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
             fechaUtc = fechaUtc.AddDays(1);
 
-            var cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc);
+            var cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc, direccion);
 
             _context.Clientes.Add(cliente);
             _context.SaveChanges();
@@ -100,6 +101,7 @@ namespace ThemisWorkshop.Controllers
                 String pais = Request.Form["nacionalidad"].ToString();
                 String correo = Request.Form["correo"].ToString();
                 String telefono = Request.Form["telefono"].ToString();
+                String direccion = Request.Form["direccion"].ToString();
                 DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString()).Date;
                 DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
                 fechaUtc =  fechaUtc.AddDays(1);
@@ -112,6 +114,7 @@ namespace ThemisWorkshop.Controllers
                 cliente.Pais = pais;
                 cliente.Correo = correo;
                 cliente.Telefono = telefono;
+                cliente.Direccion = direccion;
                 cliente.Fechanacimiento = fechaUtc;
 
                 _context.Clientes.Update(cliente);

@@ -34,7 +34,7 @@ public partial class ThemisworkshopContext : DbContext
                 .HasMaxLength(15)
                 .HasColumnName("cedula");
             entity.Property(e => e.Correo)
-                .HasMaxLength(255)
+                .HasMaxLength(101)
                 .HasColumnName("correo");
             entity.Property(e => e.Credito)
                 .HasColumnType("money")
@@ -55,6 +55,9 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.Telefono)
                 .HasMaxLength(15)
                 .HasColumnName("telefono");
+            entity.Property(e => e.Direccion)
+            .HasMaxLength(101)
+            .HasColumnName("direccion");
             entity.Property(e => e.Eliminado)
             .HasColumnName("eliminado");
         });
