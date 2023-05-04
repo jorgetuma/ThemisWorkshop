@@ -68,13 +68,13 @@ namespace ThemisWorkshop.Controllers
         public ActionResult ModificarCliente(int id)
         {
 
-           int idClienteSelecionado = id;
+            int idClienteSelecionado = id;
             Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
 
             if (cliente != null)
             {
                 // Devolver una vista con el formulario de modificar cliente y los detalles del cliente
-                return View("ModificarCliente", cliente);
+                return View("AgregarCliente", cliente);
             }
             else
             {
