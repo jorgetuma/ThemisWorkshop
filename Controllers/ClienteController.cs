@@ -102,7 +102,7 @@ namespace ThemisWorkshop.Controllers
                 String telefono = Request.Form["telefono"].ToString();
                 DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString()).Date;
                 DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
-                fechaUtc = fechaUtc.AddDays(1);
+                fechaUtc =  fechaUtc.AddDays(1);
 
                 cliente.Nombre = nombre;
                 cliente.Apellido = apellido;
