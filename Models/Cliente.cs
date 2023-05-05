@@ -19,7 +19,7 @@ public partial class Cliente
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
     public DateTime Fechanacimiento { get; set; }
 
-    public char Sexo { get; set; }
+    public String Sexo { get; set; }
 
     public string EstadoCivil { get; set; }
 
@@ -33,7 +33,7 @@ public partial class Cliente
 
     public bool Eliminado { get; set; }
 
-    public Cliente(string nombre, string apellido, string cedula, char sexo,string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento, string direccion)
+    public Cliente(string nombre, string apellido, string cedula, String sexo,string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento, string direccion)
     {
         this.Nombre = nombre;
         this.Apellido = apellido;

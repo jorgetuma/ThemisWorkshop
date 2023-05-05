@@ -50,7 +50,7 @@ public partial class ThemisworkshopContext : DbContext
                 .HasMaxLength(40)
                 .HasColumnName("pais");
             entity.Property(e => e.Sexo)
-                .HasMaxLength(1)
+                .HasMaxLength(9)
                 .HasColumnName("sexo");
             entity.Property(e => e.Telefono)
                 .HasMaxLength(15)

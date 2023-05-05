@@ -42,7 +42,7 @@ namespace ThemisWorkshop.Controllers
             String nombre = Request.Form["nombre"].ToString();
             String apellido = Request.Form["apellido"].ToString();
             String cedula = Request.Form["docIdentidad"].ToString();
-            char sexo = Request.Form["sexo"].ToString().First();
+            String sexo = Request.Form["sexo"].ToString();
             String estadoCivil = Request.Form["estadoCivil"].ToString();
             String pais = Request.Form["nacionalidad"].ToString();
             String correo = Request.Form["correo"].ToString();
@@ -96,7 +96,7 @@ namespace ThemisWorkshop.Controllers
                 String nombre = Request.Form["nombre"].ToString();
                 String apellido = Request.Form["apellido"].ToString();
                 String cedula = Request.Form["docIdentidad"].ToString();
-                char sexo = Request.Form["sexo"].ToString().First();
+                String sexo = Request.Form["sexo"].ToString();
                 String estadoCivil = Request.Form["estadoCivil"].ToString();
                 String pais = Request.Form["nacionalidad"].ToString();
                 String correo = Request.Form["correo"].ToString();
