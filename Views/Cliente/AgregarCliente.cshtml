@@ -37,6 +37,10 @@
         .modal-backdrop {
             display: none;
         }
+
+        .card-footer {
+            background: none;
+        }
     </style>
 </head>
 
@@ -52,93 +56,102 @@
                         </div>
                         <form asp-controller="Cliente" asp-action="AddCliente" method="post">
                             <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="form-group col">
-                                        <label for="nombre">Nombre</label>
-                                        <input required type="text" class="form-control" id="nombre" placeholder="" name="nombre">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="text" class="form-control" id="nombre" placeholder="nombre" value="" name="nombre" maxlength="50">
+                                            <label for="nombre">Nombre</label>
+                                        </div>
                                     </div>
-                                    <div class="form-group col">
-                                        <label for="apellido">Apellido</label>
-                                        <input required type="text" class="form-control" id="apellido" placeholder="" name="apellido">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="text" class="form-control" id="apellido" placeholder="apellido" value="" name="apellido" maxlength="50">
+                                            <label for="apellido">Apellido</label>
+                                        </div>
                                     </div>
-                                    <div class="form-group col">
-                                        <label for="docIdentidad">Documento de Identidad</label>
-                                        <input required type="text" class="form-control" id="docIdentidad" placeholder="" name="docIdentidad">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="text" class="form-control" id="docIdentidad" placeholder="docIdentidad" value="" name="docIdentidad" minlength="9" maxlength="11">
+                                            <label for="docIdentidad">Doc. de Identidad</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="form-check col">
-                                        <label required class="mb-2" for="sexo">Sexo</label><br />
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino" checked>
-                                            <label class="form-check-label" for="masculino">Masculino</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="sexo" id="feminimo" value="feminimo">
-                                            <label class="form-check-label" for="feminimo">Feminimo</label>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="sexo" name="sexo">
+                                                <option selected value="Masculino">Masculino</option>
+                                                <option value="Femenino">Femenino</option>
+                                            </select>
+                                            <label for="sexo">Sexo</label>
                                         </div>
                                     </div>
-                                    <div class="form-group col">
-                                        <label required for="nacionalidad">Nacionalidad</label>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="nacionalidad" name="nacionalidad">
+                                                @{
+                                                    List<String> paises = new List<String>();
+                                                    paises.Add("República Dominicana");
+                                                    paises.Add("Estados Unidos");
+                                                    paises.Add("Cuba");
+                                                    paises.Add("Venezuela");
+                                                    paises.Add("Colombia");
+                                                    paises.Add("Haití");
+                                                }
 
-                                        @{
-                                            List<String> paises = new List<String>();
-                                            paises.Add("República Dominicana");
-                                            paises.Add("Estados Unidos");
-                                            paises.Add("Cuba");
-                                            paises.Add("Venezuela");
-                                            paises.Add("Colombia");
-                                            paises.Add("Haití");
-                                        }
+                                                @foreach (var pais in paises)
+                                                {
+                                                    <option value="@pais">@pais</option>
+                                                }
+                                            </select>
+                                            <label for="nacionalidad">Nacionalidad</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="estadoCivil" name="estadoCivil">
+                                                <option selected value="Soltero">Soltero</option>
+                                                <option value="Casado">Casado</option>
+                                                <option value="Viudo">Viudo</option>
+                                            </select>
+                                            <label for="estadoCivil">Estado Cívil</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="date" class="form-control" id="fecha" placeholder="fecha" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="fecha" timezone="-240">
+                                            <label for="fecha">Fecha de Nacimiento</label>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                        <select name="nacionalidad" class="form-select" id="nacionalidad">
-                                            @foreach (var pais in paises)
-                                            {
-                                                <option value="@pais">@pais</option>
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="form-check col">
-                                        <label required class="mb-2" for="estadoCivil">Estado Cívil</label><br />
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="estadoCivil" id="soltero" value="soltero" checked>
-                                            <label class="form-check-label" for="soltero">Soltero</label>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="" name="direccion" maxlength="100">
+                                            <label for="direccion">Dirección</label>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="estadoCivil" id="casado" value="casado">
-                                            <label class="form-check-label" for="casado">Casado</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="estadoCivil" id="viudo" value="viudo">
-                                            <label class="form-check-label" for="viudo">Viudo</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col">
-                                        <label for="fecha">Fecha de Nacimiento</label>
-                                        <input required type="date" class="form-control" id="fecha" name="fecha" timezone="-240" value="@DateTime.Now.ToString("yyyy-MM-dd")">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="form-group col">
-                                        <label for="nombre">Dirección</label>
-                                        <input type="text" class="form-control" id="direccion" placeholder="" name="direccion">
                                     </div>
                                 </div>
                                 <div class="row mb-3 border-bottom"></div>
-                                <div class="row mb-3">
-                                    <div class="form-group col">
-                                        <label for="correo">Correo Electrónico</label>
-                                        <input required type="email" class="form-control" id="correo" placeholder="" name="correo">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="correo" placeholder="correo" value="" name="correo" maxlength="100">
+                                            <label for="correo">Correo Electrónico</label>
+                                        </div>
                                     </div>
-                                    <div class="form-group col">
-                                        <label for="telefono">Teléfono</label>
-                                        <input required type="tel" class="form-control" id="telefono" placeholder="" name="telefono">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="tel" class="form-control" id="telefono" placeholder="telefono" value="" name="telefono" maxlength="15">
+                                            <label for="telefono">Teléfono</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer mb-3">
+                            <div class="card-footer">
                                 <a href="/Cliente/ListarClientes" class="btn btn-cancelar" style="float: right; margin-right: -0.5rem; margin-bottom: 0.5rem">Cancelar</a>
                                 <button type="submit" class="btn btn-crear" style="float: right; margin-right: 0.5rem;">Registrar</button>
                             </div>
@@ -150,151 +163,134 @@
                             <h3 class="card-title"><b>M</b>odificar <b>C</b>liente</h3>
                         </div>
                         <form asp-controller="Cliente" asp-action="ModCliente" method="post">
-                            <input type="hidden" value="@Model.IdClientes" name="id" id="idc" />
+                            <input type="hidden" value="@Model.IdClientes" name="id">
                             <div class="card-body">
-                                <div class="row mb-3">
-                                    <div class="form-group col">
-                                        <label for="nombre">Nombre</label>
-                                        <input required type="text" class="form-control" id="nombre" placeholder="@Model.Nombre" name="nombre" value="@Model.Nombre">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="text" class="form-control" id="nombre" placeholder="nombre" value="@Model.Nombre" name="nombre" maxlength="50">
+                                            <label for="nombre">Nombre</label>
+                                        </div>
                                     </div>
-                                    <div class="form-group col">
-                                        <label for="apellido">Apellido</label>
-                                        <input required type="text" class="form-control" id="apellido" placeholder="@Model.Apellido" name="apellido" value="@Model.Apellido">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="text" class="form-control" id="apellido" placeholder="apellido" value="@Model.Apellido" name="apellido" maxlength="50">
+                                            <label for="apellido">Apellido</label>
+                                        </div>
                                     </div>
-                                    <div class="form-group col">
-                                        <label for="docIdentidad">Documento de Identidad</label>
-                                        <input required type="text" class="form-control" id="docIdentidad" placeholder="@Model.Cedula" name="docIdentidad" value="@Model.Cedula">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="text" class="form-control" id="docIdentidad" placeholder="docIdentidad" value="@Model.Cedula" name="docIdentidad" minlength="9" maxlength="11">
+                                            <label for="docIdentidad">Doc. de Identidad</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="form-check col">
-                                        <label required class="mb-2" for="sexo">Sexo</label><br />
-                                        @if (Model.Sexo.Equals("m"))
-                                        {
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino" checked>
-                                                <label class="form-check-label" for="masculino">Masculino</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="sexo" id="feminimo" value="feminimo">
-                                                <label class="form-check-label" for="feminimo">Feminimo</label>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino">
-                                                <label class="form-check-label" for="masculino">Masculino</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="sexo" id="feminimo" value="feminimo" checked>
-                                                <label class="form-check-label" for="feminimo">Feminimo</label>
-                                            </div>
-                                        }
-                                    </div>
-                                    <div class="form-group col">
-                                        <label required for="nacionalidad">Nacionalidad</label>
-
-                                        @{
-                                            List<String> paises = new List<String>();
-                                            paises.Add("República Dominicana");
-                                            paises.Add("Estados Unidos");
-                                            paises.Add("Cuba");
-                                            paises.Add("Venezuela");
-                                            paises.Add("Colombia");
-                                            paises.Add("Haití");
-                                        }
-
-                                        <select name="nacionalidad" class="form-select" id="nacionalidad">
-                                            @foreach (var pais in paises)
-                                            {
-                                                @if (pais.Equals(Model.Pais))
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="sexo" name="sexo">
+                                                @if (Model.Sexo.Equals("Masculino"))
                                                 {
-                                                    <option selected value="@pais">@pais</option>
+                                                    <option selected value="Masculino">Masculino</option>
+                                                    <option value="Femenino">Femenino</option>
                                                 }
                                                 else
                                                 {
-                                                    <option value="@pais">@pais</option>
+                                                    <option value="Masculino">Masculino</option>
+                                                    <option selected value="Femenino">Femenino</option>
                                                 }
+                                            </select>
+                                            <label for="sexo">Sexo</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="nacionalidad" name="nacionalidad">
+                                                @{
+                                                    List<String> paises = new List<String>();
+                                                    paises.Add("República Dominicana");
+                                                    paises.Add("Estados Unidos");
+                                                    paises.Add("Cuba");
+                                                    paises.Add("Venezuela");
+                                                    paises.Add("Colombia");
+                                                    paises.Add("Haití");
+                                                }
+
+                                                @foreach (var pais in paises)
+                                                {
+                                                    @if (pais.Equals(Model.Pais))
+                                                    {
+                                                        <option selected value="@pais">@pais</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@pais">@pais</option>
+                                                    }
+                                                }
+                                            </select>
+                                            <label for="nacionalidad">Nacionalidad</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="estadoCivil" name="estadoCivil">
+                                                @if (Model.EstadoCivil.Equals("Soltero"))
+                                                {
+                                                    <option selected value="Soltero">Soltero</option>
+                                                    <option value="Casado">Casado</option>
+                                                    <option value="Viudo">Viudo</option>
+                                                }
+                                                else if (Model.EstadoCivil.Equals("Casado"))
+                                                {
+                                                    <option value="Soltero">Soltero</option>
+                                                    <option selected value="Casado">Casado</option>
+                                                    <option value="Viudo">Viudo</option>    
+                                                }
+                                                else
+                                                {
+                                                    <option value="Soltero">Soltero</option>
+                                                    <option value="Casado">Casado</option>
+                                                    <option selected value="Viudo">Viudo</option>
+                                                }
+                                            </select>
+                                            <label for="estadoCivil">Estado Cívil</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            @{
+                                                string dateStr = Model.Fechanacimiento.ToString();
+                                                DateTime date = DateTime.Parse(dateStr);
                                             }
-                                        </select>
+                                            <input required type="date" class="form-control" id="fecha" placeholder="fecha" value="@date.ToString("yyyy-MM-dd")" name="fecha" timezone="-240">
+                                            <label for="fecha">Fecha de Nacimiento</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="form-check col">
-                                        <label required class="mb-2" for="estadoCivil">Estado Cívil</label><br />
-                                        @if (Model.EstadoCivil.Equals("soltero"))
-                                        {
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="soltero" value="soltero" checked>
-                                                <label class="form-check-label" for="soltero">Soltero</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="casado" value="casado">
-                                                <label class="form-check-label" for="casado">Casado</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="viudo" value="viudo">
-                                                <label class="form-check-label" for="viudo">Viudo</label>
-                                            </div>
-                                        }
-                                        else if (Model.EstadoCivil.Equals("casado"))
-                                        {
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="soltero" value="soltero">
-                                                <label class="form-check-label" for="soltero">Soltero</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="casado" value="casado" checked>
-                                                <label class="form-check-label" for="casado">Casado</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="viudo" value="viudo">
-                                                <label class="form-check-label" for="viudo">Viudo</label>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="soltero" value="soltero">
-                                                <label class="form-check-label" for="soltero">Soltero</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="casado" value="casado">
-                                                <label class="form-check-label" for="casado">Casado</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="estadoCivil" id="viudo" value="viudo" checked>
-                                                <label class="form-check-label" for="viudo">Viudo</label>
-                                            </div>
-                                        }
-                                    </div>
-                                    <div class="form-group col">
-                                        <label for="fecha">Fecha de Nacimiento</label>
 
-                                        @{
-                                            string dateStr = @Model.Fechanacimiento.ToString();
-                                            DateTime date = DateTime.Parse(dateStr);
-                                        }
-
-                                        <input required type="date" class="form-control" id="fecha" name="fecha" timezone="-240" value="@date.ToString("yyyy-MM-dd")">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="form-group col">
-                                        <label for="nombre">Dirección</label>
-                                        <input type="text" class="form-control" id="direccion" placeholder="" name="direccion">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="@Model.Direccion" name="direccion" maxlength="100">
+                                            <label for="direccion">Dirección</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row mb-3 border-bottom"></div>
-                                <div class="row mb-3">
-                                    <div class="form-group col">
-                                        <label for="correo">Correo Electrónico</label>
-                                        <input required type="email" class="form-control" id="correo" placeholder="@Model.Correo" name="correo" value="@Model.Correo">
+                                <div class="row g-3">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="correo" placeholder="correo" value="@Model.Correo" name="correo" maxlength="100">
+                                            <label for="correo">Correo Electrónico</label>
+                                        </div>
                                     </div>
-                                    <div class="form-group col">
-                                        <label for="telefono">Teléfono</label>
-                                        <input required type="tel" class="form-control" id="telefono" placeholder="@Model.Telefono" name="telefono" value="@Model.Telefono">
+                                    <div class="col-md">
+                                        <div class="form-floating">
+                                            <input required type="tel" class="form-control" id="telefono" placeholder="telefono" value="@Model.Telefono" name="telefono" maxlength="15">
+                                            <label for="telefono">Teléfono</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -302,7 +298,6 @@
                                 <a href="/Cliente/ListarClientes" class="btn btn-cancelar" style="float: right; margin-right: -0.5rem; margin-bottom: 0.5rem">Cancelar</a>
                                 <a class="btn btn-crear" style="float: right; margin-right: 0.5rem;" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</a>
                             </div>
-
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" style="text-align: center">
                                     <div class="modal-content">
