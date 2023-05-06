@@ -4,74 +4,178 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ThemisWorkshop</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ThemisWorkshop.styles.css" asp-append-version="true" />
 
     <style>
-        footer {
-            position: relative;
-            z-index: 1;
+        #left-rectangle {
+            height: calc(100vh - 12rem);
+            width: 4rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 2;
         }
 
+        #left-rectangle-bottom {
+            height: 100vh;
+            width: 4rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            padding-bottom: 4rem;
+        }
+
+        #content {
+            margin-left: 4rem;
+            padding-left: 4rem;
+        }
+
+        #footer {
+            background-color: #0E58C4;
+            color: #FFF;
+            position: fixed;
+            bottom: 0;
+            height: 4rem;
+            max-width: none;
+            padding: 1rem;
+            z-index: 2;
+        }
+
+        nav a:hover svg {
+            fill: #0E58C4;
+        }
+
+        .message::before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: -.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: .5rem solid transparent;
+            border-right: .5rem solid #0E58C4;
+            border-bottom: .5rem solid transparent;
+        }
+
+
+        .message {
+            display: none;
+            position: absolute;
+            transform: translateY(-100%);
+            margin-left: 4rem;
+            padding: .25rem;
+            padding-inline: .5rem;
+            background-color: #0E58C4;
+            border-radius: 0.25rem;
+            color: #FFF;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover .message {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <div>
-        <div class="d-flex flex-column flex-shrink-0 border-end align-items-center position-absolute top-0 start-0" style="width: 4rem; height: 100%;">
-            <svg width="100%" height="100%"></svg>
-        </div>
-
-        <div class="d-flex flex-column flex-shrink-0 align-items-center position-absolute" style="width: 4rem;">
-            <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
-                <img src="~/img/logoOficial_icon.png" width="48" height="48"/>
-            </a>
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                <li>
-                    <a href="#" class="nav-link py-3" title="Home" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                        <img src="~/img/home_icon.png" width="32" height="32"/>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="left-rectangle" class="col-1 border-end d-flex justify-content-center">
+                <nav class="nav flex-column">
+                    <a class="nav-link pt-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#0E58C4" class="bi bi-app" viewBox="0 0 16 16">
+                            <path d="M11 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z" />
+                        </svg>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/Cliente/ListarClientes" class="nav-link py-3" aria-current="page" title="Clientes" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                        <!--<img src="~/img/selected/clients_icon.png" width="48" height="48"/>-->
-                        <img src="~/img/clients_icon.png" width="32" height="32"/>
+                    <a class="nav-link pt-3" href="/Home/{idUser}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-house-fill" viewBox="0 0 16 16">
+                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+                            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
+                        </svg>
+                        <span class="message">Home</span>
                     </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link py-3" title="Citas" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                        <img src="~/img/calendar_icon.png" width="32" height="32"/>
+                    <a class="nav-link pt-3" href="/Expediente/ListarExpedientes/{idUser}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                            <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z" />
+                            <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z" />
+                        </svg>
+                        <span class="message">Expedientes</span>
                     </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="d-flex flex-column flex-shrink-0 align-items-center position-absolute bottom-0" style="width: 4rem; margin-bottom: 3.5rem;">
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                <li>
-                    <a href="#" class="nav-link py-3" title="Configuración" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                        <img src="~/img/configuration_icon.png" width="32" height="32"/>
+                    <a class="nav-link pt-3" href="/Calendario/{idUser}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
+                          <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                        <span class="message">Calendario</span>
                     </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link py-3" title="Usuario" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Dashboard">
-                        <img src="~/img/selected/user_icon.png" width="48" height="48" />
+                    <a class="nav-link pt-3" href="/CitasYTareas/ListarCitasYTareas/{idUser}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-list-task" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" />
+                            <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z" />
+                            <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" />
+                        </svg>
+                        <span class="message">Citas y Tareas</span>
                     </a>
-                </li>
-            </ul>
+                    <a class="nav-link pt-3" href="/Cliente/ListarClientes">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-people-fill" viewBox="0 0 16 16">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                        </svg>
+                        <span class="message">Clientes</span>
+                    </a>
+                    <a class="nav-link pt-3" href="/Factura/ListarFacturas/{idUser}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-cash" viewBox="0 0 16 16">
+                            <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                            <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                        </svg>
+                        <span class="message">Facturas</span>
+                    </a>
+                    <a class="nav-link pt-3" href="/Empleado/ListarEmpleados">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                        </svg>
+                        <span class="message">Empleados</span>
+                    </a>
+                    <a class="nav-link pt-3" href="/Servicio/ListarServicios">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-collection-fill" viewBox="0 0 16 16">
+                            <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
+                        </svg>
+                        <span class="message">Servicios</span>
+                    </a>
+                </nav>
+            </div>
+            <div id="left-rectangle-bottom" class="col-2 border-end d-flex justify-content-center">
+                <nav class="nav flex-column-reverse">
+                    <a class="nav-link pt-3 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#0E58C4" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                        </svg>
+                        <span class="message">_USERNAME</span>
+                    </a>
+                    <a class="nav-link pt-3" href="/Configuracion/{idUser}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#7F7F7F" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                            <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                        </svg>
+                        <span class="message">Configuración</span>
+                    </a>
+                </nav>
+            </div>
+            <div id="content" class="col-11">
+                <div class="container">
+                    <main role="main">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="container">
-        <main role="main">
-            @RenderBody()
-        </main>
+
+    <div id="footer" class="container border-top text-center">
+        &copy; 2023 - ThemisWorkshop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - ThemisWorkshop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

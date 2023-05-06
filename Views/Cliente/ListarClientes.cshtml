@@ -22,10 +22,14 @@
         .modal-backdrop {
             display: none;
         }
+
     </style>
 </head>
 
 <body>
+    <div class="container-fluid">
+
+  
     <div style="height: 4rem; padding-top: 1rem">
         <h1 style="float: left"><b>C</b>lientes</h1>
         <a href="/Cliente/AgregarCliente" type="button" class="btn btn-crear" style="float: right; margin-top: 0.25rem">+ Registrar</a>
@@ -35,22 +39,22 @@
         <input type="text" class="form-control" id="myInput" onkeyup="filterTable()" placeholder="Escribe para buscar...">
     </div>
 
-    <table class="table table-hover table-responsive" style="max-width: 100%; overflow-x: auto;" id="myTable">
+    <table class="table table-hover table-responsive" id="myTable">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Documento de Identidad</th>
-                <th>Correo</th>
-                <th>Teléfono</th>
-                <th>Fecha De Nacimiento</th>
-                <th>Nacionalidad</th>
-                <th>Sexo</th>
-                <th>Estado Cívil</th>
-                <th>Dirección</th>
-                <th>Crédito</th>
-                <th></th>
-                <th></th>
+                <th width="10%">Nombre</th>
+                <th width="10%">Apellido</th>
+                <th width="5%">Documento de Identidad</th>
+                <th width="10%">Correo</th>
+                <th width="5%">Teléfono</th>
+                <th width="5%">Fecha De Nacimiento</th>
+                <th width="10%">Nacionalidad</th>
+                <th width="5%">Sexo</th>
+                <th width="10%">Estado Cívil</th>
+                <th width="10%">Dirección</th>
+                <th width="10%">Crédito</th>
+                <th width="5%"></th>
+                <th width="5%"></th>
             </tr>
         </thead>
 
@@ -69,8 +73,12 @@
                     <td>@Html.DisplayFor(m=>cliente.Direccion)</td>
                     <td>@Html.DisplayFor(m=>cliente.Credito)</td>
                 <td>
-                        <a href="#"><img src="/img/delete_icon.png" style="width: 16px; height: 16px;"  data-bs-toggle="modal" data-bs-target="#exampleModal-@cliente.IdClientes" /></a>
-                       
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-trash3-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@cliente.IdClientes">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                            </svg>
+                        </a>
+
                         <div class="modal fade" id="exampleModal-@cliente.IdClientes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" style="text-align: center">
                                 <div class="modal-content">
@@ -88,16 +96,20 @@
                                 </div>
                             </div>
                         </div>
-                          
                 </td>
                 <td>
-                        <a href="/Cliente/ModificarCliente/@cliente.IdClientes"><img src="/img/edit_icon.png" style="width: 16px; height: 16px;" /></a>
+                        <a href="/Cliente/ModificarCliente/@cliente.IdClientes">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg>
+                            </a>
                 </td>
             </tr>
             }
         </tbody>
     </table>
-
+    </div>
     <script>
         function filterTable() {
             var input, filter, table, tr, td, i, j, visible;
