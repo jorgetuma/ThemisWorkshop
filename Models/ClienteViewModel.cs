@@ -20,7 +20,7 @@ namespace ThemisWorkshop.Models
         public string Cedula { get; set; }
 
         [Required(ErrorMessage = "El campo País es obligatorio")]
-        [StringLength(50, ErrorMessage = "El campo País debe tener una longitud máxima de 50 caracteres")]
+        [StringLength(40, ErrorMessage = "El campo País debe tener una longitud máxima de 50 caracteres")]
         public string Pais { get; set; }
 
         [Required(ErrorMessage = "El campo Fecha de nacimiento es obligatorio")]
@@ -29,10 +29,10 @@ namespace ThemisWorkshop.Models
         public DateTime Fechanacimiento { get; set; }
 
         [Required(ErrorMessage = "El campo Sexo es obligatorio")]
-        [StringLength(1, ErrorMessage = "El campo Sexo es obligatorio")]
+        [StringLength(9, ErrorMessage = "El campo Sexo es obligatorio")]
         public string Sexo { get; set; }
 
-        [StringLength(50, ErrorMessage = "El campo Estado Civil es obligatorio")]
+        [StringLength(10, ErrorMessage = "El campo Estado Civil es obligatorio")]
         public string Estadocivil { get; set; }
 
         [EmailAddress(ErrorMessage = "El campo Correo debe ser una dirección de correo electrónico válida")]
@@ -45,6 +45,9 @@ namespace ThemisWorkshop.Models
         [Display(Name = "Crédito")]
         [DataType(DataType.Currency)]
         public decimal? Credito { get; set; }
+
+        [StringLength(101, ErrorMessage = "El campo Direccion es obligatorio")]
+        public String Direccion { get; set; }
 
     }
 }

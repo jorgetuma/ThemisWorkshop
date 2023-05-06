@@ -17,6 +17,8 @@ public partial class ThemisworkshopContext : DbContext
 
     public virtual DbSet<Cliente> Clientes { get; set; }
 
+    public virtual DbSet<Usuario> Usuario { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -58,6 +60,64 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.Direccion)
             .HasMaxLength(101)
             .HasColumnName("direccion");
+            entity.Property(e => e.Eliminado)
+            .HasColumnName("eliminado");
+        });
+
+        modelBuilder.Entity<Usuario>(entity =>
+        {
+            entity.HasKey(e => e.IdUsuario).HasName("usuario_pkey");
+
+            entity.ToTable("usuario");
+
+            entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
+            entity.Property(e => e.Apellido)
+                .HasMaxLength(50)
+                .HasColumnName("apellido");
+            entity.Property(e => e.UserName)
+            .HasMaxLength(50)
+            .HasColumnName("username");
+            entity.Property(e => e.Password)
+            .HasMaxLength(50)
+            .HasColumnName("contrasena");
+            entity.Property(e => e.Cedula)
+                .HasMaxLength(15)
+                .HasColumnName("cedula");
+            entity.Property(e => e.Correo)
+                .HasMaxLength(101)
+                .HasColumnName("correo");
+            entity.Property(e => e.Sueldo)
+                .HasColumnType("money")
+                .HasColumnName("sueldo");
+            entity.Property(e => e.EstadoCivil)
+                .HasMaxLength(15)
+                .HasColumnName("estadocivil");
+            entity.Property(e => e.Fechanacimiento).HasColumnName("fechanacimiento");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
+            entity.Property(e => e.Pais)
+                .HasMaxLength(40)
+                .HasColumnName("pais");
+            entity.Property(e => e.Sexo)
+                .HasMaxLength(9)
+                .HasColumnName("sexo");
+            entity.Property(e => e.Telefono)
+                .HasMaxLength(15)
+                .HasColumnName("telefono");
+            entity.Property(e => e.Direccion)
+            .HasMaxLength(101)
+            .HasColumnName("direccion");
+            entity.Property(e => e.Especialidad)
+            .HasMaxLength(50)
+            .HasColumnName("especialidad");
+            entity.Property(e => e.Incentivo)
+            .HasColumnType("money")
+            .HasColumnName("incentivo");
+            entity.Property(e => e.Comision)
+            .HasColumnName("comision");
+            entity.Property(e => e.Rol)
+            .HasColumnName("rol");
             entity.Property(e => e.Eliminado)
             .HasColumnName("eliminado");
         });
