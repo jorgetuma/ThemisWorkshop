@@ -23,11 +23,15 @@
             display: none;
         }
 
+        .table {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
     </style>
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" style="height: 100vh;">
 
   
     <div style="height: 4rem; padding-top: 1rem">
@@ -35,11 +39,11 @@
         <a href="/Cliente/AgregarCliente" type="button" class="btn btn-crear" style="float: right; margin-top: 0.25rem">+ Registrar</a>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-3">
         <input type="text" class="form-control" id="myInput" onkeyup="filterTable()" placeholder="Escribe para buscar...">
     </div>
 
-    <table class="table table-hover table-responsive" id="myTable">
+        <table class="table table-hover table-responsive" id="myTable">
         <thead>
             <tr>
                 <th width="10%">Nombre</th>
