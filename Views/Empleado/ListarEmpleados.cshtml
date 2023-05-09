@@ -2,14 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Clientes";
-    @model  List<Cliente> 
+    ViewData["Title"] = "Empleados";
+    @model List<Usuario> 
 }
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Clientes</title>
 
     <style>
         .btn-crear {
@@ -34,17 +33,31 @@
     <div class="container-fluid my-3">
         <div class="row">
             <div class="col">
-                <h1><b>C</b>lientes</h1>
+                <h1><b>E</b>empleados</h1>
             </div>
             <div class="col d-flex justify-content-end align-items-center">
-                <a href="/Cliente/AgregarCliente" type="button" class="btn btn-crear">+ Registrar</a>
+                <a href="/Empleado/AgregarEmpleado" type="button" class="btn btn-crear">+ Registrar</a>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="filterInput" onkeyup="filterTable()" placeholder="filterInput" value="">
-                    <label for="filterInput">Escribe para buscar...</label>
+                <div class="row g-2">
+                    <div class="col-2">
+                        <div class="form-floating">
+                            <select class="form-select" id="filterCombobox" onchange="filterTable()">
+                                <option value="0" selected>Todos</option>
+                                <option value="1">Abogados</option>
+                                <option value="2">Secretarios</option>
+                            </select>
+                            <label for="filterCombobox">Filtra por:</label>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="filterInput" onkeyup="filterTable()" placeholder="filterInput" value="">
+                            <label for="filterInput">Escribe para buscar...</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,38 +82,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var cliente in Model)
+                        @foreach (var usuario in Model)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(m=>cliente.Nombre)</td>
-                                <td>@Html.DisplayFor(m=>cliente.Apellido)</td>
-                                <td>@Html.DisplayFor(m=>cliente.Cedula)</td>
-                                <td>@Html.DisplayFor(m=>cliente.Correo)</td>
-                                <td>@Html.DisplayFor(m=>cliente.Telefono)</td>
-                                <td>@Html.DisplayFor(m=>cliente.Fechanacimiento,new { format = "dd-MM-yyyy" })</td>
-                                <td>@Html.DisplayFor(m=>cliente.Pais)</td>
-                                <td>@Html.DisplayFor(m=>cliente.Sexo)</td>
-                                <td>@Html.DisplayFor(m=>cliente.EstadoCivil)</td>
-                                <td>@Html.DisplayFor(m=>cliente.Direccion)</td>
-                                <td>@Html.DisplayFor(m=>cliente.Credito)</td>
+                                <td>@Html.DisplayFor(m=>usuario.Nombre)</td>
+                                <td>@Html.DisplayFor(m=>usuario.Apellido)</td>
+                                <td>@Html.DisplayFor(m=>usuario.Cedula)</td>
+                                <td>@Html.DisplayFor(m=>usuario.Correo)</td>
+                                <td>@Html.DisplayFor(m=>usuario.Telefono)</td>
+                                <td>@Html.DisplayFor(m=>usuario.Fechanacimiento,new { format = "dd-MM-yyyy" })</td>
+                                <td>@Html.DisplayFor(m=>usuario.Pais)</td>
+                                <td>@Html.DisplayFor(m=>usuario.Sexo)</td>
+                                <td>@Html.DisplayFor(m=>usuario.EstadoCivil)</td>
+                                <td>@Html.DisplayFor(m=>usuario.Direccion)</td>
                                 <td>
                                     <a href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-trash3-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@cliente.IdClientes">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-trash3-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@usuario.IdUsuario">
                                             <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                                         </svg>
                                     </a>
-                                    <div class="modal fade" id="exampleModal-@cliente.IdClientes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="exampleModal-@usuario.IdUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" style="text-align: center">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel"><b>E</b>liminar <b>C</b>liente</h1>
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel"><b>E</b>liminar <b>U</b>suario</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>¿Seguro que desea eliminar este registro?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="/Cliente/EliminarCliente/@cliente.IdClientes" class="btn btn-crear">Confirmar</a>
+                                                    <a href="/Empleado/EliminarEmpleado/@usuario.IdUsuario" class="btn btn-crear">Confirmar</a>
                                                     <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
                                                 </div>
                                             </div>
@@ -108,7 +120,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="/Cliente/ModificarCliente/@cliente.IdClientes">
+                                    <a href="/Empleado/ModificarEmpleado/@usuario.IdUsuario">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -147,6 +159,20 @@
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
+                }
+            }
+        }
+
+        function filterTable() {
+            var filterValue = document.getElementById("filterCombobox").value;
+            var tableRows = document.getElementById("table").getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+            for (var i = 0; i < tableRows.length; i++) {
+                var row = tableRows[i];
+                var clientName = row.getElementsByTagName("td")[0].textContent;
+                if (filterValue === "" || filterValue === clientName) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
                 }
             }
         }

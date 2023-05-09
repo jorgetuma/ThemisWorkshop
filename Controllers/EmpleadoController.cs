@@ -3,11 +3,11 @@ using ThemisWorkshop.Models;
 
 namespace ThemisWorkshop.Controllers
 {
-    public class AdminController : Controller
+    public class EmpleadoController : Controller
     {
         private readonly ThemisworkshopContext _context;
 
-        public AdminController(ThemisworkshopContext context)
+        public EmpleadoController(ThemisworkshopContext context)
         {
             _context = context;
         }
