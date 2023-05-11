@@ -20,22 +20,19 @@
     <title>Agregar/Modificar Cliente</title>
 
     <style>
-        .btn-crear {
+        .dimension {
+            width: 8rem;
+            height: 2.5rem;
+        }
+
+        .filled {
             background-color: #0E58C4;
             color: #FFFFFF;
-            width: 8rem;
-            height: 2.5rem;
         }
 
-        .btn-cancelar {
-            background-color: #7F7F7F;
-            color: #FFFFFF;
-            width: 8rem;
-            height: 2.5rem;
-        }
-
-        .modal-backdrop {
-            display: none;
+        .outline {
+            border: 2px solid;
+            color: #0E58C4;
         }
 
         .card-footer {
@@ -47,7 +44,7 @@
 <body>
     <div class="container position-absolute top-50 start-50 translate-middle">
         <div class="row">
-            <div class="col-md-6 mx-auto">
+            <div class="col-md-8 mx-auto">
                 <div class="card">
                     @if (Model == null)
                     {
@@ -150,8 +147,10 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="/Cliente/ListarClientes" class="btn btn-cancelar" style="float: right; margin-right: -0.5rem; margin-bottom: 0.5rem">Cancelar</a>
-                                <button type="submit" class="btn btn-crear" style="float: right; margin-right: 0.5rem;">Registrar</button>
+                                <div class="input-group my-2 d-flex justify-content-end">
+                                    <a href="/Cliente/ListarClientes" class="btn ml-auto dimension outline">Cancelar</a>
+                                    <button type="submit" class="btn ml-auto dimension filled">Registrar</button>
+                                </div>
                             </div>
                         </form>
                     }
@@ -267,7 +266,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row g-3 mb-3">
                                     <div class="col-md">
                                         <div class="form-floating">
@@ -292,23 +290,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer mb-3">
-                                <a href="/Cliente/ListarClientes" class="btn btn-cancelar" style="float: right; margin-right: -0.5rem; margin-bottom: 0.5rem">Cancelar</a>
-                                <a class="btn btn-crear" style="float: right; margin-right: 0.5rem;" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</a>
+                            <div class="card-footer">
+                                <div class="input-group my-2 d-flex justify-content-end">
+                                    <a href="/Cliente/ListarClientes" class="btn ml-auto dimension outline">Cancelar</a>
+                                    <!-- Button trigger modal -->
+                                    <a class="btn ml-auto dimension filled" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</a>
+                                </div>
                             </div>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" style="text-align: center">
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="exampleModalLabel"><b>M</b>odificar <b>C</b>liente</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
-                                            <p>¿Desea guardar los cambios?</p>
+                                        <div class="modal-body text-center">
+                                            <span>¿Desea guardar los cambios?</span>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="Submit" class="btn btn-crear">Confirmar</button>
-                                            <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                                            <div class="input-group my-2 d-flex justify-content-end">
+                                                <button class="btn ml-auto dimension outline" type="button" data-bs-dismiss="modal">Cancelar</button>
+                                                <button class="btn ml-auto dimension filled" type="submit">Modificar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

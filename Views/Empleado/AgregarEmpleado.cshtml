@@ -21,22 +21,19 @@
     <title>Agregar/Modificar Empleado</title>
 
     <style>
-        .btn-crear {
+        .dimension {
+            width: 8rem;
+            height: 2.5rem;
+        }
+
+        .filled {
             background-color: #0E58C4;
             color: #FFFFFF;
-            width: 8rem;
-            height: 2.5rem;
         }
 
-        .btn-cancelar {
-            background-color: #7F7F7F;
-            color: #FFFFFF;
-            width: 8rem;
-            height: 2.5rem;
-        }
-
-        .modal-backdrop {
-            display: none;
+        .outline {
+            border: 2px solid;
+            color: #0E58C4;
         }
 
         .card-footer {
@@ -240,12 +237,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col">
-                                        <a href="/Empleado/ListarEmpleados" class="btn btn-cancelar  ml-auto">Cancelar</a>
-                                        <button type="submit" class="btn btn-crear  ml-auto">Registrar</button>
-                                    </div>
+                            <div class="card-footer d-flex justify-content-end">
+                                <div class="input-group my-2 d-flex justify-content-end">
+                                    <a href="/Empleado/ListarEmpleados" class="btn ml-auto dimension outline">Cancelar</a>
+                                    <button type="submit" class="btn ml-auto dimension filled">Registrar</button>
                                 </div>
                             </div>
                         </form>
