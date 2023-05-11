@@ -48,27 +48,25 @@
 <body>
     <div class="container position-absolute top-50 start-50 translate-middle">
         <div class="row">
-            <div class="col-md-8 mx-auto">
+            <div class="col-md-12 mx-auto">
                 <div class="card">
                     @if (Model == null)
                     {
                         <div class="card-header text-center">
-                            <h3 class="card-title"><b>N</b>uevo <b>E</b>empleado</h3>
+                            <h3 class="card-title"><b>N</b>uevo <b>E</b>mpleado</h3>
                         </div>
                         <form asp-controller="Empleado" asp-action="AddEmpleado" method="post">
                             <div class="card-body">
                                 <div>
                                     <div class="row">
                                         <div class="col-4 border-end">
-                                            <div class="row mb-3">
+                                            <div class="row g-3 mb-3">
                                                 <div class="col">
                                                     <div class="form-floating">
                                                         <input required type="text" class="form-control" id="usuario" placeholder="usuario" value="" name="usuario" maxlength="50">
                                                         <label for="usuario">Usuario</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-3">
                                                 <div class="col">
                                                     <div class="form-floating">
                                                         <select class="form-select" id="rol" name="rol">
@@ -80,19 +78,39 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <div class="row g-3 mb-3">
                                                 <div class="col">
                                                     <div class="form-floating">
                                                         <input required type="password" class="form-control" id="password" placeholder="password" value="" name="password" maxlength="50">
                                                         <label for="password">Contraseña</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row mb-3">
                                                 <div class="col">
                                                     <div class="form-floating">
                                                         <input required type="password" class="form-control" id="password2" placeholder="password2" value="" name="password2" maxlength="50">
                                                         <label for="password2">Confirmar Contraseña</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <div class="form-floating">
+                                                        <input required type="number" class="form-control" id="sueldo" placeholder="sueldo" value="" name="sueldo" maxlength="50">
+                                                        <label for="sueldo">Sueldo</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mb-3">
+                                                <div class="col">
+                                                    <div class="form-floating">
+                                                        <input required type="number" class="form-control" id="incentivo" placeholder="incentivo" value="" name="incentivo" maxlength="50">
+                                                        <label for="incentivo">Incentivo</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-floating">
+                                                        <input required type="number" class="form-control" id="comision" placeholder="comision" value="" name="comision" maxlength="50">
+                                                        <label for="comision">Comisión</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -192,7 +210,7 @@
                                                 <div class="col-md">
                                                     <div class="form-floating">
                                                         <input required type="date" class="form-control" id="fecha" placeholder="fecha" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="fecha" timezone="-240">
-                                                        <label for="fecha">Fecha de Nacimiento</label>
+                                                        <label for="fecha">Fecha de Nacimiento (DD/MM/AAAA)</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,8 +241,12 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="/Empleado/ListarEmpleados" class="btn btn-cancelar">Cancelar</a>
-                                <button type="submit" class="btn btn-crear">Registrar</button>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="/Empleado/ListarEmpleados" class="btn btn-cancelar  ml-auto">Cancelar</a>
+                                        <button type="submit" class="btn btn-crear  ml-auto">Registrar</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     }
@@ -239,13 +261,19 @@
 
     <script>
         const mySelect = document.getElementById("rol");
-        const myInput = document.getElementById("especialidad");
+        const especialidadInput = document.getElementById("especialidad");
+        const incentivoInput = document.getElementById("incentivo");
+        const comisionInput = document.getElementById("comision");
 
         mySelect.addEventListener("change", function () {
             if (mySelect.value == "Abogado" || mySelect.value == "Admin") {
-                myInput.disabled = false;
+                especialidadInput.disabled = false;
+                incentivoInput.disabled = false;
+                comisionInput.disabled = false;
             } else {
-                myInput.disabled = true;
+                especialidadInput.disabled = true;
+                incentivoInput.disabled = true;
+                comisionInput.disabled = true;
             }
         });
     </script>
