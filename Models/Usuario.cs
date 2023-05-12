@@ -33,20 +33,22 @@ namespace ThemisWorkshop.Models
 
         public String Direccion { get; set; }
 
-        public float Sueldo { get; set; }
+        public decimal Sueldo { get; set; }
 
         public String Especialidad { get; set; }
 
-        public float Comision { get; set; }
+        public decimal Comision { get; set; }
 
-        public float Incentivo { get; set; }
+        public decimal Incentivo { get; set; }
 
         public bool Eliminado { get; set; }
 
-        public Usuario(string nombre, string apellido, string cedula, String sexo, string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento, string direccion, float sueldo, string especialidad, float incentivo, float comision)
+        public Usuario(string nombre, string apellido, String userName,String password, string cedula, String sexo, string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento, string direccion,int rol, decimal sueldo, string especialidad, decimal incentivo, decimal comision)
         {
             this.Nombre = nombre;
             this.Apellido = apellido;
+            this.UserName = userName;
+            this.Password = password;
             this.Cedula = cedula;
             this.Sexo = sexo;
             this.EstadoCivil = estadoCivil;
@@ -62,9 +64,9 @@ namespace ThemisWorkshop.Models
             this.Eliminado = false;
         }
 
-        public float CalcularSueldo() 
+        public decimal CalcularSueldo() 
         {
-            float sueldo = 0;
+            decimal sueldo = 0;
             switch (Rol) {
                 case 1 :
                     sueldo = Sueldo; 
