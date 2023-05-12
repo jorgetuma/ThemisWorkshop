@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ThemisWorkshop.Models;
 
 namespace ThemisWorkshop.Controllers
@@ -7,19 +6,27 @@ namespace ThemisWorkshop.Controllers
     public class ClienteController : Controller
     {
         private readonly ThemisworkshopContext _context;
+        static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
 
 
         public ClienteController(ThemisworkshopContext context)
         {
             _context = context;
+            _temp = context;
         }
 
         // Acción GET para listar todos los clientes
         [HttpGet]
-        public ActionResult ListarClientes()
+        [Route("Cliente/ListarClientes/{pag}")]
+        [Route("Cliente/ListarClientes")]
+        public ActionResult ListarClientes(int pag)
         {
-
-            List<Cliente> clientes = _context.Clientes.Where(e => e.Eliminado == false).ToList();
+            if (pag <= 0)
+            {
+                pag = 1;
+            }
+            List<Cliente> clientes = LoadClientes(pag);
+            int cantidadPag = ObtenerPaginas(10);
 
             // Devolver una vista con la lista de clientes
             return View("ListarClientes", clientes);
@@ -157,6 +164,43 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult Error() { 
         return View("Error");
+        }
+
+        private int CantidadClientes() { 
+        return _context.Clientes.Count(e => e.Eliminado == false);
+        }
+
+        private int ObtenerPaginas(int cantidadPorpagina) {
+            return CantidadClientes() / cantidadPorpagina;
+        }
+
+        private List<Cliente> LoadClientes(int numPag) {
+            int indIni = (numPag - 1) * 10;
+            int max = 10;
+            int cantidad = CantidadClientes();
+
+            if (indIni >= cantidad)
+            {
+                return new List<Cliente>();
+            }
+
+            if (indIni + max > cantidad)
+            {
+                max = cantidad - indIni;
+            }
+
+            List<Cliente> clientes = _context.Clientes
+                .Where(e => e.Eliminado == false)
+                .OrderBy(e => e.IdClientes)
+                .Skip(indIni)
+                .Take(max)
+                .ToList();
+            return clientes;
+
+        }
+
+        public  static int ObtenerPaginasFronted(int cantidadPorpagina) {
+            return _temp.Clientes.Count(e => e.Eliminado == false)/cantidadPorpagina;
         }
     }
 }
