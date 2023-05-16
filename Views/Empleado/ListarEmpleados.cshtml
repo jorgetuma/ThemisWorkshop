@@ -44,8 +44,8 @@
                 <div class="row g-2">
                     <div class="col-2">
                         <div class="form-floating">
-                            <select class="form-select" id="filterCombobox" onchange="filterTable()">
-                                <option value="0" selected>Todos</option>
+                            <select class="form-select" id="filterCombobox">
+                                <option value="0">Todos</option>
                                 <option value="1">Abogados</option>
                                 <option value="2">Secretarios</option>
                             </select>
@@ -66,25 +66,37 @@
                 <table class="table table-hover table-responsive" id="table">
                     <thead>
                         <tr>
-                            <th width="10%">Nombre</th>
-                            <th width="10%">Apellido</th>
-                            <th width="5%">Documento de Identidad</th>
-                            <th width="10%">Correo</th>
-                            <th width="5%">Teléfono</th>
-                            <th width="5%">Fecha De Nacimiento</th>
-                            <th width="10%">Nacionalidad</th>
-                            <th width="5%">Sexo</th>
-                            <th width="10%">Estado Cívil</th>
-                            <th width="10%">Dirección</th>
-                            <th width="10%">Crédito</th>
-                            <th width="5%"></th>
-                            <th width="5%"></th>
+                            <th>Rol</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento de Identidad</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Fecha De Nacimiento</th>
+                            <th>Nacionalidad</th>
+                            <th>Sexo</th>
+                            <th>Estado Cívil</th>
+                            <th>Dirección</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var usuario in Model)
                         {
                             <tr>
+                                @if (usuario.Rol == 0)
+                                {
+                                    <td>Administrador</td>
+                                }
+                                else if(usuario.Rol == 1)
+                                {
+                                    <td>Abogado</td>
+                                }
+                                else
+                                {
+                                    <td>Secretario</td>
+                                }
                                 <td>@Html.DisplayFor(m=>usuario.Nombre)</td>
                                 <td>@Html.DisplayFor(m=>usuario.Apellido)</td>
                                 <td>@Html.DisplayFor(m=>usuario.Cedula)</td>
@@ -95,30 +107,43 @@
                                 <td>@Html.DisplayFor(m=>usuario.Sexo)</td>
                                 <td>@Html.DisplayFor(m=>usuario.EstadoCivil)</td>
                                 <td>@Html.DisplayFor(m=>usuario.Direccion)</td>
-                                <td>
-                                    <a href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-trash3-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@usuario.IdUsuario">
-                                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-                                        </svg>
-                                    </a>
-                                    <div class="modal fade" id="exampleModal-@usuario.IdUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" style="text-align: center">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel"><b>E</b>liminar <b>U</b>suario</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>¿Seguro que desea eliminar este registro?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="/Empleado/EliminarEmpleado/@usuario.IdUsuario" class="btn btn-crear">Confirmar</a>
-                                                    <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                                @if (usuario.Rol == 0)
+                                {
+                                    <td>
+                                        <a href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#BFBFBF" class="bi bi-trash3-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@usuario.IdUsuario">
+                                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <a href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-trash3-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@usuario.IdUsuario">
+                                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                                            </svg>
+                                        </a>
+                                        <div class="modal fade" id="exampleModal-@usuario.IdUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" modal-dialog-centered d-flex align-items-center>
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel"><b>E</b>liminar <b>U</b>suario</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>¿Seguro que desea eliminar este registro?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="/Empleado/EliminarEmpleado/@usuario.IdUsuario" class="btn btn-crear">Confirmar</a>
+                                                        <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                }
                                 <td>
                                     <a href="/Empleado/ModificarEmpleado/@usuario.IdUsuario">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -162,20 +187,32 @@
                 }
             }
         }
+    </script>
 
-        function filterTable() {
-            var filterValue = document.getElementById("filterCombobox").value;
-            var tableRows = document.getElementById("table").getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-            for (var i = 0; i < tableRows.length; i++) {
-                var row = tableRows[i];
-                var clientName = row.getElementsByTagName("td")[0].textContent;
-                if (filterValue === "" || filterValue === clientName) {
-                    row.style.display = "";
+    <script>
+        var combobox = document.getElementById('filterCombobox');
+        var tabla = document.getElementById('table');
+        combobox.addEventListener('change', filtrarTabla);
+        function filtrarTabla() {
+            var valorSeleccionado = combobox.value;
+            for (var i = 1; i < tabla.rows.length; i++) { 
+                var row = tabla.rows[i];
+                var rol = row.cells[0].textContent;
+                if (valorSeleccionado === '0') {
+                    row.style.display = '';
                 } else {
-                    row.style.display = "none";
+                    row.style.display = 'none';
+                    if (
+                        (valorSeleccionado === '1' && rol.includes('Abogado')) ||
+                        (valorSeleccionado === '2' && rol.includes('Secretario'))
+                    ) {
+                        row.style.display = '';
+                    }
                 }
             }
         }
+
     </script>
+
 </body>
 </html>

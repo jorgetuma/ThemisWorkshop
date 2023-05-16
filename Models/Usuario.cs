@@ -43,7 +43,7 @@ namespace ThemisWorkshop.Models
 
         public bool Eliminado { get; set; }
 
-        public Usuario(string nombre, string apellido, String userName,String password, string cedula, String sexo, string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento, string direccion,int rol, decimal sueldo, string especialidad, decimal incentivo, decimal comision)
+        public Usuario(string nombre, string apellido, String userName,String password, string cedula, String sexo, string estadoCivil, string pais, string correo, string telefono, DateTime fechanacimiento, string direccion, int rol, decimal sueldo, string especialidad, decimal incentivo, decimal comision)
         {
             this.Nombre = nombre;
             this.Apellido = apellido;
@@ -57,6 +57,7 @@ namespace ThemisWorkshop.Models
             this.Telefono = telefono;
             this.Fechanacimiento = fechanacimiento;
             this.Direccion = direccion;
+            this.Rol = rol;
             this.Sueldo = sueldo;
             this.Especialidad = especialidad;
             this.Incentivo = incentivo;

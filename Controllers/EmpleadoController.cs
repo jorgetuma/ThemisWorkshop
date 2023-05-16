@@ -49,26 +49,22 @@ namespace ThemisWorkshop.Controllers
             decimal sueldo = decimal.Parse(Request.Form["sueldo"].ToString());
             decimal incentivo = 0;
             decimal comision = 0;
-            int rol = -1;
-            if (Request.Form["rol"].ToString().Equals("Admin")) {
-                rol = (int)Rolesapp.Admin;
+            int rol = int.Parse(Request.Form["rol"].ToString());
+
+            if (rol == 0)
+            {
+                especialidad = Request.Form["especialidad"].ToString();
+                incentivo = decimal.Parse(Request.Form["incentivo"].ToString());
+                comision = decimal.Parse(Request.Form["comision"].ToString());
+            }
+            else if (rol == 1)
+            {
                 especialidad = Request.Form["especialidad"].ToString();
                 incentivo = decimal.Parse(Request.Form["incentivo"].ToString());
                 comision = decimal.Parse(Request.Form["comision"].ToString());
             }
 
-            if (Request.Form["rol"].ToString().Equals("Abogado"))
-            {
-                rol = (int)Rolesapp.Abogado;
-                especialidad = Request.Form["especialidad"].ToString();
-                incentivo = decimal.Parse(Request.Form["incentivo"].ToString());
-                comision = decimal.Parse(Request.Form["comision"].ToString());
-            }
-            if (Request.Form["rol"].ToString().Equals("Secretario"))
-            {
-                rol = (int)Rolesapp.Secretario;
-            }
-           var user = new Usuario(nombre, apellido, userName, password, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc, direccion, rol, sueldo, especialidad, incentivo, comision);
+            var user = new Usuario(nombre, apellido, userName, password, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc, direccion, rol, sueldo, especialidad, incentivo, comision);
             _context.Usuario.Add(user);
             _context.SaveChanges();
             return RedirectToAction("AgregarEmpleado");
@@ -115,27 +111,22 @@ namespace ThemisWorkshop.Controllers
                 decimal sueldo = decimal.Parse(Request.Form["sueldo"].ToString());
                 decimal incentivo = 0;
                 decimal comision = 0;
-                int rol = -1;
-                if (Request.Form["rol"].ToString().Equals("Admin"))
+                int rol = int.Parse(Request.Form["rol"].ToString());
+
+                if (rol == 0)
                 {
-                    rol = (int)Rolesapp.Admin;
+                    especialidad = Request.Form["especialidad"].ToString();
+                    incentivo = decimal.Parse(Request.Form["incentivo"].ToString());
+                    comision = decimal.Parse(Request.Form["comision"].ToString());
+                }
+                else if (rol == 1)
+                {
                     especialidad = Request.Form["especialidad"].ToString();
                     incentivo = decimal.Parse(Request.Form["incentivo"].ToString());
                     comision = decimal.Parse(Request.Form["comision"].ToString());
                 }
 
-                if (Request.Form["rol"].ToString().Equals("Abogado"))
-                {
-                    rol = (int)Rolesapp.Abogado;
-                    especialidad = Request.Form["especialidad"].ToString();
-                    incentivo = decimal.Parse(Request.Form["incentivo"].ToString());
-                    comision = decimal.Parse(Request.Form["comision"].ToString());
-
-                }
-                if (Request.Form["rol"].ToString().Equals("Secretario"))
-                {
-                    rol = (int)Rolesapp.Secretario;
-                }
+                Console.WriteLine(rol);
 
                 user.UserName = userName; 
                 user.Password = password;

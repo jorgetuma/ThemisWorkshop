@@ -2,8 +2,8 @@
 {
     public enum Rolesapp
     {
-        Admin,
+        Administrador,
+        Abogado,
         Secretario,
-        Abogado
     }
 }

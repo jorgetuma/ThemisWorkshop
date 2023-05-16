@@ -67,9 +67,9 @@
                                                 <div class="col">
                                                     <div class="form-floating">
                                                         <select class="form-select" id="rol" name="rol">
-                                                            <option selected value="Secretario">Secretario</option>
-                                                            <option value="Abogado">Abogado</option>
-                                                            <option value="Admin">Admin</option>
+                                                            <option selected value="2">Secretario</option>
+                                                            <option value="1">Abogado</option>
+                                                            <option value="0">Administrador</option>
                                                         </select>
                                                         <label for="rol">Rol</label>
                                                     </div>
@@ -250,7 +250,7 @@
                         <div class="card-header text-center">
                             <h3 class="card-title"><b>M</b>odificar <b>E</b>mpleado</h3>
                         </div>
-                        <form asp-controller="Empleado" asp-action="AddEmpleado" method="post">
+                        <form asp-controller="Empleado" asp-action="ModEmpleado" method="post">
                             <input type="hidden" value="@Model.IdUsuario" name="id">
                             <div class="card-body">
                                 <div class="row">
@@ -265,23 +265,23 @@
                                             <div class="col">
                                                 <div class="form-floating">
                                                     <select class="form-select" id="rol" name="rol">
-                                                        @{
-                                                            List<String> roles = new List<String>();
-                                                            roles.Add("Secretario");
-                                                            roles.Add("Abogado");
-                                                            roles.Add("Admin");
-                                                        }
-
-                                                        @foreach (var rol in roles)
+                                                        @if(Model.Rol == 0)
                                                         {
-                                                            @if (rol.Equals(Model.Rol))
-                                                            {
-                                                                <option selected value="@rol">@rol</option>
-                                                            }
-                                                            else
-                                                            {
-                                                                <option value="@rol">@rol</option>
-                                                            }
+                                                            <option value="2">Secretario</option>
+                                                            <option value="1">Abogado</option>
+                                                            <option selected value="0">Administrador</option>
+                                                        }
+                                                        else if (Model.Rol == 1)
+                                                        {
+                                                            <option selected value="2">Secretario</option>
+                                                            <option value="1">Abogado</option>
+                                                            <option value="0">Administrador</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option selected value="2">Secretario</option>
+                                                            <option value="1">Abogado</option>
+                                                            <option value="0">Administrador</option>
                                                         }
                                                     </select>
                                                     <label for="rol">Rol</label>
@@ -310,18 +310,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @if (Model.Rol.Equals("Secretario"))
+                                        @if (Model.Rol == 2)
                                         {
                                             <div class="row g-3 mb-3">
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="" name="incentivo" maxlength="50">
+                                                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="0" name="incentivo" maxlength="50">
                                                         <label for="incentivo">Incentivo</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="" name="comision" maxlength="50">
+                                                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="0" name="comision" maxlength="50">
                                                         <label for="comision">Comisión</label>
                                                     </div>
                                                 </div>
@@ -360,13 +360,13 @@
                                             <div class="row g-3 mb-3">
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="@Model.Incentivo" name="incentivo" maxlength="50">
+                                                        <input required type="number" class="form-control" id="incentivo" placeholder="incentivo" value="@Model.Incentivo" name="incentivo" maxlength="50">
                                                         <label for="incentivo">Incentivo</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="@Model.Comision" name="comision" maxlength="50">
+                                                        <input required type="number" class="form-control" id="comision" placeholder="comision" value="@Model.Comision" name="comision" maxlength="50">
                                                         <label for="comision">Comisión</label>
                                                     </div>
                                                 </div>
@@ -374,7 +374,7 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-floating">
-                                                        <select disabled class="form-select" id="especialidad" name="especialidad">
+                                                        <select class="form-select" id="especialidad" name="especialidad">
                                                             @{
                                                                 List<String> especialidades = new List<String>();
                                                                 especialidades.Add("Cívil");
@@ -579,7 +579,7 @@
         const comisionInput = document.getElementById("comision");
 
         mySelect.addEventListener("change", function () {
-            if (mySelect.value == "Abogado" || mySelect.value == "Admin") {
+            if (mySelect.value == 0 || mySelect.value == 1) {
                 especialidadInput.disabled = false;
                 incentivoInput.disabled = false;
                 comisionInput.disabled = false;
