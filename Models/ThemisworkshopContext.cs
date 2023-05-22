@@ -19,6 +19,12 @@ public partial class ThemisworkshopContext : DbContext
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
+    public virtual DbSet<Expediente> Expediente { get; set; }
+
+    public virtual DbSet<Servicio> Servicio { get; set; }
+
+    public virtual DbSet<Detalleservicio> Detalleservicio { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -120,6 +126,57 @@ public partial class ThemisworkshopContext : DbContext
             .HasColumnName("rol");
             entity.Property(e => e.Eliminado)
             .HasColumnName("eliminado");
+        });
+
+        modelBuilder.Entity<Expediente>(entity =>
+        {
+            entity.HasKey(e => e.IdExpediente).HasName("expediente_pkey");
+
+            entity.ToTable("expediente");
+
+            entity.Property(e => e.IdExpediente).HasColumnName("id_expediente");
+            entity.Property(e => e.Activo).HasColumnName("activo");
+            entity.Property(e => e.Asunto)
+                .HasMaxLength(60)
+                .HasColumnName("asunto");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(100)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
+            entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
+        });
+
+        modelBuilder.Entity<Servicio>(entity =>
+        {
+            entity.HasKey(e => e.IdServicio).HasName("servicio_pkey");
+
+            entity.ToTable("servicio");
+
+            entity.Property(e => e.IdServicio).HasColumnName("id_servicio");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(100)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
+            entity.Property(e => e.Preciofijo)
+                .HasColumnType("money")
+                .HasColumnName("preciofijo");
+
+            entity.Property(e => e.Eliminado)
+           .HasColumnName("eliminado");
+        });
+
+        modelBuilder.Entity<Detalleservicio>(entity =>
+        {
+            entity.HasKey(e => e.IdDetalleservicio).HasName("detalleservicio_pkey");
+
+            entity.ToTable("detalleservicio");
+
+            entity.Property(e => e.IdDetalleservicio).HasColumnName("id_detalleservicio");
+            entity.Property(e => e.IdExpediente).HasColumnName("id_expediente");
+            entity.Property(e => e.IdServicio).HasColumnName("id_servicio");
+            entity.Property(e => e.Eliminado).HasColumnName("eliminado");
         });
 
         OnModelCreatingPartial(modelBuilder);
