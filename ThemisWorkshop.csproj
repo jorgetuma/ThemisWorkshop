@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Abogado\" />
-    <Folder Include="Views\Secretario\" />
+    <Folder Include="Views\Expediente\" />
+    <Folder Include="Views\Servicio\" />
   </ItemGroup>
 
 </Project>

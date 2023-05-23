@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ThemisWorkshop.Models;
 
@@ -144,6 +142,9 @@ public partial class ThemisworkshopContext : DbContext
                 .HasColumnName("descripcion");
             entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
             entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
+
+            entity.HasOne(e => e.Cliente).WithMany().HasForeignKey("id_cliente_fkey");
+            entity.HasOne(e => e.Abogado).WithMany().HasForeignKey("id_usuario_fkey");
         });
 
         modelBuilder.Entity<Servicio>(entity =>

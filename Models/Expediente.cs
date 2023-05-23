@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ThemisWorkshop.Models;
+﻿namespace ThemisWorkshop.Models;
 
 public partial class Expediente
 {
