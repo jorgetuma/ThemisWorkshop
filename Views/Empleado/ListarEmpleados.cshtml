@@ -9,161 +9,116 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        .btn-crear {
-            background-color: #0E58C4;
-            color: #FFFFFF;
-            width: 8rem;
-            height: 2.5rem;
-        }
-
-        .modal-backdrop {
-            display: none;
-        }
-
-        .table {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-    </style>
 </head>
 
 <body>
-    <div class="container-fluid my-3">
-        <div class="row">
-            <div class="col">
-                <h1><b>E</b>mpleados</h1>
-            </div>
-            <div class="col d-flex justify-content-end align-items-center">
-                <a href="/Empleado/AgregarEmpleado" type="button" class="btn btn-crear">+ Registrar</a>
-            </div>
+    <div class="row my-3">
+        <div class="col-2">
+            <select class="form-select" id="filter_combobox">
+                <option selected value="0">Todos</option>
+                <option value="1">Abogado</option>
+                <option value="2">Secretario</option>
+            </select>
         </div>
-        <div class="row mb-3">
-            <div class="col">
-                <div class="row g-2">
-                    <div class="col-2">
-                        <div class="form-floating">
-                            <select class="form-select" id="filterCombobox">
-                                <option value="0">Todos</option>
-                                <option value="1">Abogados</option>
-                                <option value="2">Secretarios</option>
-                            </select>
-                            <label for="filterCombobox">Filtra por:</label>
-                        </div>
-                    </div>
-                    <div class="col-10">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="filterInput" onkeyup="filterTable()" placeholder="filterInput" value="">
-                            <label for="filterInput">Escribe para buscar...</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col ps-0">
+            <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
         </div>
-        <div class="row">
-            <div class="col">
-                <table class="table table-hover table-responsive" id="table">
-                    <thead>
+        <div class="col-auto ps-0">
+            <a class="btn btn-positive" href="/Empleado/AgregarEmpleado" role="button">Registrar</a>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <table class="table table-responsive table-hover" id="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Documento de Identidad</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Teléfono</th>
+                        <th style="width: 2.5%"></th>
+                        <th style="width: 2.5%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var empleado in Model)
+                    {
                         <tr>
-                            <th>Rol</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Documento de Identidad</th>
-                            <th>Correo</th>
-                            <th>Teléfono</th>
-                            <th>Fecha De Nacimiento</th>
-                            <th>Nacionalidad</th>
-                            <th>Sexo</th>
-                            <th>Estado Cívil</th>
-                            <th>Dirección</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var usuario in Model)
-                        {
-                            <tr>
-                                @if (usuario.Rol == 0)
-                                {
-                                    <td>Administrador</td>
-                                }
-                                else if(usuario.Rol == 1)
-                                {
-                                    <td>Abogado</td>
-                                }
-                                else
-                                {
-                                    <td>Secretario</td>
-                                }
-                                <td>@Html.DisplayFor(m=>usuario.Nombre)</td>
-                                <td>@Html.DisplayFor(m=>usuario.Apellido)</td>
-                                <td>@Html.DisplayFor(m=>usuario.Cedula)</td>
-                                <td>@Html.DisplayFor(m=>usuario.Correo)</td>
-                                <td>@Html.DisplayFor(m=>usuario.Telefono)</td>
-                                <td>@Html.DisplayFor(m=>usuario.Fechanacimiento,new { format = "dd-MM-yyyy" })</td>
-                                <td>@Html.DisplayFor(m=>usuario.Pais)</td>
-                                <td>@Html.DisplayFor(m=>usuario.Sexo)</td>
-                                <td>@Html.DisplayFor(m=>usuario.EstadoCivil)</td>
-                                <td>@Html.DisplayFor(m=>usuario.Direccion)</td>
-                                @if (usuario.Rol == 0)
-                                {
-                                    <td>
-                                        <a href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#BFBFBF" class="bi bi-trash3-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@usuario.IdUsuario">
-                                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-                                            </svg>
-                                        </a>
-                                    </td>
+                            @if (empleado.Rol == 0)
+                            {
+                                <td class="admin-row">Abogado</td>
+                            }
+                            else if (empleado.Rol == 1)
+                            {
+                                <td>Abogado</td>
+                            }
+                            else
+                            {
+                                <td>Secretario</td>
+                            }
+                            <td>@empleado.Nombre @empleado.Apellido</td>
+                            <td>@empleado.Cedula</td>
+                            <td>@empleado.Correo</td>
+                            <td>@empleado.Telefono</td>
+                            <td>
+                                <a href="/Empleado/ModificarEmpleado/@empleado.IdUsuario">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                    </svg>
+                                </a>
+                            </td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                @if (empleado.Rol == 0)
+                                {        
+                                    <a href="#" class="btn-disabled">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#969696" class="bi bi-x-square" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                        </svg>
+                                    </a>
                                 }
                                 else
                                 {
-                                    <td>
-                                        <a href="#">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-trash3-fill" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@usuario.IdUsuario">
-                                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-                                            </svg>
-                                        </a>
-                                        <div class="modal fade" id="exampleModal-@usuario.IdUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" modal-dialog-centered d-flex align-items-center>
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel"><b>E</b>liminar <b>U</b>suario</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>¿Seguro que desea eliminar este registro?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <a href="/Empleado/EliminarEmpleado/@usuario.IdUsuario" class="btn btn-crear">Confirmar</a>
-                                                        <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
-                                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@empleado.IdUsuario">
+                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                }
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal-@empleado.IdUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                        <div class="modal-content text-center">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Eliminar Empleado</h1>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Seguro que desea eliminar este registro?<br>
+                                                <b>@empleado.Nombre @empleado.Apellido</b>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="input-group d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                    <a href="/Empleado/EliminarEmpleado/@empleado.IdUsuario" class="btn btn-positive">Aceptar</a>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                }
-                                <td>
-                                    <a href="/Empleado/ModificarEmpleado/@usuario.IdUsuario">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="7F7F7F" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>        
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script>
-        function filterTable() {
+        function filter_table() {
             var input, filter, table, tr, td, i, j, visible;
-            input = document.getElementById("filterInput");
+            input = document.getElementById("search_filter");
             filter = input.value.toUpperCase();
             table = document.getElementById("table");
             tr = table.getElementsByTagName("tr");
@@ -190,10 +145,11 @@
     </script>
 
     <script>
-        var combobox = document.getElementById('filterCombobox');
+        var combobox = document.getElementById('filter_combobox');
         var tabla = document.getElementById('table');
-        combobox.addEventListener('change', filtrarTabla);
-        function filtrarTabla() {
+        combobox.addEventListener('change', filter_table);
+
+        function filter_table() {
             var valorSeleccionado = combobox.value;
             for (var i = 1; i < tabla.rows.length; i++) { 
                 var row = tabla.rows[i];
