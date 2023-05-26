@@ -60,7 +60,7 @@ namespace ThemisWorkshop.Controllers
             }
             else
             {
-                return View("Error");
+                return RedirectToAction("Error");
             }
         }
 
@@ -88,7 +88,7 @@ namespace ThemisWorkshop.Controllers
             }
             else
             {
-                return View("Error");
+                return RedirectToAction("Error");
             }
         }
 
@@ -108,8 +108,14 @@ namespace ThemisWorkshop.Controllers
             }
             else
             {
-                return View("Error");
+                return RedirectToAction("Error");
             }
+        }
+
+        [HttpGet]
+        public ActionResult Error()
+        {
+            return View("Error");
         }
 
         private int CantidadServicios()
@@ -145,7 +151,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return (_temp.Servicio.Count(e => e.Eliminado == false) / cantidadPorpagina) + 1;
+            return _temp.Servicio.Count(e => e.Eliminado == false) / cantidadPorpagina;
         }
     }
 }
