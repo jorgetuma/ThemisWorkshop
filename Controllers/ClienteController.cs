@@ -18,7 +18,6 @@ namespace ThemisWorkshop.Controllers
         // Acción GET para listar todos los clientes
         [HttpGet]
         [Route("Cliente/ListarClientes/{pag}")]
-        [Route("Cliente/ListarClientes")]
         public ActionResult ListarClientes(int pag)
         {
             if (pag <= 0)
@@ -26,7 +25,6 @@ namespace ThemisWorkshop.Controllers
                 pag = 1;
             }
             List<Cliente> clientes = LoadClientes(pag);
-            int cantidadPag = ObtenerPaginas(10);
 
             // Devolver una vista con la lista de clientes
             return View("ListarClientes", clientes);
@@ -128,7 +126,7 @@ namespace ThemisWorkshop.Controllers
                 _context.SaveChanges(true);
 
                 // Redirigir a la vista de listar clientes
-                return RedirectToAction("ListarClientes");
+                return Redirect("/Cliente/ListarClientes/1");
             }
             else
             {
@@ -150,7 +148,7 @@ namespace ThemisWorkshop.Controllers
                 cliente.Fechanacimiento = DateTime.SpecifyKind(cliente.Fechanacimiento, DateTimeKind.Utc);
                 _context.Update(cliente);
                 _context.SaveChanges();
-                return RedirectToAction("ListarClientes");
+                return Redirect("/Cliente/ListarClientes/1");
             }
             else
             {
@@ -168,10 +166,6 @@ namespace ThemisWorkshop.Controllers
 
         private int CantidadClientes() { 
         return _context.Clientes.Count(e => e.Eliminado == false);
-        }
-
-        private int ObtenerPaginas(int cantidadPorpagina) {
-            return CantidadClientes() / cantidadPorpagina;
         }
 
         private List<Cliente> LoadClientes(int numPag) {

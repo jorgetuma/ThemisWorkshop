@@ -6,17 +6,23 @@ namespace ThemisWorkshop.Controllers
     public class EmpleadoController : Controller
     {
         private readonly ThemisworkshopContext _context;
+        static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
 
         public EmpleadoController(ThemisworkshopContext context)
         {
             _context = context;
+            _temp = context;
         }
 
         [HttpGet]
-        [Route("Empleado/ListarEmpleados")]
-        public ActionResult ListarEmpleados()
+        [Route("Empleado/ListarEmpleados/{pag}")]
+        public ActionResult ListarEmpleados(int pag)
         {
-            List<Usuario> usuarios = _context.Usuario.Where(e => e.Eliminado == false).ToList();
+            if (pag <= 0) 
+            {
+                pag = 1;
+            }
+            List<Usuario> usuarios = LoadEmpleados(pag);
             return View("ListarEmpleados", usuarios);
         }
 
@@ -147,7 +153,7 @@ namespace ThemisWorkshop.Controllers
                 user.Comision = comision;
                 _context.Update(user);
                 _context.SaveChanges();
-                return RedirectToAction("ListarEmpleados");
+                return Redirect("/Empleado/ListarEmpleados/1");
             }
             else 
             {
@@ -166,7 +172,7 @@ namespace ThemisWorkshop.Controllers
                 user.Fechanacimiento = DateTime.SpecifyKind(user.Fechanacimiento, DateTimeKind.Utc);
                 _context.Update(user);
                 _context.SaveChanges(true);
-                return RedirectToAction("ListarEmpleados");
+                return Redirect("/Empleado/ListarEmpleados/1");
             }
             else 
             {
@@ -178,6 +184,42 @@ namespace ThemisWorkshop.Controllers
         public ActionResult Error()
         {
             return View("Error");
+        }
+
+        private int CantidadEmpleados()
+        {
+            return _context.Usuario.Count(e => e.Eliminado == false);
+        }
+
+        private List<Usuario> LoadEmpleados(int numPag)
+        {
+            int indIni = (numPag - 1) * 10;
+            int max = 10;
+            int cantidad = CantidadEmpleados();
+
+            if (indIni >= cantidad)
+            {
+                return new List<Usuario>();
+            }
+
+            if (indIni + max > cantidad)
+            {
+                max = cantidad - indIni;
+            }
+
+            List<Usuario> servicios = _context.Usuario
+                .Where(e => e.Eliminado == false)
+                .OrderBy(e => e.IdUsuario)
+                .Skip(indIni)
+                .Take(max)
+                .ToList();
+            return servicios;
+
+        }
+
+        public static int ObtenerPaginasFronted(int cantidadPorpagina)
+        {
+            return (_temp.Usuario.Count(e => e.Eliminado == false) / cantidadPorpagina) + 1;
         }
     }
 }
