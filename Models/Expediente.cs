@@ -1,4 +1,6 @@
-﻿namespace ThemisWorkshop.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ThemisWorkshop.Models;
 
 public partial class Expediente
 {
@@ -16,14 +18,20 @@ public partial class Expediente
 
     public string Descripcion { get; set; }
 
+    [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+    public DateTime FechaApertura { get; set; }
+
     public bool Activo { get; set; }
-    
-    public Expediente(int idCliente, int idUsuario,string asunto, string descripcion) 
+
+    public List<Detalleservicio> Servicios { get; set; }
+
+    public Expediente(int idCliente, int idUsuario, string asunto, string descripcion, DateTime fechaApertura)
     {
         this.IdCliente = idCliente;
         this.IdUsuario = idUsuario;
         this.Asunto = asunto;
         this.Descripcion = descripcion;
         this.Activo = true;
+        this.FechaApertura = fechaApertura;
     }
 }
