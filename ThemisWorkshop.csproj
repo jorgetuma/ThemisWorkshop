@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Expediente\" />
-    <Folder Include="Views\Servicio\" />
   </ItemGroup>
 
 </Project>

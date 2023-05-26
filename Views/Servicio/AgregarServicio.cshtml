@@ -1,0 +1,138 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Agregar/Modificar Servicio";
+    @model Servicio
+    @if (Model == null) // Si no hay nada, significa que esta agregando un Servicio
+    {
+        ViewData["Title"] = "Registrar Servicio";
+    }
+    else // Si hay algo, significa que esta modificando un Servicio
+    {
+        ViewData["Title"] = "Modificar Servicio";
+    }
+}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    @if (Model == null)
+    {
+        <form asp-controller="Servicio" asp-action="AddServicio" method="post">
+            <div class="row m-0 g-3">
+                <div class="col-auto fw-bold">
+                    Información del Servicio:
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="text" class="form-control" id="nombre" placeholder="nombre" value="" name="nombre" maxlength="50">
+                        <label for="nombre">Nombre</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="text" class="form-control" id="descripcion" placeholder="descripcion" value="" name="descripcion" maxlength="100">
+                        <label for="descripcion">Descripción</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col-auto fw-bold">
+                    Valuación del Servicio:
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="" name="direccion" maxlength="100">
+                        <label for="direccion">Dirección</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="input-group d-flex justify-content-end">
+                        <a href="/Servicio/ListarServicios/1" class="btn btn-negative">Cancelar</a>
+                        <button type="submit" class="btn btn-positive">Registrar</button>
+                    </div>
+                </div>
+            </div> 
+        </form>
+    }
+    else
+    {
+        <form asp-controller="Servicio" asp-action="ModServicio" method="post">
+            <input type="hidden" value="@Model.IdServicio" name="id">
+            <div class="row m-0 g-3">
+                <div class="col-auto fw-bold">
+                    Información del Servicio:
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="text" class="form-control" id="nombre" placeholder="nombre" value="" name="nombre" maxlength="50">
+                        <label for="nombre">Nombre</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="text" class="form-control" id="descripcion" placeholder="descripcion" value="" name="descripcion" maxlength="100">
+                        <label for="descripcion">Descripción</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col-auto fw-bold">
+                    Valuación del Servicio:
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="" name="direccion" maxlength="100">
+                        <label for="direccion">Dirección</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="input-group d-flex justify-content-end">
+                        <a href="/Servicio/ListarServicios/1" class="btn btn-negative">Cancelar</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                <div class="modal-content text-center">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Modificar Servicio</h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Seguro que desea guardar los cambios?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="input-group d-flex justify-content-center">
+                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-positive">Aceptar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    }
+</body>
+</html>
