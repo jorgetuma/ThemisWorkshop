@@ -35,9 +35,11 @@
                         <label for="nombre">Nombre</label>
                     </div>
                 </div>
+            </div>
+            <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="descripcion" placeholder="descripcion" value="" name="descripcion" maxlength="100">
+                        <textarea required class="form-control" id="descripcion" placeholder="descripcion" value="" name="descripcion" style="height: 100px" maxlength="100"></textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>
@@ -50,7 +52,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="costo" placeholder="costo" value="" name="costo" maxlength="100" step="0.01">
+                        <input required type="number" class="form-control" id="costo" placeholder="costo" value="" name="costo" maxlength="100" step="0.01">
                         <label for="costo">Costo</label>
                     </div>
                 </div>
@@ -81,9 +83,11 @@
                         <label for="nombre">Nombre</label>
                     </div>
                 </div>
+            </div>
+            <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Descripcion" name="descripcion" maxlength="100">
+                        <textarea required class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Descripcion" name="descripcion" style="height: 100px" maxlength="100"></textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>
