@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    @if (Model == null)
+    @if (Model.EsMod == false)
     {
         <form asp-controller="Expediente" asp-action="AddExpediente" method="post">
             <div class="row m-0 g-3">

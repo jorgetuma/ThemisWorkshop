@@ -75,7 +75,7 @@ namespace ThemisWorkshop.Controllers
         {
 
             int idClienteSelecionado = id;
-            Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
+            Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);
 
             if (cliente != null)
             {
@@ -95,7 +95,7 @@ namespace ThemisWorkshop.Controllers
         public ActionResult ModCliente()
         {
             int idClienteSelecionado = int.Parse(Request.Form["id"].ToString());
-            Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
+            Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);
             if (cliente != null)
             {
                 String nombre = Request.Form["nombre"].ToString();
@@ -141,7 +141,7 @@ namespace ThemisWorkshop.Controllers
         public ActionResult EliminarCliente(int id)
         {
             int idClienteSelecionado = id;
-            Cliente cliente = _context.Clientes.Find(idClienteSelecionado);
+            Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);
             if (cliente != null)
             {
                 cliente.Eliminado = true;

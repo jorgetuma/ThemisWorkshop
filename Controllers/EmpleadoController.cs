@@ -6,7 +6,7 @@ namespace ThemisWorkshop.Controllers
     public class EmpleadoController : Controller
     {
         private readonly ThemisworkshopContext _context;
-        static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
+        static ThemisworkshopContext? _temp; /*Para uso exclusivo en el frontend*/
 
         public EmpleadoController(ThemisworkshopContext context)
         {
@@ -80,7 +80,7 @@ namespace ThemisWorkshop.Controllers
         [Route("Empleado/ModificarEmpleado/{id}")]
         public ActionResult ModificarEmpleado(int id)
         {
-            Usuario user = _context.Usuario.Find(id);
+            Usuario? user = _context.Usuario.Find(id);
             if (user!=null) 
             {
                 return View("AgregarEmpleado", user);
@@ -96,7 +96,7 @@ namespace ThemisWorkshop.Controllers
         public ActionResult ModEmpleado()
         {
             int id = int.Parse(Request.Form["id"].ToString());
-            Usuario user = _context.Usuario.Find(id);
+            Usuario? user = _context.Usuario.Find(id);
             if (user != null)
             {
                 String userName = Request.Form["usuario"].ToString();
@@ -165,7 +165,7 @@ namespace ThemisWorkshop.Controllers
         [Route("Empleado/EliminarEmpleado/{id}")]
         public ActionResult EliminarEmpleado(int id)
         {
-            Usuario user = _context.Usuario.Find(id);
+            Usuario? user = _context.Usuario.Find(id);
             if (user != null)
             {
                 user.Eliminado = true;

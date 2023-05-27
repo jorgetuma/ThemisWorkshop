@@ -6,7 +6,7 @@ namespace ThemisWorkshop.Controllers
     public class ServicioController : Controller
     {
         private readonly ThemisworkshopContext _context;
-        static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
+        static ThemisworkshopContext? _temp; /*Para uso exclusivo en el frontend*/
 
         public ServicioController(ThemisworkshopContext context) 
         { 
@@ -52,7 +52,7 @@ namespace ThemisWorkshop.Controllers
         [Route("/Servicio/ModificarServicio/{id}")]
         public ActionResult ModificarServicio(int id)
         {
-            Servicio servicio = _context.Servicio.Find(id);
+            Servicio? servicio = _context.Servicio.Find(id);
 
             if (servicio != null)
             {
@@ -69,7 +69,7 @@ namespace ThemisWorkshop.Controllers
         public ActionResult ModServicio()
         {
             int id = int.Parse(Request.Form["id"].ToString());
-            Servicio servicio = _context.Servicio.Find(id);
+            Servicio? servicio = _context.Servicio.Find(id);
 
             if (servicio != null)
             {
@@ -96,7 +96,7 @@ namespace ThemisWorkshop.Controllers
         [Route("/Servicio/EliminarServicio/{id}")]
         public ActionResult EliminarServicio(int id)
         {
-            Servicio servicio = _context.Servicio.Find(id);
+            Servicio? servicio = _context.Servicio.Find(id);
 
             if (servicio != null)
             {
