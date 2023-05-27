@@ -3,7 +3,7 @@
 *@
 @{
     ViewData["Title"] = "Agregar/Modificar Expediente";
-    @model Expediente
+    @model ExpedienteViewModel
     @if (Model == null) // Si no hay nada, significa que esta agregando un Servicio
     {
         ViewData["Title"] = "Registrar Expediente";
@@ -70,7 +70,7 @@
     else
     {
         <form asp-controller="Expediente" asp-action="ModExpediente" method="post">
-            <input type="hidden" value="@Model.IdExpediente" name="id">
+            <input type="hidden" value="@Model.Expediente.IdExpediente" name="id">
             <!---->
             <div class="row m-0 g-3">
                 <div class="col">
