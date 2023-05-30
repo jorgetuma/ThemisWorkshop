@@ -6,7 +6,7 @@ namespace ThemisWorkshop.Controllers
     public class EmpleadoController : Controller
     {
         private readonly ThemisworkshopContext _context;
-        static ThemisworkshopContext? _temp; /*Para uso exclusivo en el frontend*/
+        static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
 
         public EmpleadoController(ThemisworkshopContext context)
         {
@@ -219,7 +219,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return (_temp.Usuario.Count(e => e.Eliminado == false) / cantidadPorpagina) + 1;
+            return _temp.Usuario.Count(e => e.Eliminado == false) / cantidadPorpagina;
         }
     }
 }

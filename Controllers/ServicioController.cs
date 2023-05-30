@@ -6,7 +6,7 @@ namespace ThemisWorkshop.Controllers
     public class ServicioController : Controller
     {
         private readonly ThemisworkshopContext _context;
-        static ThemisworkshopContext? _temp; /*Para uso exclusivo en el frontend*/
+        static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
 
         public ServicioController(ThemisworkshopContext context) 
         { 
@@ -152,11 +152,6 @@ namespace ThemisWorkshop.Controllers
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
             return _temp.Servicio.Count(e => e.Eliminado == false) / cantidadPorpagina;
-        }
-
-        public static List<Servicio> ObtenerServicios() 
-        { 
-            return _temp.Servicio.Where(e => e.Eliminado == false).ToList();
         }
     }
 }

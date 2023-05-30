@@ -6,6 +6,8 @@
 
         public Cliente? Cliente { get; set; }
 
+        public List<Servicio>? Servicios { get; set; }
+
         public bool EsMod { get; set; }
 
         public ExpedienteViewModel(Expediente? expediente,Cliente? Cliente,bool esMod) 

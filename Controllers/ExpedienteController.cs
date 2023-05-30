@@ -32,6 +32,7 @@ namespace ThemisWorkshop.Controllers
         {
             Cliente? cliente = _context.Clientes.Find(idCliente);
             ExpedienteViewModel model = new ExpedienteViewModel(null,cliente,false);
+            model.Servicios = _context.Servicio.Where(e => e.Eliminado == false).ToList();
             return View("AgregarExpediente", model);
         }
 
@@ -59,6 +60,7 @@ namespace ThemisWorkshop.Controllers
             if (expediente != null)
             {
                 ExpedienteViewModel model = new ExpedienteViewModel(expediente,null, true);
+                model.Servicios = _context.Servicio.Where(e => e.Eliminado == false).ToList();
                 return View("AgregarExpediente", model);
             }
             else 
