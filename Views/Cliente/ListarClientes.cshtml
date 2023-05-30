@@ -27,7 +27,6 @@
             <table class="table table-responsive table-hover" id="table">
                 <thead>
                     <tr>
-                        <th class="data-checkbox-enabled"></th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Documento de Identidad</th>
                         <th scope="col">Correo</th>
@@ -41,9 +40,6 @@
                     @foreach (var cliente in Model)
                     {
                         <tr>
-                            <td class="data-checkbox-enabled">
-                                <input data-index="0" name="btSelectItem" type="checkbox">
-                            </td>
                             <td>@cliente.Nombre @cliente.Apellido</td>
                             <td>@cliente.Cedula</td>
                             <td>@cliente.Correo</td>

@@ -20,22 +20,30 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        .table-responsive {
+            min-height: 200px;
+            max-height: 200px;
+        }
+    </style>
 </head>
     
 <body>
     @if (Model.EsMod == false)
     {
         <form asp-controller="Expediente" asp-action="AddExpediente" method="post">
+            <input type="hidden" value="@Model.Cliente.IdClientes" name="idCliente">
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Información del Expediente:
+                    Información del Expediente de @Model.Cliente.Nombre @Model.Cliente.Apellido:
                 </div>
             </div>
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="nombre" placeholder="nombre" value="" name="nombre" maxlength="50">
-                        <label for="nombre">Nombre</label>
+                        <input required type="text" class="form-control" id="titulo" placeholder="titulo" value="" name="titulo" maxlength="50">
+                        <label for="titulo">Título</label>
                     </div>
                 </div>
             </div>
@@ -49,6 +57,16 @@
             </div>
             <div class="row m-0 g-3">
                 <div class="col fw-bold">
+                    Servicios:
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col fw-bold">
                     Servicios Disponibles:
                 </div>
                 <div class="col fw-bold">
@@ -57,25 +75,31 @@
             </div>
             <div class="row m-0 g-3">
                 <input type="hidden" value="" name="id" id="id-input">
-                <div class="col">
-                    <table class="table table-hover  table-bordered" id="left-table">
-                        <tbody>
-                            @foreach (var servicio in servicios)
-                            {
-                                <tr class="left-row">
-                                    <td>@servicio.Nombre</td>
-                                    <td>@servicio.Preciofijo</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col">
-                    <table class="table table-hover table-bordered" id="right-table">
-                        <tbody>
 
-                        </tbody>
-                    </table>
+                <div class="col border mx-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="left-table">
+                            <tbody>
+                                @foreach (var servicio in servicios)
+                                {
+                                    <tr class="left-row">
+                                        <input type="hidden" value="@servicio.IdServicio" name="idServicio">
+                                        <td>@servicio.Nombre</td>
+                                        <td>@servicio.Preciofijo</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col border mx-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="right-table">
+                            <tbody>
+ 
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="row m-0 g-3">
@@ -128,32 +152,30 @@
     }
 
     <script>
-        // Add an event listener to the left table rows
         var leftRows = document.getElementsByClassName('left-row');
         for (var i = 0; i < leftRows.length; i++) {
             leftRows[i].addEventListener('click', moveRowToRightTable);
         }
 
-        // Add an event listener to the right table rows
         var rightRows = document.getElementsByClassName('right-row');
         for (var i = 0; i < rightRows.length; i++) {
             rightRows[i].addEventListener('click', moveRowToLeftTable);
         }
 
         function updateHiddenInputValue() {
-            // Get all the IDs from the rows in the right table
             var rightTable = document.getElementById('right-table');
             var rightRows = rightTable.getElementsByClassName('right-row');
             var ids = [];
             for (var i = 0; i < rightRows.length; i++) {
-                var id = rightRows[i].getAttribute('data-id');
+                var hiddenInput = rightRows[i].querySelector('input[type="hidden"]');
+                var id = hiddenInput.value;
                 ids.push(id);
             }
 
-            // Set the value of the hidden input field to the concatenated IDs
             var hiddenInput = document.getElementById('id-input');
-            hiddenInput.value = ids.join(',');
+            hiddenInput.value = ids.join('-');
         }
+
 
         function moveRowToRightTable() {
             // Get the clicked row
@@ -176,6 +198,10 @@
             clonedRow.addEventListener('click', moveRowToLeftTable);
             clonedRow.classList.add('right-row');
             updateHiddenInputValue();
+
+            input = document.getElementById("search_filter");
+            input.value = "";
+            filter_table();
         }
 
         function moveRowToLeftTable() {
@@ -199,6 +225,46 @@
             clonedRow.addEventListener('click', moveRowToRightTable);
             clonedRow.classList.remove('right-row');
             updateHiddenInputValue();
+
+            input = document.getElementById("search_filter");
+            input.value = "";
+            filter_table();
+        }
+    </script>
+
+    <script>
+        function filter_table() {
+            var input, filter, table, tr, td, i, j, visible;
+            input = document.getElementById("search_filter");
+            filter = input.value.toUpperCase();
+
+            for (x = 0; x < 2; x++) {
+                if (x == 0) {
+                    table = document.getElementById("left-table");
+                } else {
+                    table = document.getElementById("right-table");
+                }
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    visible = false;
+                    if (tr[i].getElementsByTagName("th").length == 0) {
+                        td = tr[i].getElementsByTagName("td");
+                        for (j = 0; j < td.length; j++) {
+                            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                visible = true;
+                            }
+                        }
+                    } else {
+                        visible = true;
+                    }
+                    if (visible) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
         }
     </script>
 </body>
