@@ -27,10 +27,12 @@
             <table class="table table-responsive table-hover" id="table">
                 <thead>
                     <tr>
+                        <th class="data-checkbox-enabled"></th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Documento de Identidad</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Teléfono</th>
+                        <th style="width: 2.5%"></th>
                         <th style="width: 2.5%"></th>
                         <th style="width: 2.5%"></th>
                     </tr>
@@ -39,10 +41,21 @@
                     @foreach (var cliente in Model)
                     {
                         <tr>
+                            <td class="data-checkbox-enabled">
+                                <input data-index="0" name="btSelectItem" type="checkbox">
+                            </td>
                             <td>@cliente.Nombre @cliente.Apellido</td>
                             <td>@cliente.Cedula</td>
                             <td>@cliente.Correo</td>
                             <td>@cliente.Telefono</td>
+                            <td>
+                                <a href="/Expediente/AgregarExpediente/@cliente.IdClientes">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                                        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z" />
+                                        <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z" />
+                                    </svg>
+                                </a>
+                            </td>
                             <td>
                                 <a href="/Cliente/ModificarCliente/@cliente.IdClientes">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -85,30 +98,33 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col d-flex justify-content-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="/Cliente/ListarClientes/1" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    @for (int i = 1; i <= cantidadPag; i++)
-                    {
+    @if (cantidadPag > 1)
+    {
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="/Cliente/ListarClientes/@i">@i</a>
+                            <a class="page-link" href="/Cliente/ListarClientes/1" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
                         </li>
-                    }
-                    <li class="page-item">
-                        <a class="page-link" href="/Cliente/ListarClientes/@cantidadPag" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                        @for (int i = 1; i <= cantidadPag; i++)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="/Cliente/ListarClientes/@i">@i</a>
+                            </li>
+                        }
+                        <li class="page-item">
+                            <a class="page-link" href="/Cliente/ListarClientes/@cantidadPag" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
+    }
 
     <script>
         function filter_table() {
