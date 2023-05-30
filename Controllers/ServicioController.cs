@@ -153,5 +153,10 @@ namespace ThemisWorkshop.Controllers
         {
             return _temp.Servicio.Count(e => e.Eliminado == false) / cantidadPorpagina;
         }
+
+        public static List<Servicio> ObtenerServicios() 
+        { 
+            return _temp.Servicio.Where(e => e.Eliminado == false).ToList();
+        }
     }
 }

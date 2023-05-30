@@ -28,7 +28,6 @@ namespace ThemisWorkshop.Controllers
 
         [HttpGet]
         [Route("/Expediente/AgregarExpediente/{idCliente}")]
-        [Route("/Expediente/AgregarExpediente")]
         public ActionResult AgregarExpediente(int idCliente)
         {
             Cliente? cliente = _context.Clientes.Find(idCliente);
