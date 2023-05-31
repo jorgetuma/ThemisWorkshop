@@ -143,9 +143,6 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.FechaApertura).HasColumnName("fechaapertura");
             entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
             entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
-
-            entity.HasOne(e => e.Cliente).WithMany().HasForeignKey("id_cliente_fkey");
-            entity.HasOne(e => e.Abogado).WithMany().HasForeignKey("id_usuario_fkey");
         });
 
         modelBuilder.Entity<Servicio>(entity =>

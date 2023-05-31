@@ -9,11 +9,6 @@ public partial class Expediente
     public int IdCliente { get; set; }
 
     public int IdUsuario { get; set; }
-
-    public Cliente Cliente { get; set; }
-
-    public Usuario Abogado { get; set; }
-
     public string Asunto { get; set; }
 
     public string Descripcion { get; set; }
@@ -22,8 +17,6 @@ public partial class Expediente
     public DateTime FechaApertura { get; set; }
 
     public bool Activo { get; set; }
-
-    public List<Detalleservicio> Servicios { get; set; }
 
     public Expediente(int idCliente, int idUsuario, string asunto, string descripcion, DateTime fechaApertura)
     {

@@ -36,21 +36,42 @@ namespace ThemisWorkshop.Controllers
             return View("AgregarExpediente", model);
         }
 
-        /*[HttpPost]
-         [ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
          public ActionResult AddExpediente()
          {
-             string nombre = Request.Form["nombre"].ToString();
-             string descripcion = Request.Form["descripcion"].ToString();
-             decimal precioFijo = decimal.Parse(Request.Form["costo"].ToString());
+            int idCliente = int.Parse(Request.Form["idCliente"].ToString()); 
+            string titulo = Request.Form["titulo"].ToString();
+            string descripcion = Request.Form["descripcion"].ToString();
+            string ids = Request.Form["id"].ToString();
+            List<string> servicios = new List<string>();
+            DateTime fecha = DateTime.Today;
+            DateTime fechaUtc = DateTime.SpecifyKind(fecha, DateTimeKind.Utc);
+            fechaUtc = fechaUtc.AddDays(1);
+            if (ids.Count() > 1)
+            {
+                servicios = Request.Form["id"].ToString().Split('-').ToList();
+            }
+            else
+            {
+                servicios.Add(ids);
+            }
 
-             var expediente = new Expediente();
+            var expediente = new Expediente(idCliente,1,titulo,descripcion,fechaUtc); // Se debe asociar al usuario en sesion.
+
 
              _context.Expediente.Add(expediente);
-             _context.SaveChanges();
+            _context.SaveChanges();
+            for (int i = 0; i < servicios.Count(); i++)
+            {
+                int id = int.Parse(servicios.ElementAt(i).ToString());
+                var ds = new Detalleservicio(id, expediente.IdExpediente);
+                _context.Detalleservicio.Add(ds);
+            }
+            _context.SaveChanges();
 
-             return RedirectToAction("AgregarExpediente");
-         }*/
+             return Redirect("/Expediente/ListarExpedientes/1");
+         }
 
         [HttpGet]
         [Route("/Expediente/ModificarExpediente/{id}")]
@@ -59,7 +80,8 @@ namespace ThemisWorkshop.Controllers
             Expediente? expediente = _context.Expediente.Find(id);
             if (expediente != null)
             {
-                ExpedienteViewModel model = new ExpedienteViewModel(expediente,null, true);
+                Cliente cliente = _context.Clientes.Find(expediente.IdCliente);
+                ExpedienteViewModel model = new ExpedienteViewModel(expediente,cliente, true);
                 model.Servicios = _context.Servicio.Where(e => e.Eliminado == false).ToList();
                 return View("AgregarExpediente", model);
             }
@@ -78,6 +100,7 @@ namespace ThemisWorkshop.Controllers
             if (expediente != null)
             {
                 expediente.Activo = false;
+                expediente.FechaApertura = DateTime.SpecifyKind(expediente.FechaApertura, DateTimeKind.Utc);
                 _context.Expediente.Update(expediente);
                 _context.SaveChanges();
 
@@ -97,7 +120,7 @@ namespace ThemisWorkshop.Controllers
 
         private int CantidadExpedientes()
         {
-            return _context.Expediente.Count(e => e.Activo == true);
+            return _context.Expediente.Count();
         }
 
         private List<Expediente> LoadExpedientes(int numPag)
@@ -117,7 +140,6 @@ namespace ThemisWorkshop.Controllers
             }
 
             List<Expediente> expedientes = _context.Expediente
-                .Where(e => e.Activo == true)
                 .OrderBy(e => e.IdExpediente)
                 .Skip(indIni)
                 .Take(max)
@@ -128,7 +150,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return _temp.Expediente.Count(e => e.Activo == true) / cantidadPorpagina;
+            return _temp.Expediente.Count() / cantidadPorpagina;
         }
     }
 }
