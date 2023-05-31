@@ -184,7 +184,7 @@
                     <div class="table-responsive">
                         <table class="table table-hover" id="right-table">
                             <tbody>
-                                @foreach (var servicio in Model.Expediente.Servicios)
+                                @foreach (var servicio in Model.Servicios)
                                 {
                                     var matchingServicio = servicios.FirstOrDefault(s => s.IdServicio == servicio.IdServicio);
                                     if (matchingServicio != null)
