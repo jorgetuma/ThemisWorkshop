@@ -62,7 +62,7 @@
             </div>
             <div class="row m-0 g-3">
                 <div class="col">
-                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
+                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" onkeyup="filter_table()">
                 </div>
             </div>
             <div class="row m-0 g-3">
@@ -115,8 +115,92 @@
     else
     {
         <form asp-controller="Expediente" asp-action="ModExpediente" method="post">
-            <input type="hidden" value="@Model.Expediente.IdExpediente" name="id">
-            <!---->
+            <input type="hidden" value="@Model.Expediente.IdExpediente" name="idExpediente">
+            <input type="hidden" value="@Model.Cliente.IdClientes" name="idCliente">
+
+            <div class="row m-0 g-3">
+                <div class="col-auto fw-bold">
+                    Información del Expediente de @Model.Cliente.Nombre @Model.Cliente.Apellido:
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input required type="text" class="form-control" id="titulo" placeholder="titulo" value="@Model.Expediente.Asunto" name="titulo" maxlength="50">
+                        <label for="titulo">Título</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <textarea required class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Expediente.Descripcion" name="descripcion" style="height: 100px" maxlength="100"></textarea>
+                        <label for="descripcion">Descripción</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col fw-bold">
+                    Servicios:
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" onkeyup="filter_table()">
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col fw-bold">
+                    Servicios Disponibles:
+                </div>
+                <div class="col fw-bold">
+                    Servicios del Expediente:
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                @{
+                    string concatenatedIds = string.Join("-", Model.Servicios.Select(servicio => servicio.IdServicio));
+                }
+                <input type="hidden" value="@concatenatedIds" name="id-originales">
+
+                <input type="hidden" value="" name="id" id="id-input">
+                <div class="col border mx-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="left-table">
+                            <tbody>
+                                @foreach (var servicio in servicios.Where(s => !Model.Servicios.Any(ms => ms.IdServicio == s.IdServicio)))
+                                {
+                                    <tr class="left-row">
+                                        <input type="hidden" value="@servicio.IdServicio" name="idServicio">
+                                        <td>@servicio.Nombre</td>
+                                        <td>@servicio.Preciofijo</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col border mx-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="right-table">
+                            <tbody>
+                                @foreach (var servicio in Model.Expediente.Servicios)
+                                {
+                                    var matchingServicio = servicios.FirstOrDefault(s => s.IdServicio == servicio.IdServicio);
+                                    if (matchingServicio != null)
+                                    {
+                                        <tr class="right-row">
+                                            <input type="hidden" value="@servicio.IdServicio" name="idServicio">
+                                            <td>@matchingServicio.Nombre</td>
+                                            <td>@matchingServicio.Preciofijo</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="input-group d-flex justify-content-end">
