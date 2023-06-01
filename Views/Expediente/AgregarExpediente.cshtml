@@ -134,7 +134,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <textarea required class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Expediente.Descripcion" name="descripcion" style="height: 100px" maxlength="100"></textarea>
+                        <textarea required class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Expediente.Descripcion" name="descripcion" style="height: 100px" maxlength="100">@Model.Expediente.Descripcion</textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>
@@ -159,22 +159,36 @@
             </div>
             <div class="row m-0 g-3">
                 @{
-                    string concatenatedIds = string.Join("-", Model.Servicios.Select(servicio => servicio.IdServicio));
+                    var misServicios = @ExpedienteController._temp.Detalleservicio.Where(e => e.IdExpediente == Model.Expediente.IdExpediente).ToList();
+
+                    string concatenatedIds = string.Join("-", misServicios.Select(servicio => servicio.IdServicio));
                 }
                 <input type="hidden" value="@concatenatedIds" name="id-originales">
 
-                <input type="hidden" value="" name="id" id="id-input">
+                <input type="hidden" value="empty" name="id" id="id-input">
                 <div class="col border mx-2">
                     <div class="table-responsive">
                         <table class="table table-hover" id="left-table">
                             <tbody>
-                                @foreach (var servicio in servicios.Where(s => !Model.Servicios.Any(ms => ms.IdServicio == s.IdServicio)))
+                                @foreach (var servicio in servicios)
                                 {
-                                    <tr class="left-row">
-                                        <input type="hidden" value="@servicio.IdServicio" name="idServicio">
-                                        <td>@servicio.Nombre</td>
-                                        <td>@servicio.Preciofijo</td>
-                                    </tr>
+                                    var isPresent = false;
+                                    @foreach (var miservicio in misServicios)
+                                    {
+                                        if (servicio.IdServicio == miservicio.IdServicio)
+                                        {
+                                            isPresent = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!isPresent)
+                                    {
+                                        <tr class="left-row">
+                                            <input type="hidden" value="@servicio.IdServicio" name="idServicio">
+                                            <td>@servicio.Nombre</td>
+                                            <td>@servicio.Preciofijo</td>
+                                        </tr>
+                                    }
                                 }
                             </tbody>
                         </table>
@@ -184,16 +198,18 @@
                     <div class="table-responsive">
                         <table class="table table-hover" id="right-table">
                             <tbody>
-                                @foreach (var servicio in Model.Servicios)
+                                @foreach (var servicio in servicios)
                                 {
-                                    var matchingServicio = servicios.FirstOrDefault(s => s.IdServicio == servicio.IdServicio);
-                                    if (matchingServicio != null)
+                                    @foreach (var miservicio in misServicios)
                                     {
-                                        <tr class="right-row">
-                                            <input type="hidden" value="@servicio.IdServicio" name="idServicio">
-                                            <td>@matchingServicio.Nombre</td>
-                                            <td>@matchingServicio.Preciofijo</td>
-                                        </tr>
+                                        if (servicio.IdServicio == miservicio.IdServicio)
+                                        {
+                                            <tr class="right-row">
+                                                <input type="hidden" value="@servicio.IdServicio" name="idServicio">
+                                                <td>@servicio.Nombre</td>
+                                                <td>@servicio.Preciofijo</td>
+                                            </tr>
+                                        }
                                     }
                                 }
                             </tbody>
@@ -250,6 +266,13 @@
             var rightTable = document.getElementById('right-table');
             var rightRows = rightTable.getElementsByClassName('right-row');
             var ids = [];
+
+            if (rightRows.length === 0) {
+                var hiddenInput = document.getElementById('id-input');
+                hiddenInput.value = "empty";
+                return; // Exit the function if there are no rows
+            }
+
             for (var i = 0; i < rightRows.length; i++) {
                 var hiddenInput = rightRows[i].querySelector('input[type="hidden"]');
                 var id = hiddenInput.value;
@@ -259,6 +282,7 @@
             var hiddenInput = document.getElementById('id-input');
             hiddenInput.value = ids.join('-');
         }
+
 
 
         function moveRowToRightTable() {

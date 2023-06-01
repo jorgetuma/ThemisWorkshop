@@ -16,7 +16,7 @@
 <body>
     <div class="row my-3">
         <div class="col-2">
-            <select class="form-select" id="filter_combobox">
+            <select class="form-select" id="filter_combobox" onchange="filter_table2()">
                 <option selected value="0">Activos</option>
                 <option value="1">Archivados</option>
                 <option value="2">Todos</option>
@@ -41,13 +41,20 @@
                         <th style="width: 2.5%;"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tableBody">
                     @foreach (var expediente in Model)
                     {
                         <tr>
-                            <input type="hidden" value="@expediente.Activo" name="isActivo">
-                            <td>@expediente.Asunto</td>
-                            <td></td>
+                            <td>
+                                <input type="hidden" value="@expediente.Activo" name="isActivo">
+                                @expediente.Asunto
+                            </td>
+
+                            @{
+                                var cliente = ExpedienteController._temp.Clientes.Where(e => e.IdClientes == expediente.IdCliente).FirstOrDefault();
+                            }
+
+                            <td>@cliente.Nombre @cliente.Apellido</td>
                             <td>@expediente.FechaApertura</td>
                             <td>
                                 <a href="/Expediente/ModificarExpediente/@expediente.IdExpediente">
@@ -119,28 +126,23 @@
     }
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var filterCombobox = document.getElementById('filter_combobox');
-            filterCombobox.addEventListener('change', filterTable);
-        });
+        function filter_table2() {
+            var filterOption = document.getElementById("filter_combobox").value;
+            var tableBody = document.getElementById("tableBody");
+            var rows = tableBody.getElementsByTagName("tr");
 
-        function filterTable() {
-            var selectedValue = document.getElementById('filter_combobox').value;
-            var rows = document.querySelectorAll('#table tbody tr');
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                var isActive = row.querySelector("input[name='isActivo']").value === "True";
 
-            rows.forEach(function (row) {
-                var isActivo = row.querySelector('input[name="isActivo"]').value;
-
-                if (selectedValue === '0' && isActivo === 'True') {
-                    row.style.display = 'table-row'; // Show rows with active expedientes
-                } else if (selectedValue === '1' && isActivo === 'False') {
-                    row.style.display = 'table-row'; // Show rows with archived expedientes
-                } else if (selectedValue === '2') {
-                    row.style.display = 'table-row'; // Show all rows
+                if (filterOption == 0 && !isActive) {
+                    row.style.display = "none"; // Hide the row
+                } else if (filterOption == 1 && isActive) {
+                    row.style.display = "none"; // Hide the row
                 } else {
-                    row.style.display = 'none'; // Hide rows that don't match the filter
+                    row.style.display = ""; // Show the row
                 }
-            });
+            }
         }
     </script>
 
