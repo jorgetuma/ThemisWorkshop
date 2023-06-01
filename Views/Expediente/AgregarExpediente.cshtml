@@ -130,6 +130,23 @@
                         <label for="titulo">Título</label>
                     </div>
                 </div>
+                <div class="col-auto">
+                    <div class="form-floating">
+                        <select class="form-select" id="estado" name="estado">
+                            @if (Model.Expediente.Activo.Equals("True"))
+                            {
+                                <option selected value="1">Activo</option>
+                                <option value="0">Archivado</option>
+                            }
+                            else
+                            {
+                                <option value="1">Activo</option>
+                                <option selected value="0">Archivado</option>
+                            }
+                        </select>
+                        <label for="estado">Estado</label>
+                    </div>
+                </div>
             </div>
             <div class="row m-0 g-3">
                 <div class="col">

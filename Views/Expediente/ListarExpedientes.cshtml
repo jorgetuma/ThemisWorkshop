@@ -46,14 +46,21 @@
                     {
                         <tr>
                             <td>
-                                <input type="hidden" value="@expediente.Activo" name="isActivo">
+                                <input type="hidden" value="@expediente.IdExpediente" id="idExpediente">
+
+                                @if (expediente.Activo == true)
+                                {
+                                    <input type="hidden" value="1" id="isActive-@expediente.IdExpediente">
+                                } 
+                                else
+                                {
+                                    <input type="hidden" value="0" id="isActive-@expediente.IdExpediente">
+                                }
                                 @expediente.Asunto
                             </td>
-
                             @{
                                 var cliente = ExpedienteController._temp.Clientes.Where(e => e.IdClientes == expediente.IdCliente).FirstOrDefault();
                             }
-
                             <td>@cliente.Nombre @cliente.Apellido</td>
                             <td>@expediente.FechaApertura</td>
                             <td>
@@ -64,33 +71,45 @@
                                     </svg>
                                 </a>
                             </td>
-                            <td>
-                                <!-- Button trigger modal -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@expediente.IdExpediente">
-                                    <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                                </svg>
+                            @if (expediente.Activo == true)
+                            {
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@expediente.IdExpediente">
+                                        <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                                    </svg>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal-@expediente.IdExpediente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
-                                        <div class="modal-content text-center">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Archivar Expediente</h1>
-                                            </div>
-                                            <div class="modal-body">
-                                                ¿Seguro que desea archivar este registro?<br>
-                                                <b>@expediente.Asunto</b>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div class="input-group d-flex justify-content-center">
-                                                    <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                                    <a href="/Expediente/EliminarExpediente/@expediente.IdExpediente" class="btn btn-positive">Aceptar</a>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal-@expediente.IdExpediente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                            <div class="modal-content text-center">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Archivar Expediente</h1>
                                                 </div>
-                                            </div>                               
+                                                <div class="modal-body">
+                                                    ¿Seguro que desea archivar este registro?<br>
+                                                    <b>@expediente.Asunto</b>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="input-group d-flex justify-content-center">
+                                                        <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                        <a href="/Expediente/EliminarExpediente/@expediente.IdExpediente" class="btn btn-positive">Aceptar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#969696" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@expediente.IdExpediente">
+                                        <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                                    </svg>
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>
@@ -131,19 +150,43 @@
             var tableBody = document.getElementById("tableBody");
             var rows = tableBody.getElementsByTagName("tr");
 
-            for (var i = 0; i < rows.length; i++) {
-                var row = rows[i];
-                var isActive = row.querySelector("input[name='isActivo']").value === "True";
+            if (filterOption == 0) {
+                for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    var idExpediente = row.querySelector("#idExpediente").value;
+                    var isActive = row.querySelector("#isActive-" + idExpediente).value;
+                    console.log(isActive)
 
-                if (filterOption == 0 && !isActive) {
-                    row.style.display = "none"; // Hide the row
-                } else if (filterOption == 1 && isActive) {
-                    row.style.display = "none"; // Hide the row
-                } else {
-                    row.style.display = ""; // Show the row
+                    if (isActive == 1) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                }
+            } else if (filterOption == 1) {
+                for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    var idExpediente = row.querySelector("#idExpediente").value;
+                    var isActive = row.querySelector("#isActive-" + idExpediente).value;
+                    console.log(isActive)
+
+                    if (isActive == 0) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                }
+            } else {
+                for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    row.style.display = "";
                 }
             }
         }
+
+        window.addEventListener('load', function () {
+            filter_table2();
+        });
     </script>
 
     <script>
