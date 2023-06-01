@@ -91,6 +91,57 @@ namespace ThemisWorkshop.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ModExpediente() 
+        {
+            int id = int.Parse(Request.Form["idCliente"].ToString());
+            Expediente? expediente = _context.Expediente.Find(id);
+            if (expediente != null)
+            {
+                string titulo = Request.Form["titulo"].ToString();
+                string descripcion = Request.Form["descripcion"].ToString();
+                string ids = Request.Form["id-originales"].ToString();
+                string idsMod = Request.Form["id"].ToString();
+                List<Detalleservicio> servicios = _context.Detalleservicio.Where(e => e.IdExpediente == expediente.IdExpediente).ToList();
+                List<string> serviciosMod = new List<string>();
+                if (idsMod.Count() > 1)
+                {
+                    serviciosMod = Request.Form["id"].ToString().Split('-').ToList();
+                }
+                else { 
+                    serviciosMod.Add(idsMod);
+                }
+
+                expediente.Asunto = titulo;
+                expediente.Descripcion = descripcion;
+                expediente.FechaApertura = DateTime.SpecifyKind(expediente.FechaApertura, DateTimeKind.Utc);
+                _context.Expediente.Update(expediente);
+                _context.SaveChanges();
+
+                for (int i = 0; i < servicios.Count(); i++)
+                { 
+                    Detalleservicio ds = servicios.ElementAt(i);
+                    _context.Detalleservicio.Remove(ds);
+                    _context.SaveChanges();
+                }
+
+                for (int i = 0; i < serviciosMod.Count(); i++)
+                {
+                    int idServ = int.Parse(serviciosMod.ElementAt(i).ToString());
+                    Detalleservicio ds = new Detalleservicio(idServ,expediente.IdExpediente);
+                    _context.Detalleservicio.Add(ds);
+                    _context.SaveChanges();
+                }
+
+                return Redirect("/Expediente/ListarExpedientes/1");
+            }
+            else
+            { 
+                return RedirectToAction("Error");
+            }
+        }
+
         [HttpGet]
         [Route("/Expediente/EliminarExpediente/{id}")]
         public ActionResult EliminarExpediente(int id)
