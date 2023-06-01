@@ -101,6 +101,7 @@ namespace ThemisWorkshop.Controllers
             {
                 string titulo = Request.Form["titulo"].ToString();
                 string descripcion = Request.Form["descripcion"].ToString();
+                int estado = int.Parse(Request.Form["estado"].ToString());
                 string ids = Request.Form["id-originales"].ToString();
                 string idsMod = Request.Form["id"].ToString();
                 List<Detalleservicio> servicios = _context.Detalleservicio.Where(e => e.IdExpediente == expediente.IdExpediente).ToList();
@@ -111,6 +112,15 @@ namespace ThemisWorkshop.Controllers
                     serviciosMod = Request.Form["id"].ToString().Split('-').ToList();
                 }
 
+                switch (estado) { 
+                case 1:
+                expediente.Activo = true;
+                break;
+                case 0:
+                expediente.Activo = false;
+                break;
+                }
+                
                 expediente.Asunto = titulo;
                 expediente.Descripcion = descripcion;
                 expediente.FechaApertura = DateTime.SpecifyKind(expediente.FechaApertura, DateTimeKind.Utc);

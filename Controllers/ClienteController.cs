@@ -6,7 +6,7 @@ namespace ThemisWorkshop.Controllers
     public class ClienteController : Controller
     {
         private readonly ThemisworkshopContext _context;
-        static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
+        public static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
 
 
         public ClienteController(ThemisworkshopContext context)
