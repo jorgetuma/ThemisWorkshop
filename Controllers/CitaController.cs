@@ -37,6 +37,7 @@ namespace ThemisWorkshop.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCita()
         {
             int idcliente = int.Parse(Request.Form["idcliente"].ToString());
@@ -46,7 +47,7 @@ namespace ThemisWorkshop.Controllers
             DateTime fecha = DateTime.Parse(Request.Form["fecha"].ToString());
             DateTime fechautc = DateTime.SpecifyKind(fecha, DateTimeKind.Utc);
             fechautc = fechautc.AddDays(1);
-            TimeOnly horaini = TimeOnly.Parse(Request.Form["fechainicial"].ToString());
+            TimeOnly horaini = TimeOnly.Parse(Request.Form["horainicial"].ToString());
             TimeOnly horafin = TimeOnly.Parse("00:00");
 
             var cita = new Cita(idcliente, 1, asunto, lugar, descripcion, fechautc, horaini, horafin);
@@ -72,6 +73,7 @@ namespace ThemisWorkshop.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ModCita()
         {
             int id = int.Parse(Request.Form["id"].ToString());
@@ -84,15 +86,13 @@ namespace ThemisWorkshop.Controllers
                 DateTime fecha = DateTime.Parse(Request.Form["fecha"].ToString());
                 DateTime fechautc = DateTime.SpecifyKind(fecha, DateTimeKind.Utc);
                 fechautc = fechautc.AddDays(1);
-                TimeOnly horaini = TimeOnly.Parse(Request.Form["fechainicial"].ToString());
-                TimeOnly horafin = TimeOnly.Parse(Request.Form["fechafinal"].ToString());
+                TimeOnly horaini = TimeOnly.Parse(Request.Form["horainicial"].ToString());
 
                 cita.Asunto = asunto;
                 cita.Descripcion = descripcion;
                 cita.Lugar = lugar;
                 cita.Fecha = fechautc;
                 cita.HoraInicial = horaini;
-                cita.HoraFinal = horafin;
 
                 _context.Cita.Update(cita);
                 _context.SaveChanges();
@@ -160,6 +160,7 @@ namespace ThemisWorkshop.Controllers
             }
 
             List<Cita> citas = _context.Cita
+                .Where(e => e.Realizado == false)
                 .OrderBy(e => e.IdCita)
                 .Skip(indIni)
                 .Take(max)

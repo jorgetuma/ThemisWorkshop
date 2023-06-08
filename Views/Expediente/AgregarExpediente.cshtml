@@ -133,7 +133,8 @@
                 <div class="col-auto">
                     <div class="form-floating">
                         <select class="form-select" id="estado" name="estado">
-                            @if (Model.Expediente.Activo.Equals("True"))
+
+                            @if (Model.Expediente.Activo == true)
                             {
                                 <option selected value="1">Activo</option>
                                 <option value="0">Archivado</option>

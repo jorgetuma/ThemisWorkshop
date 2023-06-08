@@ -85,7 +85,6 @@
                         <select class="form-select" id="estadoCivil" name="estadoCivil">
                             <option selected value="Soltero">Soltero</option>
                             <option value="Casado">Casado</option>
-                            <option value="Viudo">Viudo</option>
                         </select>
                         <label for="estadoCivil">Estado Cívil</label>
                     </div>
@@ -208,19 +207,11 @@
                             {
                                 <option selected value="Soltero">Soltero</option>
                                 <option value="Casado">Casado</option>
-                                <option value="Viudo">Viudo</option>
-                            }
-                            else if (Model.EstadoCivil.Equals("Casado"))
-                            {
-                                <option value="Soltero">Soltero</option>
-                                <option selected value="Casado">Casado</option>
-                                <option value="Viudo">Viudo</option>
                             }
                             else
                             {
                                 <option value="Soltero">Soltero</option>
-                                <option value="Casado">Casado</option>
-                                <option selected value="Viudo">Viudo</option>
+                                <option selected value="Casado">Casado</option>
                             }
                         </select>
                         <label for="estadoCivil">Estado Cívil</label>

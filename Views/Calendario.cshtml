@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @using ThemisWorkshop.Controllers;
+    ViewData["Title"] = "Calendario";
+    @model List<Cita> 
+}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="calendar"></div>
+
+    <script>
+        function generateCalendar() {
+            var calendar = document.getElementById('calendar');
+            var html = '';
+
+            // Generate calendar HTML code
+            // ...
+
+            // Append the generated HTML code to the container element
+            calendar.innerHTML = html;
+        }
+
+        // Call the generateCalendar function when the page is loaded
+        $(document).ready(function () {
+            generateCalendar();
+        });
+    </script>
+
+    <script>
+        function generateCalendar() {
+            var calendar = document.getElementById('calendar');
+            var html = '';
+
+            var currentDate = new Date();
+            var currentMonth = currentDate.getMonth();
+            var currentYear = currentDate.getFullYear();
+
+            // Generate calendar HTML code
+            html += '<table class="table table-bordered">';
+            html += '<thead>';
+            html += '<tr>';
+            html += '<th colspan="7">' + currentYear + ' ' + currentMonth + '</th>';
+            html += '</tr>';
+            html += '</thead>';
+            html += '<tbody>';
+
+            // Generate calendar rows and columns
+            // ...
+
+            html += '</tbody>';
+            html += '</table>';
+
+            // Append the generated HTML code to the container element
+            calendar.innerHTML = html;
+        }
+
+        // Call the generateCalendar function when the page is loaded
+        $(document).ready(function () {
+            generateCalendar();
+        });
+    </script>
+
+</body>
+</html>
