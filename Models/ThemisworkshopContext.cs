@@ -25,6 +25,7 @@ public partial class ThemisworkshopContext : DbContext
 
     public virtual DbSet<Cita> Cita { get; set; }
 
+    public virtual DbSet<Consulta> Consulta { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -201,6 +202,19 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.HoraInicial).HasColumnName("horainicial");
             entity.Property(e => e.HoraFinal).HasColumnName("horafinal");
             entity.Property(e => e.Realizado).HasColumnName("realizado");
+        });
+
+        modelBuilder.Entity<Consulta>(entity =>
+        {
+            entity.HasKey(e => e.IdConsulta).HasName("id_consulta_pkey");
+            entity.ToTable("consulta");
+
+            entity.Property(e => e.IdConsulta).HasColumnName("id_consulta");
+            entity.Property(e => e.IdCita).HasColumnName("id_cita");
+            entity.Property(e => e.IdExpediente).HasColumnName("id_expediente");
+            entity.Property(e => e.HoraInicial).HasColumnName("horainicial");
+            entity.Property(e => e.HoraFinal).HasColumnName("horafinal");
+            entity.Property(e => e.Eliminado).HasColumnName("eliminado");
         });
 
         OnModelCreatingPartial(modelBuilder);
