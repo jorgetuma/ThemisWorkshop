@@ -28,9 +28,31 @@ namespace ThemisWorkshop.Controllers
         }
 
         [HttpGet]
-        public ActionResult AgregarCita()
+        [Route("Cita/AgregarCita/{idCliente}")]
+        public ActionResult AgregarCita(int idCliente)
         {
-            return View("AgregarCita");
+            Cliente? cliente = _context.Clientes.Find(idCliente);
+            CitaViewModel model = new CitaViewModel(null, cliente, false);
+            return View("AgregarCita",model);
+        }
+
+        [HttpPost]
+        public ActionResult AddCita()
+        {
+            int idcliente = int.Parse(Request.Form["idcliente"].ToString());
+            string asunto = Request.Form["asunto"].ToString();
+            string descripcion = Request.Form["descripcion"].ToString();
+            string lugar = Request.Form["lugar"].ToString();
+            DateTime fecha = DateTime.Parse(Request.Form["fecha"].ToString());
+            DateTime fechautc = DateTime.SpecifyKind(fecha, DateTimeKind.Utc);
+            fechautc = fechautc.AddDays(1);
+            TimeOnly horaini = TimeOnly.Parse(Request.Form["fechainicial"].ToString());
+            TimeOnly horafin = TimeOnly.Parse("00:00");
+
+            var cita = new Cita(idcliente, 1, asunto, lugar, descripcion, fechautc, horaini, horafin);
+            _context.Cita.Add(cita);
+            _context.SaveChanges();
+            return Redirect("/Cita/ListarCitas/1");
         }
 
         [HttpGet]
@@ -39,11 +61,66 @@ namespace ThemisWorkshop.Controllers
             Cita? cita = _context.Cita.Find(id);
             if (cita != null)
             {
-                return View("AgregarCita", cita);
+                Cliente? cliente = _context.Clientes.Find(cita.IdCliente);
+                CitaViewModel model = new CitaViewModel(cita, cliente, true);
+                return View("AgregarCita", model);
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ModCita()
+        {
+            int id = int.Parse(Request.Form["id"].ToString());
+            Cita? cita = _context.Cita.Find(id);
+            if (cita != null)
+            {
+                string asunto = Request.Form["asunto"].ToString();
+                string descripcion = Request.Form["descripcion"].ToString();
+                string lugar = Request.Form["lugar"].ToString();
+                DateTime fecha = DateTime.Parse(Request.Form["fecha"].ToString());
+                DateTime fechautc = DateTime.SpecifyKind(fecha, DateTimeKind.Utc);
+                fechautc = fechautc.AddDays(1);
+                TimeOnly horaini = TimeOnly.Parse(Request.Form["fechainicial"].ToString());
+                TimeOnly horafin = TimeOnly.Parse(Request.Form["fechafinal"].ToString());
+
+                cita.Asunto = asunto;
+                cita.Descripcion = descripcion;
+                cita.Lugar = lugar;
+                cita.Fecha = fechautc;
+                cita.HoraInicial = horaini;
+                cita.HoraFinal = horafin;
+
+                _context.Cita.Update(cita);
+                _context.SaveChanges();
+
+                return Redirect("/Cita/ListarCitas/1");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        [HttpGet]
+        [Route("Cita/EliminarCita/{id}")]
+        public ActionResult EliminarCita(int id)
+        { 
+            Cita? cita = _context.Cita.Find(id);
+            if (cita != null)
+            {
+                cita.Realizado = true;
+                cita.Fecha = DateTime.SpecifyKind(cita.Fecha,DateTimeKind.Utc);
+                _context.Cita.Update(cita);
+                _context.SaveChanges();
+                return Redirect("/Cita/ListarCitas/1");
             }
             else 
-            { 
-              return  RedirectToAction("Error");
+            {
+                return RedirectToAction("Error");
             }
         }
 
