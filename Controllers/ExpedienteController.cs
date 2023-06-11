@@ -31,12 +31,19 @@ namespace ThemisWorkshop.Controllers
         public ActionResult AgregarExpediente(int idCliente)
         {
             Cliente? cliente = _context.Clientes.Find(idCliente);
-            ExpedienteViewModel model = new ExpedienteViewModel(null,cliente,false);
-            model.Servicios = _context.Servicio.Where(e => e.Eliminado == false).ToList();
-            return View("AgregarExpediente", model);
+            if (cliente != null)
+            {
+                ExpedienteViewModel model = new ExpedienteViewModel(null, cliente, false);
+                model.Servicios = _context.Servicio.Where(e => e.Eliminado == false).ToList();
+                return View("AgregarExpediente", model);
+            }
+            else 
+            {
+                return Redirect("/Cliente/Error");
+            }
         }
 
-        [HttpPost]
+            [HttpPost]
         [ValidateAntiForgeryToken]
          public ActionResult AddExpediente()
          {

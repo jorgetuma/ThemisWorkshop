@@ -32,11 +32,18 @@ namespace ThemisWorkshop.Controllers
         public ActionResult AgregarCita(int idCliente)
         {
             Cliente? cliente = _context.Clientes.Find(idCliente);
-            CitaViewModel model = new CitaViewModel(null, cliente, false);
-            return View("AgregarCita",model);
-        }
+            if (cliente != null)
+            {
+                CitaViewModel model = new CitaViewModel(null, cliente, false);
+                return View("AgregarCita", model);
+            }
+            else 
+            {
+                return Redirect("/Cliente/Error");
+            }
+            }
 
-        [HttpPost]
+            [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddCita()
         {
