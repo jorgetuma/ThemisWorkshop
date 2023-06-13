@@ -22,6 +22,7 @@
 
 <body>
     <div class="row my-3">
+        <!--
         <div class="col-2">
             <select class="form-select" id="filter_combobox" onchange="filter_table2()">
                 <option selected value="0">Pendientes</option>
@@ -29,7 +30,8 @@
                 <option value="2">Todos</option>
             </select>
         </div>
-        <div class="col ps-0">
+        -->
+        <div class="col">
             <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
         </div>
         <div class="col-auto ps-0">
@@ -42,7 +44,7 @@
                 <tbody>
                     @foreach (var cita in Model)
                     {
-                        <tr>
+                        <tr id="head">
                             @if (cita.HoraFinal.ToString().Trim().Equals("12:00 AM", StringComparison.OrdinalIgnoreCase))
                             {
                                 <td colspan="2"><b>@cita.Fecha.ToShortDateString()</b> @cita.HoraInicial</td>
@@ -53,7 +55,7 @@
                             }
                             <td colspan="4" class="text-end">@cita.Lugar</td>
                         </tr>
-                        <tr>
+                        <tr id="body">
                             @{
                                 var cliente = CitaController._temp.Clientes.Where(e => e.IdClientes == cita.IdCliente).FirstOrDefault();
                             }
@@ -157,11 +159,22 @@
 
             for (i = 0; i < tr.length; i++) {
                 visible = false;
-                if (tr[i].getElementsByTagName("th").length == 0) {
+                if (tr[i].id === "head" || tr[i].id === "body") {
+                    var siblingRow = tr[i].nextElementSibling;
                     td = tr[i].getElementsByTagName("td");
                     for (j = 0; j < td.length; j++) {
                         if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
                             visible = true;
+                            break;
+                        }
+                    }
+                    if (!visible && siblingRow && siblingRow.id === "body") {
+                        td = siblingRow.getElementsByTagName("td");
+                        for (j = 0; j < td.length; j++) {
+                            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                visible = true;
+                                break;
+                            }
                         }
                     }
                 } else {
