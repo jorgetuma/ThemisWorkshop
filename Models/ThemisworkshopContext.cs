@@ -214,6 +214,7 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.IdExpediente).HasColumnName("id_expediente");
             entity.Property(e => e.HoraInicial).HasColumnName("horainicial");
             entity.Property(e => e.HoraFinal).HasColumnName("horafinal");
+            entity.Property(e => e.Precio).HasColumnName("precio");
             entity.Property(e => e.Eliminado).HasColumnName("eliminado");
         });
 
