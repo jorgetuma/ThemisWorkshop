@@ -43,6 +43,22 @@ namespace ThemisWorkshop.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddConsulta() 
+        { 
+            int idCita = int.Parse(Request.Form["idCita"].ToString());
+            int idExpediente = int.Parse(Request.Form["idExpediente"].ToString());
+            TimeOnly horaini = TimeOnly.Parse(Request.Form["horainicial"].ToString());
+            TimeOnly horafin = TimeOnly.Parse(Request.Form["horafinal"].ToString());
+            decimal costo = decimal.Parse(Request.Form["costoHidden"].ToString());
+
+            var consulta = new Consulta(idCita,idExpediente,horaini,horafin,costo);
+            _context.Consulta.Add(consulta);
+            _context.SaveChanges();
+            return Redirect("/Consulta/ListarConsultas/1");
+        }
+
         [HttpGet]
         [Route("/consulta/EliminarConsulta/{id}")]
         public ActionResult EliminarConsulta(int id) {
