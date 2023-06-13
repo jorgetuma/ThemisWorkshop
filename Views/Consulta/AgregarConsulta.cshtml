@@ -125,9 +125,11 @@
         var horaFinal = parseInt(horafinal.split(":")[0]);
 
         var costo = (horaFinal - horaInicial) * costo_por_hora;
+        console.log(costo);
         document.getElementById("costo").value = costo;
-        document.getElementById("costoHidden").value = costo;
+        document.getElementsByName("costoHidden")[0].value = costo;
     }
+
 
     window.onload = function () {
         calcularCosto();
@@ -144,7 +146,7 @@
 
         var horaMinima = new Date(horaInicialDate.getTime() + 60 * 60 * 1000);
 
-        if (horaFinalDate < horaMinima) {
+        if (horaFinalDate.getTime() < horaMinima.getTime()) {
             var nuevaHoraFinal = horaMinima.toTimeString().slice(0, 5);
             document.getElementById("horafinal").value = nuevaHoraFinal;
             document.getElementById("horafinal").setAttribute("value", nuevaHoraFinal);
@@ -152,6 +154,7 @@
 
         calcularCosto();
     }
+
 </script>
 
 <script>
