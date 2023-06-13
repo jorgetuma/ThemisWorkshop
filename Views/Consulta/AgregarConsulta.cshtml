@@ -32,6 +32,7 @@
                         DateTime horainicial = DateTime.Parse(horaInicialStr);
                     }
                     <input disabled type="time" class="form-control" id="horainicial" placeholder="horainicial" value="@horainicial.ToString("HH:mm")" name="horainicial" timezone="-240">
+                    <input type="hidden" value="@horainicial.ToString("HH:mm")" name="horainicial">
                     <label for="horainicial">Hora Inicial</label>
                 </div>
             </div>
@@ -71,6 +72,7 @@
                         <input type="hidden" value="@costo_por_hora.FirstOrDefault().Preciofijo" id="costo_por_hora">
                     }
                     <input disabled type="number" class="form-control" id="costo" placeholder="costo" value="" name="costo" maxlength="100" step="0.01">
+                    <input type="hidden" value="" name="costoHidden">
                     <label for="costo">Costo</label>
                 </div>
             </div>
@@ -124,6 +126,7 @@
 
         var costo = (horaFinal - horaInicial) * costo_por_hora;
         document.getElementById("costo").value = costo;
+        document.getElementById("costoHidden").value = costo;
     }
 
     window.onload = function () {
