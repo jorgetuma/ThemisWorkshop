@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <form asp-controller="Servicio" asp-action="ModServicio" method="post">
+    <form asp-controller="Consulta" asp-action="AddConsulta" method="post">
         <input type="hidden" value="@Model.Cita.IdCita" name="idCita">
         <div class="row m-0 g-3">
             <div class="col-auto fw-bold">
@@ -37,7 +37,7 @@
             </div>
             <div class="col">
                 <div class="form-floating">
-                    <input required type="time" class="form-control" id="horafinal" placeholder="horafinal" value="@horainicial.AddHours(1).ToString("HH:mm")" name="horafinal" timezone="-240" onchange="calcularCosto()">
+                    <input required type="time" class="form-control" id="horafinal" placeholder="horafinal" value="@horainicial.AddHours(1).ToString("HH:mm")" name="horafinal" timezone="-240" onchange="calcularCosto(); validarHoraFinal()">
                     <label for="horafinal">Hora Final</label>
                 </div>
             </div>
@@ -77,13 +77,13 @@
         </div>
         <div class="row m-0 g-3">
             <div class="col">
-                <a class="btn btn-positive" href="/Expediente/AgregarExpediente/@Model.Cliente.IdClientes" role="button">+ Expediente</a>
+                <a class="btn btn-positive-twice" href="/Expediente/AgregarExpediente/@Model.Cliente.IdClientes" role="button">Registrar Expediente</a>
             </div>
             <div class="col">
                 <div class="input-group d-flex justify-content-end">
-                    <a href="/Servicio/ListarServicios/1" class="btn btn-negative">Cancelar</a>
+                    <a href="/Consulta/ListarConsultas/1" class="btn btn-negative">Cancelar</a>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</button>
+                    <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#exampleModal">Registrar</button>
                 </div>
 
                 <!-- Modal -->
@@ -92,10 +92,11 @@
                         <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
                             <div class="modal-content text-center">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Modificar Servicio</h1>
+                                    <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Registrar Consulta</h1>
                                 </div>
                                 <div class="modal-body">
-                                    ¿Seguro que desea guardar los cambios?
+                                    ¿Seguro que desea registrar la consulta en ese expediente?
+                                    <b><span id="expedienteSeleccionadoModal"></span></b>
                                 </div>
                                 <div class="modal-footer">
                                     <div class="input-group d-flex justify-content-center">
@@ -128,6 +129,41 @@
     window.onload = function () {
         calcularCosto();
     };
+</script>
+
+<script>
+    function validarHoraFinal() {
+        var horaInicial = document.getElementById("horainicial").value;
+        var horaFinal = document.getElementById("horafinal").value;
+
+        var horaInicialDate = new Date("2000-01-01T" + horaInicial);
+        var horaFinalDate = new Date("2000-01-01T" + horaFinal);
+
+        var horaMinima = new Date(horaInicialDate.getTime() + 60 * 60 * 1000);
+
+        if (horaFinalDate < horaMinima) {
+            var nuevaHoraFinal = horaMinima.toTimeString().slice(0, 5);
+            document.getElementById("horafinal").value = nuevaHoraFinal;
+            document.getElementById("horafinal").setAttribute("value", nuevaHoraFinal);
+        }
+
+        calcularCosto();
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectExpediente = document.getElementById('idExpediente');
+        var expedienteSeleccionadoModal = document.getElementById('expedienteSeleccionadoModal');
+
+        selectExpediente.addEventListener('change', function () {
+            expedienteSeleccionadoModal.textContent = selectExpediente.options[selectExpediente.selectedIndex].text;
+        });
+
+        $('#exampleModal').on('show.bs.modal', function () {
+            expedienteSeleccionadoModal.textContent = selectExpediente.options[selectExpediente.selectedIndex].text;
+        });
+    });
 </script>
 
 </html>
