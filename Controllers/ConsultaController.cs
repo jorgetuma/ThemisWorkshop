@@ -69,8 +69,13 @@ namespace ThemisWorkshop.Controllers
             Consulta? consulta = _context.Consulta.Find(id);
             if (consulta != null)
             {
+                Cita? cita = _context.Cita.Find(consulta.IdCita);
                 consulta.Eliminado = true;
                 _context.Consulta.Update(consulta);
+
+                cita.Realizado = false;
+                cita.Fecha = DateTime.SpecifyKind(cita.Fecha, DateTimeKind.Utc);
+                _context.Cita.Update(cita);
                 _context.SaveChanges();
                 return Redirect("/Consulta/ListarConsultas/1");
             }
