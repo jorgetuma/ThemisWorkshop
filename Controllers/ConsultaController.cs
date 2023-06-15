@@ -55,6 +55,8 @@ namespace ThemisWorkshop.Controllers
 
             var cita = _context.Cita.Find(idCita);
             cita.Realizado = true;
+            cita.Fecha = DateTime.SpecifyKind(cita.Fecha,DateTimeKind.Utc);
+            _context.Cita.Update(cita);
             var consulta = new Consulta(idCita,idExpediente,horaini,horafin,costo);
             _context.Consulta.Add(consulta);
             _context.SaveChanges();
