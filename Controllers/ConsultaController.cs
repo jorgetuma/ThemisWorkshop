@@ -64,7 +64,7 @@ namespace ThemisWorkshop.Controllers
         }
 
         [HttpGet]
-        [Route("/consulta/EliminarConsulta/{id}")]
+        [Route("/Consulta/EliminarConsulta/{id}")]
         public ActionResult EliminarConsulta(int id) {
             Consulta? consulta = _context.Consulta.Find(id);
             if (consulta != null)
