@@ -104,12 +104,6 @@
             display: none;
         }
 
-        /* Table */
-
-        .admin-row {
-            color: #FFD700;
-        }
-
         /* Pagination */
 
         .page-link {
@@ -119,6 +113,19 @@
         .page-link:hover {
             background-color: #4b4b4b;
             color: #4b4b4b !important;
+        }
+
+        /* Colors */
+        .red {
+            color: #c4281c;
+        }
+
+        .yellow {
+            color: #f5cd30;
+        }
+
+        .green {
+            color: #4b974b;
         }
     </style>
 </head>
@@ -245,11 +252,6 @@
         var titleElement = document.getElementById("title");
         var titleValue = "@ViewData["Title"]";
         titleElement.innerHTML = titleValue;
-    </script>
-    
-    <script>
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
