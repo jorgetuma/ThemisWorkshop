@@ -53,6 +53,8 @@ namespace ThemisWorkshop.Controllers
             TimeOnly horafin = TimeOnly.Parse(Request.Form["horafinal"].ToString());
             decimal costo = decimal.Parse(Request.Form["costoHidden"].ToString());
 
+            var cita = _context.Cita.Find(idCita);
+            cita.Realizado = true;
             var consulta = new Consulta(idCita,idExpediente,horaini,horafin,costo);
             _context.Consulta.Add(consulta);
             _context.SaveChanges();
