@@ -27,6 +27,8 @@ public partial class ThemisworkshopContext : DbContext
 
     public virtual DbSet<Consulta> Consulta { get; set; }
 
+    public virtual DbSet<Factura> Factura { get; set; }
+
     public virtual DbSet<Tarea> Tarea { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -217,6 +219,29 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.HoraInicial).HasColumnName("horainicial");
             entity.Property(e => e.HoraFinal).HasColumnName("horafinal");
             entity.Property(e => e.Precio).HasColumnName("precio");
+            entity.Property(e => e.Eliminado).HasColumnName("eliminado");
+        });
+
+        modelBuilder.Entity<Factura>(entity =>
+        {
+            entity.HasKey(e => e.IdFactura).HasName("id_factura_pkey");
+            entity.ToTable("factura");
+
+            entity.Property(e => e.IdFactura).HasColumnName("id_factura");
+            entity.Property(e => e.IdServicio).HasColumnName("id_servicio");
+            entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
+            entity.Property(e => e.FechaEmision).HasColumnName("fechaemision");
+            entity.Property(e => e.FechaLimite).HasColumnName("fechalimite");
+            entity.Property(e => e.Costo)
+                .HasColumnType("money")
+                .HasColumnName("costo");
+            entity.Property(e => e.MontoVariable)
+                .HasColumnType("money")
+                .HasColumnName("montovariable");
+            entity.Property(e => e.MontoPorPagar)
+                .HasColumnType("money")
+                .HasColumnName("montoporpagar");
+            entity.Property(e => e.EsCredito).HasColumnName("escredito");
             entity.Property(e => e.Eliminado).HasColumnName("eliminado");
         });
 
