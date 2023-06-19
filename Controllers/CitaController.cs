@@ -147,7 +147,7 @@ namespace ThemisWorkshop.Controllers
 
         private int CantidadCitas()
         {
-            return _context.Clientes.Count();
+            return _context.Cita.Count(e => e.Realizado == false);
         }
 
         private List<Cita> LoadCitas(int numPag)
@@ -178,7 +178,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return _temp.Cita.Count() / cantidadPorpagina;
+            return _temp.Cita.Count(e => e.Realizado == false) / cantidadPorpagina;
         }
     }
 }
