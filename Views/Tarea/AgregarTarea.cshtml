@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    @if (Model == null)
+    @if (Model.EsMod == false)
     {
         <form asp-controller="Tarea" asp-action="AddTarea" method="post">
             <input type="hidden" value="@Model.Usuario.IdUsuario" name="idUsuario">

@@ -28,7 +28,7 @@
             <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" onkeyup="filter_table()">
         </div>
         <div class="col-auto ps-0">
-            <a class="btn btn-positive" href="/Tarea/CAMBIAR/1" role="button">Agendar</a>
+            <a class="btn btn-positive" href="/Tarea/AgregarTarea" role="button">Agendar</a>
         </div>
     </div>
     <div class="row mb-3">
@@ -107,7 +107,7 @@
                                                 </svg>
                                             </a>
                                         <td style="width: 2.5%;">
-                                            <a href="/Tarea/CAMBIAR/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                            <a href="/Tarea/ModificarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
@@ -134,7 +134,7 @@
                                                         <div class="modal-footer">
                                                             <div class="input-group d-flex justify-content-center">
                                                                 <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                                                <a href="/Tarea/CAMBIAR/@tarea.IdTarea" class="btn btn-positive">Aceptar</a>
+                                                                <a href="/Tarea/EliminarTarea/@tarea.IdTarea" class="btn btn-positive">Aceptar</a>
                                                             </div>
                                                         </div>
                                                     </div>
