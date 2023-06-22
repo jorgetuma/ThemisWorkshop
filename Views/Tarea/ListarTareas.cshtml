@@ -1,0 +1,213 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @using ThemisWorkshop.Controllers;
+    @using System.Globalization
+
+    ViewData["Title"] = "Tareas";
+    @model List<Tarea>
+    int cantidadPag = TareaController.ObtenerPaginasFronted(10) + 1;
+
+    List<String> colors = new List<String>();
+    colors.Add("#CC99C9");
+    colors.Add("#9EC1CF");
+    colors.Add("#9EE09E");
+    colors.Add("#FDFD97");
+    colors.Add("#FEB144");
+    colors.Add("#FF6663");
+}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="row my-3">
+        <div class="col">
+            <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" onkeyup="filter_table()">
+        </div>
+        <div class="col-auto ps-0">
+            <a class="btn btn-positive" href="/Tarea/CAMBIAR/1" role="button">Agendar</a>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="row mb-3">
+                <div class="col fw-bold">
+                    @{
+                        DateTime fechaActual = DateTime.Now;
+                        string nombreDia = fechaActual.ToString("dddd", new System.Globalization.CultureInfo("en-US"));
+                    }
+                    <p>Tareas para hoy @nombreDia, @DateTime.Now.Day.ToString("dd") de :</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    @if (Model.Count.Equals(0))
+                    {
+                        <p class="text-center">¡No hay tareas para hoy!</p>
+                    }
+                    else
+                    {
+                        @foreach (var tarea in Model)
+                        {
+                            string fechaToString = tarea.Fecha.ToString();
+                            DateTime fecha = DateTime.Parse(fechaToString);
+
+                            if (fecha.Equals(@DateTime.Now.ToString("yyyy-MM-dd")))
+                            {
+                                
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col fw-bold">
+                    Tareas próximas:
+                </div>
+            </div>
+            <div class="row mb-3">
+                @if (Model.Count.Equals(0))
+                {
+                    <div class="col fw-bold">
+                        <p class="text-center">¡No hay tareas agendadas!</p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var tarea in Model)
+                    {
+                        string fechaStr = tarea.Fecha.ToString();
+                        DateTime fecha = DateTime.Parse(fechaStr);
+
+                        if (!fecha.Equals(@DateTime.Now.ToString("yyyy-MM-dd")))
+                        {
+                            <table class="table table-responsive table-hover" id="table-today">
+                                <tbody>
+                                    <tr id="body">
+                                        <td style="width: 2.5%;">
+                                            @{
+                                                Random random = new Random();
+                                                int index = random.Next(colors.Count);
+                                                string randomColor = colors[index];
+                                            }
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="@randomColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                                <circle cx="8" cy="8" r="8" />
+                                            </svg>
+                                        </td>
+                                        <td colspan="2"><b>@tarea.Fecha.ToShortDateString()</b> @tarea.Hora</td>
+                                        <td class="text-end">@tarea.Asunto</td>
+                                        <td style="width: 2.5%;">
+                                            <a href="/Tarea/CAMBIAR/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Realizar">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                    <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z" />
+                                                    <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                </svg>
+                                            </a>
+                                        <td style="width: 2.5%;">
+                                            <a href="/Tarea/CAMBIAR/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                        <td style="width: 2.5%;">
+                                            <!-- Button trigger modal -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@tarea.IdTarea">
+                                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                            </svg>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modal-@tarea.IdTarea" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                    <div class="modal-content text-center">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Eliminar Tarea</h1>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>¿Seguro que desea eliminar este registro?</p><br>
+                                                            <b>@tarea.Asunto</b>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="input-group d-flex justify-content-center">
+                                                                <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                <a href="/Tarea/CAMBIAR/@tarea.IdTarea" class="btn btn-positive">Aceptar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    @if (cantidadPag > 1)
+    {
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="/Tarea/ListarTareas/1" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @for (int i = 1; i <= cantidadPag; i++)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="/Tarea/ListarTareas/@i">@i</a>
+                            </li>
+                        }
+                        <li class="page-item">
+                            <a class="page-link" href="/Tarea/ListarTareas/@cantidadPag" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    }
+    <script>
+        function filter_table() {
+            var input, filter, table, tr, td, i, j, visible;
+
+            input = document.getElementById("search_filter");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                visible = false;
+
+                if (tr[i].getElementsByTagName("th").length == 0) {
+                    td = tr[i].getElementsByTagName("td");
+
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            visible = true;
+                        }
+                    }
+                } else {
+                    visible = true;
+                }
+
+                if (visible) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

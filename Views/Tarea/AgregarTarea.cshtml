@@ -2,15 +2,15 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Agregar/Modificar Cita";
-    @model CitaViewModel
-    @if (Model.EsMod == false) // Si no hay nada, significa que esta agregando una Cita
+    ViewData["Title"] = "Agregar/Modificar Tarea";
+    @model TareaViewModel
+    @if (Model.EsMod == false) // Si no hay nada, significa que esta agregando una Tarea
     {
-        ViewData["Title"] = "Agendar Cita";
+        ViewData["Title"] = "Agendar Tarea";
     }
-    else // Si hay algo, significa que esta modificando una Cita
+    else // Si hay algo, significa que esta modificando una Tarea
     {
-        ViewData["Title"] = "Modificar Cita";
+        ViewData["Title"] = "Modificar Tarea";
     }
 }
 <html>
@@ -20,13 +20,13 @@
 </head>
 
 <body>
-    @if (Model.EsMod == false)
+    @if (Model == null)
     {
-        <form asp-controller="Cita" asp-action="AddCita" method="post">
-            <input type="hidden" value="@Model.Cliente.IdClientes" name="idCliente">
+        <form asp-controller="Tarea" asp-action="AddTarea" method="post">
+            <input type="hidden" value="@Model.Usuario.IdUsuario" name="idUsuario">
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Detalles de la Cita de @Model.Cliente.Nombre @Model.Cliente.Apellido:
+                    Detalles de la Tarea:
                 </div>
             </div>
             <div class="row m-0 g-3">
@@ -38,22 +38,14 @@
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="time" class="form-control" id="horainicial" placeholder="horainicial" value="@DateTime.Now.ToString("HH:mm")" name="horainicial" timezone="-240">
-                        <label for="horainicial">Hora Inicial</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="lugar" placeholder="lugar" value="" name="lugar" maxlength="50">
-                        <label for="lugar">Lugar</label>
+                        <input required type="time" class="form-control" id="hora" placeholder="hora" value="@DateTime.Now.ToString("HH:mm")" name="hora" timezone="-240">
+                        <label for="hora">Hora</label>
                     </div>
                 </div>
             </div>
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Información de la Cita:
+                    Información de la Tarea:
                 </div>
             </div>
             <div class="row m-0 g-3">
@@ -75,7 +67,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="input-group d-flex justify-content-end">
-                        <a href="/Cita/ListarCitas/1" class="btn btn-negative">Cancelar</a>
+                        <a href="/Tarea/ListarTareas/1" class="btn btn-negative">Cancelar</a>
                         <button type="submit" class="btn btn-positive">Agendar</button>
                     </div>
                 </div>
@@ -84,19 +76,19 @@
     }
     else
     {
-        <form asp-controller="Cita" asp-action="ModCita" method="post">
-            <input type="hidden" value="@Model.Cita.IdCita" name="id">
+        <form asp-controller="Tarea" asp-action="ModTarea" method="post">
+            <input type="hidden" value="@Model.Tarea.IdTarea" name="idTarea">
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Detalles de la Cita de @Model.Cliente.Nombre @Model.Cliente.Apellido:
+                    Detalles de la Tarea:
                 </div>
             </div>
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
                         @{
-                            string fechaStr = Model.Cita.Fecha.ToString();
-                            DateTime fecha = DateTime.Parse(fechaStr);
+                            string fechaString = Model.Tarea.Fecha.ToString();
+                            DateTime fecha = DateTime.Parse(fechaString);
                         }
                         <input required type="date" class="form-control" id="fecha" placeholder="fecha" value="@fecha.ToString("yyyy-MM-dd")" name="fecha" timezone="-240">
                         <label for="fecha">Fecha</label>
@@ -105,31 +97,23 @@
                 <div class="col">
                     <div class="form-floating">
                         @{
-                            string horaInicialStr = Model.Cita.HoraInicial.ToString();
-                            DateTime horainicial = DateTime.Parse(horaInicialStr);
+                            string horaString = Model.Tarea.Hora.ToString();
+                            DateTime hora = DateTime.Parse(horaString);
                         }
-                        <input required type="time" class="form-control" id="horainicial" placeholder="horainicial" value="@horainicial.ToString("HH:mm")" name="horainicial" timezone="-240">
-                        <label for="horainicial">Hora Inicial</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="lugar" placeholder="lugar" value="@Model.Cita.Lugar" name="lugar" maxlength="50">
-                        <label for="lugar">Lugar</label>
+                        <input required type="time" class="form-control" id="hora" placeholder="hora" value="@hora.ToString("HH:mm")" name="hora" timezone="-240">
+                        <label for="hora">Hora</label>
                     </div>
                 </div>
             </div>
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Información de la Cita:
+                    Información de la Tarea:
                 </div>
             </div>
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="asunto" placeholder="asunto" value="@Model.Cita.Asunto" name="asunto" maxlength="50">
+                        <input required type="text" class="form-control" id="asunto" placeholder="asunto" value="@Model.Tarea.Asunto" name="asunto" maxlength="50">
                         <label for="asunto">Asunto</label>
                     </div>
                 </div>
@@ -137,7 +121,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <textarea class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Cita.Descripcion" name="descripcion" style="height: 100px" maxlength="100">@Model.Cita.Descripcion</textarea>
+                        <textarea class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Tarea.Descripcion" name="descripcion" style="height: 100px" maxlength="100">@Model.Tarea.Descripcion</textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>
@@ -145,21 +129,21 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="input-group d-flex justify-content-end">
-                        <a href="/Cita/ListarCitas/1" class="btn btn-negative">Cancelar</a>
+                        <a href="/Tarea/ListarTareas/1" class="btn btn-negative">Cancelar</a>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</button>
+                        <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#modal">Modificar</button>
                     </div>
 
                     <!-- Modal -->
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
                                 <div class="modal-content text-center">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Modificar Cita</h1>
+                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Modificar Tarea</h1>
                                     </div>
                                     <div class="modal-body">
-                                        ¿Seguro que desea guardar los cambios?
+                                        <p>¿Seguro que desea guardar los cambios?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="input-group d-flex justify-content-center">

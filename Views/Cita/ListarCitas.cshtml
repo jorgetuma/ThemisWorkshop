@@ -37,14 +37,7 @@
                     @foreach (var cita in Model)
                     {
                         <tr id="head">
-                            @if (cita.HoraFinal.ToString().Trim().Equals("12:00 AM", StringComparison.OrdinalIgnoreCase))
-                            {
-                                <td colspan="2"><b>@cita.Fecha.ToShortDateString()</b> @cita.HoraInicial</td>
-                            }
-                            else
-                            {
-                                <td colspan="2"><b>@cita.Fecha.ToShortDateString()</b> @cita.HoraInicial - @cita.HoraFinal</td>
-                            }
+                            <td colspan="2"><b>@cita.Fecha.ToShortDateString()</b> @cita.HoraInicial</td>
                             <td colspan="4" class="text-end">@cita.Lugar</td>
                         </tr>
                         <tr id="body">
