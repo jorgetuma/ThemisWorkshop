@@ -104,7 +104,24 @@ namespace ThemisWorkshop.Controllers
 
         [HttpGet]
         [Route("/Tarea/EliminarTarea/{id}")]
-        public ActionResult EliminarTarea(int id) 
+        public ActionResult EliminarTarea(int id)
+        {
+            Tarea? tarea = _context.Tarea.Find(id);
+            if (tarea != null)
+            {
+                _context.Tarea.Remove(tarea);
+                _context.SaveChanges();
+                return Redirect("/Tarea/ListarTareas/1");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        [HttpGet]
+        [Route("/Tarea/RealizarTarea/{id}")]
+        public ActionResult RealizarTarea(int id) 
         {
             Tarea? tarea = _context.Tarea.Find(id);
             if (tarea != null)
@@ -129,7 +146,7 @@ namespace ThemisWorkshop.Controllers
 
         private int CantidadTareas()
         {
-            return _context.Tarea.Count(e => e.Realizado == false);
+            return _context.Tarea.Count();
         }
 
         private List<Tarea> LoadTareas(int numPag)
@@ -149,7 +166,6 @@ namespace ThemisWorkshop.Controllers
             }
 
             List<Tarea> tareas = _context.Tarea
-                .Where(e => e.Realizado == false)
                 .OrderBy(e => e.IdTarea)
                 .Skip(indIni)
                 .Take(max)
@@ -160,7 +176,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return _temp.Tarea.Count(e => e.Realizado == false) / cantidadPorpagina;
+            return _temp.Tarea.Count() / cantidadPorpagina;
         }
     }
 }
