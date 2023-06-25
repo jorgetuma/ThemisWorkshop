@@ -25,7 +25,7 @@
         <form asp-controller="Servicio" asp-action="AddServicio" method="post">
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Información del Servicio:
+                    <p class="m-0">Información del Servicio:</p>
                 </div>
             </div>
             <div class="row m-0 g-3">
@@ -46,7 +46,7 @@
             </div>
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Valuación del Servicio:
+                    <p class="m-0">Valuación del Servicio:</p>
                 </div>
             </div>
             <div class="row m-0 g-3">
@@ -73,7 +73,7 @@
             <input type="hidden" value="@Model.IdServicio" name="id">
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Información del Servicio:
+                    <p class="m-0">Información del Servicio:</p>
                 </div>
             </div>
             <div class="row m-0 g-3">
@@ -94,7 +94,7 @@
             </div>
             <div class="row m-0 g-3">
                 <div class="col-auto fw-bold">
-                    Valuación del Servicio:
+                    <p class="m-0">Valuación del Servicio:</p>
                 </div>
             </div>
             <div class="row m-0 g-3">
@@ -110,19 +110,19 @@
                     <div class="input-group d-flex justify-content-end">
                         <a href="/Servicio/ListarServicios/1" class="btn btn-negative">Cancelar</a>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</button>
+                        <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#modal">Modificar</button>
                     </div>
 
                     <!-- Modal -->
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
                                 <div class="modal-content text-center">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Modificar Servicio</h1>
+                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Modificar Servicio</h1>
                                     </div>
                                     <div class="modal-body">
-                                        ¿Seguro que desea guardar los cambios?
+                                        <p class="m-0">¿Seguro que desea guardar los cambios?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <div class="input-group d-flex justify-content-center">

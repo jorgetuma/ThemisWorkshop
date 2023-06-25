@@ -6,6 +6,8 @@
     ViewData["Title"] = "Expedientes";
     @model List<Expediente> 
     int cantidadPag = ExpedienteController.ObtenerPaginasFronted(10) + 1;
+
+    List<Servicio> servicios = ExpedienteController._temp.Servicio.ToList();
 }
 <html>
 <head>
@@ -111,6 +113,30 @@
                                 </td>
                             }
                         </tr>
+                        {
+                            var misServicios = @ExpedienteController._temp.Detalleservicio.Where(e => e.IdExpediente == expediente.IdExpediente).ToList();
+
+                            foreach(var servicio in servicios)
+                            {
+                                foreach (var miservicio in misServicios)
+                                {
+                                    if (servicio.IdServicio == miservicio.IdServicio)
+                                    {
+                                        <tr class="right-row">
+                                            <td colspan="4">@servicio.Nombre</td>
+                                            <td>
+                                                <a href="/Factura/AgregarFactura/@expediente.IdExpediente/@servicio.IdServicio/-1" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Facturar">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-cash" viewBox="0 0 16 16">
+                                                        <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                                                        <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
                     }
                 </tbody>
             </table>

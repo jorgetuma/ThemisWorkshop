@@ -53,7 +53,7 @@
 
         /* Navbar's setting */
 
-        .bg-black-darker {
+        .bg-black-dark {
             background-color: #323232;
             color: #FFF;
         }
@@ -68,34 +68,58 @@
             color: #FFF !important;
         }
 
-        .hover-bg-black-light:hover {
+        .hover-to-bg-black-light:hover {
             background-color: #FFF !important;
             color: #323232 !important;
             font-weight: bold;
         }
 
-        .navbar-col {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            z-index: 64
+        .navbar-height-3 {
+            height: 3rem;
         }
 
-        .navbar-row {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            z-index: 32
+        .navbar-height-4 {
+            height: 4rem;
         }
 
-        /* Main content */
+        .fixed-navbar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+        }
 
-        .content {
-            margin-top: 4rem;
-            margin-left: 16.666666%;
-            z-index: 16
+        .navbar-shown {
+            width: 12rem;
+        }
+
+        .navbar-hidden {
+            width: 4rem;
+        }
+            
+        .fixed-topbar-shown {
+            position: fixed;
+            top: 0;
+            padding-left: 12rem;
+        }
+
+        .fixed-topbar-hidden {
+            position: fixed;
+            top: 0;
+            padding-left: 4rem;
+        }
+
+        .content-shown {
+            padding-left: 12rem;
+            padding-top: 4rem;
+        }
+
+        .content-hidden {
+            padding-left: 4rem;
+            padding-top: 4rem;
+        }
+
+        .hidden {
+            display: none;
         }
 
          /* Modal */
@@ -128,117 +152,164 @@
         .green {
             color: #4b974b !important;
         }
+
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-2 bg-black-darker navbar-col">
-                <div class="row align-content-center" style="height: 4rem;">
-                    <a href="/Home" class="col text-center">
-                        <span class="h5 mb-0">Themis Workshop</span>
-                    </a>
-                </div>
-                <div class="row">
-                    <div class="col d-flex flex-column">
-                        <div class="row">
-                            <a href="/Expediente/ListarExpedientes/1" class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
-                                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z" />
-                                    <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z" />
-                                </svg>
-                                <span class="ms-3">Expedientes</span>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <a href="/Calendario" class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
-                                    <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z" />
-                                </svg>
-                                <span class="ms-3">Calendario</span>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <a href="/Cita/ListarCitas/1" class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-bookmark-fill" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M6 1h6v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8V1z" />
-                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
-                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
-                                </svg>
-                                <span class="ms-3">Citas</span>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <a href="/Tarea/ListarTareas/1" class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" />
-                                    <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z" />
-                                    <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" />
-                                </svg>
-                                <span class="ms-3">Tareas</span>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <a href="/Consulta/ListarConsultas/1" class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar2-check-fill" viewBox="0 0 16 16">
-                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zm-2.6 5.854a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
-                                </svg>
-                                <span class="ms-3">Consultas</span>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <a href="/Cliente/ListarClientes/1" class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                                </svg>
-                                <span class="ms-3">Clientes</span>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <div class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
-                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
-                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
-                                </svg>
-                                <span class="ms-3">Facturas</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <a href="/Empleado/ListarEmpleados/1" class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
-                                </svg>
-                                <span class="ms-3">Empleados</span>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <a href="/Servicio/ListarServicios/1" class="col d-flex align-items-center hover-bg-black-light ms-2" style="height: 3rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-collection-fill" viewBox="0 0 16 16">
-                                    <path d="M0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zM2 3a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11A.5.5 0 0 0 2 3zm2-2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7A.5.5 0 0 0 4 1z" />
-                                </svg>
-                                <span class="ms-3">Servicios</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col content">
-                <div class="row align-content-center bg-black-light fixed-top" style="height: 4rem;">
-                    <div class="col-2">
-                        <!-- Navbar space -->
-                    </div>
+            <div class="col fixed-topbar-shown" id="topbar">
+                <div class="row navbar-height-4 ps-3 align-items-center bg-black-light">
                     <div class="col">
-                        <span class="h1 ms-3" id="title">HOME_TEXT</span>
+                        <div id="title">
+                            HOME_TEXT
+                        </div>
                     </div>
-                    <div class="col-2 d-flex align-items-center justify-content-end me-3">
-                        <span class="me-3">Username</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#FFF" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <div class="col-auto">
+                        _USERNAME
+                    </div>
+                    <div class="col-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                         </svg>
                     </div>
                 </div>
-                <div class="row">
+            </div>
+        </div>
+        <div class="row">
+            <div class="navbar-shown fixed-navbar bg-black-dark" id="navbar">
+                <div class="row navbar-height-4 align-items-center">
+                    <div class="col text-center">
+                        <h5 class="m-0" id="main_title" onclick="toggle_navbar()">Themis Workshop</h5>
+                    </div>
+                </div>
+                <!-- Expedientes -->
+                <a href="/Expediente/ListarExpedientes/1">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Expedientes
+                        </div>
+                    </div>
+                </a>
+                <!-- Calendario -->
+                <a href="/Calendario">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar4-week" viewBox="0 0 16 16">
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z" />
+                                <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Calendario
+                        </div>
+                    </div>
+                </a>
+                <!-- Citas -->
+                <a href="/Cita/ListarCitas/1">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z" />
+                                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Citas
+                        </div>
+                    </div>
+                </a>
+                <!-- Tareas -->
+                <a href="/Tarea/ListarTareas/1">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Tareas
+                        </div>
+                    </div>
+                </a>
+                <!-- Consultas -->
+                <a href="/Consulta/ListarConsultas/1">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+                                <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Consultas
+                        </div>
+                    </div>
+                </a>
+                <!-- Facturas -->
+                <a href="">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-receipt" viewBox="0 0 16 16">
+                                <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z" />
+                                <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Facturas
+                        </div>
+                    </div>
+                </a>
+                <!-- Clientes -->
+                <a href="/Cliente/ListarClientes/1">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Clientes
+                        </div>
+                    </div>
+                </a>
+                <!-- Empleados -->
+                <a href="/Empleado/ListarEmpleados/1">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Empleados
+                        </div>
+                    </div>
+                </a>
+                <!-- Servicios -->
+                <a href="/Servicio/ListarServicios/1">
+                    <div class="row navbar-height-3 align-items-center hover-to-bg-black-light" id="icon">
+                        <div class="col-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                                <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z" />
+                            </svg>
+                        </div>
+                        <div class="col ps-0" id="name">
+                            Servicios
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <div class="row content-shown" id="content">
                     <div class="col">
                         <div class="container-flex">
                             @RenderBody()
@@ -253,6 +324,111 @@
         var titleElement = document.getElementById("title");
         var titleValue = "@ViewData["Title"]";
         titleElement.innerHTML = titleValue;
+    </script>
+
+    <script>
+        function toggle_navbar() {
+            var main_text = document.getElementById("main_title");
+
+            if (main_text.textContent == "Themis Workshop") {
+                main_text.textContent = "T W";
+            } else {
+                main_text.textContent = "Themis Workshop";
+            }
+
+            const names = document.querySelectorAll('[id="name"]');
+            for (var i = 0; i < names.length; i++) {
+                names[i].classList.toggle("hidden");
+            }
+
+            const icons = document.querySelectorAll('[id="icon"]');
+            for (var i = 0; i < icons.length; i++) {
+                icons[i].classList.toggle("justify-content-center");
+            }
+
+            var navbar = document.getElementById("navbar");
+            navbar.classList.toggle("navbar-shown");
+            navbar.classList.toggle("navbar-hidden");
+
+            var topbar = document.getElementById("topbar");
+            topbar.classList.toggle("fixed-topbar-shown");
+            topbar.classList.toggle("fixed-topbar-hidden");
+
+            var content = document.getElementById("content");
+            content.classList.toggle("content-shown");
+            content.classList.toggle("content-hidden");
+
+            var isNavbarHidden = navbar.classList.contains("navbar-hidden");
+            localStorage.setItem("navbarState", isNavbarHidden);
+
+            var isTopbarHidden = topbar.classList.contains("fixed-topbar-hidden");
+            localStorage.setItem("topbarState", isTopbarHidden);
+
+            var isContentHidden = content.classList.contains("content-hidden");
+            localStorage.setItem("contentState", isContentHidden);
+
+            var isMainTextShort = main_text.textContent === "T W";
+            localStorage.setItem("mainTextState", isMainTextShort);
+
+            var namesHidden = Array.from(names).map(name => name.classList.contains("hidden"));
+            localStorage.setItem("namesState", JSON.stringify(namesHidden));
+
+            var iconsCentered = Array.from(icons).map(icon => icon.classList.contains("justify-content-center"));
+            localStorage.setItem("iconsState", JSON.stringify(iconsCentered));
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var navbarState = localStorage.getItem("navbarState");
+            if (navbarState === "true") {
+                document.getElementById("navbar").classList.add("navbar-hidden");
+                document.getElementById("navbar").classList.remove("navbar-shown");
+            }
+
+            var topbarState = localStorage.getItem("topbarState");
+            if (topbarState === "true") {
+                document.getElementById("topbar").classList.add("fixed-topbar-hidden");
+                document.getElementById("topbar").classList.remove("fixed-topbar-shown");
+            }
+
+            var contentState = localStorage.getItem("contentState");
+            if (contentState === "true") {
+                document.getElementById("content").classList.add("content-hidden");
+                document.getElementById("content").classList.remove("content-shown");
+            }
+
+            var mainTextState = localStorage.getItem("mainTextState");
+            if (mainTextState === "true") {
+                document.getElementById("main_title").textContent = "T W";
+            } else {
+                document.getElementById("main_title").textContent = "Themis Workshop";
+            }
+
+            var namesState = localStorage.getItem("namesState");
+            if (namesState) {
+                namesState = JSON.parse(namesState);
+                var names = document.querySelectorAll('[id="name"]');
+                for (var i = 0; i < names.length; i++) {
+                    if (namesState[i] === true) {
+                        names[i].classList.add("hidden");
+                    } else {
+                        names[i].classList.remove("hidden");
+                    }
+                }
+            }
+
+            var iconsState = localStorage.getItem("iconsState");
+            if (iconsState) {
+                iconsState = JSON.parse(iconsState);
+                var icons = document.querySelectorAll('[id="icon"]');
+                for (var i = 0; i < icons.length; i++) {
+                    if (iconsState[i] === true) {
+                        icons[i].classList.add("justify-content-center");
+                    } else {
+                        icons[i].classList.remove("justify-content-center");
+                    }
+                }
+            }
+        });
     </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
