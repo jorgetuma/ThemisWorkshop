@@ -6,8 +6,24 @@
     ViewData["Title"] = "Agregar/Modificar Factura";
     @model FacturaViewModel
     ViewData["Title"] = "Registrar Factura";
+    var cliente = 0;
 
-    List<Expediente> expedientes = FacturaController._temp.Expediente.ToList();
+    if (Model.IdConsulta == -1)
+    {
+        List<Expediente> expedientes = FacturaController._temp.Expediente.ToList();
+        var expediente = expedientes.Where(e => e.IdExpediente == Model.IdExpediente).FirstOrDefault();
+        cliente = expediente.IdCliente;
+    }
+    else
+    {
+        List<Consulta> consultas = FacturaController._temp.Consulta.ToList();
+        var consulta = consultas.Where(e => e.IdConsulta == Model.IdConsulta).FirstOrDefault();
+
+        List<Cita> citas = FacturaController._temp.Cita.ToList();
+
+        var cita = citas.Where(e => e.IdCita == consulta.IdCita).FirstOrDefault();
+        cliente = cita.IdCliente;
+    }
 }
 <html>
 <head>
@@ -18,10 +34,6 @@
 <body>
     <form asp-controller="Factura" asp-action="AddFactura" method="post">
         <input type="hidden" value="@Model.IdExpediente" name="idExpediente">
-        @{
-            var expediente = expedientes.Where(e => e.IdExpediente == Model.IdExpediente).FirstOrDefault();
-            var cliente = expediente.IdCliente;
-        }
         <input type="hidden" value="@cliente" name="idCliente">
         <div class="row m-0 g-3">
             <div class="col-auto fw-bold">
@@ -75,7 +87,7 @@
                 <div class="input-group d-flex justify-content-end">
                     @if (Model.IdConsulta == -1)
                     {
-                        <a href="/Expediente/ListarExpediente/1" class="btn btn-negative">Cancelar</a>
+                        <a href="/Expediente/ListarExpedientes/1" class="btn btn-negative">Cancelar</a>
                     }
                     else
                     {
