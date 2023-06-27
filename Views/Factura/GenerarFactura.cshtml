@@ -2,9 +2,12 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    @using ThemisWorkshop.Controllers;
     ViewData["Title"] = "Agregar/Modificar Factura";
     @model FacturaViewModel
     ViewData["Title"] = "Registrar Factura";
+
+    List<Expediente> expedientes = FacturaController._temp.Expediente.ToList();
 }
 <html>
 <head>
@@ -14,7 +17,12 @@
 
 <body>
     <form asp-controller="Factura" asp-action="AddFactura" method="post">
-         <input type="hidden" value="@Model.IdExpediente" name="idExpediente">
+        <input type="hidden" value="@Model.IdExpediente" name="idExpediente">
+        @{
+            var expediente = expedientes.Where(e => e.IdExpediente == Model.IdExpediente).FirstOrDefault();
+            var cliente = expediente.IdCliente;
+        }
+        <input type="hidden" value="@cliente" name="idCliente">
         <div class="row m-0 g-3">
             <div class="col-auto fw-bold">
                 <p class="m-0">Información General:</p>
