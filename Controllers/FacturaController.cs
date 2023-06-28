@@ -95,6 +95,22 @@ namespace ThemisWorkshop.Controllers
         }
 
         [HttpGet]
+        [Route("/Factura/SaldarFactura/{id}")]
+        public ActionResult SaldarFactura(int id) 
+        { 
+            Factura? factura = _context.Factura.Find(id);
+            if (factura != null)
+            {
+                FacturaViewModel model = new FacturaViewModel(-1,-1,-1,factura);
+                return View("SaldarFactura",model);
+            }
+            else 
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        [HttpGet]
         [Route("/Factura/EliminarFactura/{id}")]
         public ActionResult EliminarFactura(int id) 
         {
