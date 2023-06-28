@@ -33,7 +33,9 @@
 
 <body>
     <form asp-controller="Factura" asp-action="AddFactura" method="post">
+        <input type="hidden" value="@Model.IdServicio" name="idServicio">
         <input type="hidden" value="@Model.IdExpediente" name="idExpediente">
+        <input type="hidden" value="@Model.IdConsulta" name="idConsulta">
         <input type="hidden" value="@cliente" name="idCliente">
         <div class="row m-0 g-3">
             <div class="col-auto fw-bold">
@@ -75,8 +77,8 @@
             <div class="col">
                 <div class="form-floating">
                     <select class="form-select" id="esCredito" name="esCredito">
-                        <option selected value="0">Contado</option>
-                        <option value="1">Crédito</option>
+                        <option selected value="false">Contado</option>
+                        <option value="true">Crédito</option>
                     </select>
                     <label for="esCredito">Método de Pago</label>
                 </div>

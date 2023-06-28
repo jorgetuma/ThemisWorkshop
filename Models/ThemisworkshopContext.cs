@@ -183,6 +183,7 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.IdExpediente).HasColumnName("id_expediente");
             entity.Property(e => e.IdServicio).HasColumnName("id_servicio");
             entity.Property(e => e.Eliminado).HasColumnName("eliminado");
+            entity.Property(e => e.Facturado).HasColumnName("facturado");
         });
 
         modelBuilder.Entity<Cita>(entity =>
@@ -197,7 +198,7 @@ public partial class ThemisworkshopContext : DbContext
                 .HasMaxLength(60)
                 .HasColumnName("asunto");
             entity.Property(e => e.Descripcion)
-                .HasMaxLength(100)
+                .HasMaxLength(200)
                 .HasColumnName("descripcion");
             entity.Property(e => e.Lugar)
                 .HasMaxLength(60)
@@ -220,6 +221,7 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.HoraFinal).HasColumnName("horafinal");
             entity.Property(e => e.Precio).HasColumnName("precio");
             entity.Property(e => e.Eliminado).HasColumnName("eliminado");
+            entity.Property(e => e.Facturado).HasColumnName("facturado");
         });
 
         modelBuilder.Entity<Factura>(entity =>

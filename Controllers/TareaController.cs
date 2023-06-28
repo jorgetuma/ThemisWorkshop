@@ -125,8 +125,14 @@ namespace ThemisWorkshop.Controllers
         {
             Tarea? tarea = _context.Tarea.Find(id);
             if (tarea != null)
-            { 
-                tarea.Realizado = true;
+            {
+                if (tarea.Realizado == false)
+                {
+                    tarea.Realizado = true;
+                }
+                else { 
+                    tarea.Realizado = false;
+                }
                 tarea.Fecha = DateTime.SpecifyKind(tarea.Fecha,DateTimeKind.Utc);
                 _context.Tarea.Update(tarea);
                 _context.SaveChanges();

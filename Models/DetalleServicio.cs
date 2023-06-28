@@ -10,10 +10,13 @@ public partial class Detalleservicio
 
     public bool Eliminado { get; set; }
 
+    public bool Facturado { get; set; }
+
     public Detalleservicio(int idServicio, int idExpediente) 
     {
      this.IdServicio = idServicio;
     this.IdExpediente = idExpediente;
     this.Eliminado = false;
+    this.Facturado = false;
     }
 }

@@ -144,13 +144,20 @@ namespace ThemisWorkshop.Controllers
             Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);
             if (cliente != null)
             {
-                cliente.Eliminado = true;
-                cliente.Fechanacimiento = DateTime.SpecifyKind(cliente.Fechanacimiento, DateTimeKind.Utc);
-                _context.Update(cliente);
-                _context.SaveChanges();
-                return Redirect("/Cliente/ListarClientes/1");
+                if (cliente.Credito <= 0)
+                {
+                    cliente.Eliminado = true;
+                    cliente.Fechanacimiento = DateTime.SpecifyKind(cliente.Fechanacimiento, DateTimeKind.Utc);
+                    _context.Update(cliente);
+                    _context.SaveChanges();
+                    return Redirect("/Cliente/ListarClientes/1");
+                }
+                else 
+                {
+                  return RedirectToAction("CreditoPendiente");    
+                }
             }
-            else
+            else 
             {
                 // Redirigir a una vista que liste todos los clientes
                 return RedirectToAction("Error");
@@ -162,6 +169,12 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult Error() { 
         return View("Error");
+        }
+
+        [HttpGet]
+        public ActionResult CreditoPendiente() 
+        { 
+            return View("CreditoPendiente");
         }
 
         private int CantidadClientes() { 

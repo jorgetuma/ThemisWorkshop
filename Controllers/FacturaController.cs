@@ -35,6 +35,65 @@ namespace ThemisWorkshop.Controllers
             return View("GenerarFactura",model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddFactura() 
+        {
+            int idServicio = int.Parse(Request.Form["idServicio"].ToString());
+            int idConsulta = int.Parse(Request.Form["idConsulta"].ToString());
+            int idExpediente = int.Parse(Request.Form["idExpediente"].ToString());
+            int idCliente = int.Parse(Request.Form["IdCliente"].ToString());
+            Cliente? cliente = _context.Clientes.FirstOrDefault(c => c.IdClientes == idCliente);
+            Servicio? servicio = _context.Servicio.Find(idServicio);
+            DateTime  fechaEmision = DateTime.Today;
+            DateTime fechaEmisionUtc = DateTime.SpecifyKind(fechaEmision,DateTimeKind.Utc);
+            fechaEmisionUtc = fechaEmisionUtc.AddDays(1);
+            DateTime fechaLimite = DateTime.Parse(Request.Form["fechalimite"].ToString());
+            DateTime fechaLimiteUtc = DateTime.SpecifyKind(fechaLimite, DateTimeKind.Utc);
+            fechaLimiteUtc = fechaLimiteUtc.AddDays(1);
+            bool esCredito = bool.Parse(Request.Form["esCredito"].ToString());
+            decimal costo = 0;
+            decimal montoVariable = decimal.Parse(Request.Form["montovariable"].ToString());
+            decimal montoPorPagar = 0;
+
+            if (idExpediente != -1)
+            {
+                costo = servicio.Preciofijo + montoVariable;
+                if (esCredito)
+                {
+                    montoPorPagar = servicio.Preciofijo + montoVariable;
+                    cliente.Credito += montoPorPagar;
+                }
+                Detalleservicio? ds = _context.Detalleservicio.Where(e => e.IdServicio == idServicio && e.IdExpediente == idExpediente).First();
+                if (ds.Facturado == true) { 
+                return RedirectToAction("ServicioFacturado");
+                }
+                ds.Facturado = true;
+            }
+
+            if (idConsulta != -1) {
+                Consulta? consulta = _context.Consulta.Find(idConsulta);
+                costo = consulta.Precio + montoVariable;
+                if (esCredito)
+                {
+                    montoPorPagar = consulta.Precio + montoVariable;
+                    cliente.Credito += montoPorPagar;
+                }
+                if (consulta.Facturado == true)
+                {
+                    return RedirectToAction("ServicioFacturado");
+                }
+                consulta.Facturado = true;
+            }
+
+            Factura factura = new Factura(idServicio, idCliente, costo, montoVariable, fechaEmisionUtc, fechaLimiteUtc, esCredito);
+            factura.MontoPorPagar = montoPorPagar;
+
+            _context.Factura.Add(factura);
+            _context.SaveChanges();
+            return Redirect("/Factura/ListarFacturas/1"); 
+        }
+
         [HttpGet]
         [Route("/Factura/EliminarFactura/{id}")]
         public ActionResult EliminarFactura(int id) 
@@ -42,12 +101,17 @@ namespace ThemisWorkshop.Controllers
             Factura? factura = _context.Factura.Find(id);
             if (factura != null)
             {
-                factura.Eliminado = true;
-                factura.FechaEmision = DateTime.SpecifyKind(factura.FechaEmision,DateTimeKind.Utc);
-                factura.FechaLimite = DateTime.SpecifyKind(factura.FechaLimite, DateTimeKind.Utc);
-                _context.Factura.Update(factura);
-                _context.SaveChanges();
-                return RedirectToAction("Factura/ListarFacturas/1");
+                if (factura.MontoPorPagar <= 0)
+                {
+                    factura.Eliminado = true;
+                    factura.FechaEmision = DateTime.SpecifyKind(factura.FechaEmision, DateTimeKind.Utc);
+                    factura.FechaLimite = DateTime.SpecifyKind(factura.FechaLimite, DateTimeKind.Utc);
+                    _context.Factura.Update(factura);
+                    _context.SaveChanges();
+                    return RedirectToAction("Factura/ListarFacturas/1");
+                }else {
+                    return RedirectToAction("FacturaSinPagar");   
+                 }
             }
             else
             { 
@@ -59,6 +123,18 @@ namespace ThemisWorkshop.Controllers
         public ActionResult Error()
         { 
             return View("Error");
+        }
+
+        [HttpGet]
+        public ActionResult ServicioFacturado() 
+        {
+            return View("ServicioFacturado");
+        }
+
+        [HttpGet]
+        public ActionResult FacturaSinPagar() 
+        {
+            return View("FacturaSinPagar");
         }
 
         private int CantidadFacturas()

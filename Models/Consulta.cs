@@ -16,6 +16,8 @@
 
         public bool Eliminado { get; set; }
 
+        public bool Facturado { get; set; }
+
         public Consulta(int idCita, int idExpediente, TimeOnly horaInicial, TimeOnly horaFinal,decimal precio) 
         { 
             this.IdCita = idCita;
@@ -24,6 +26,7 @@
             this.HoraFinal = horaFinal;
             this.Precio = precio;
             this.Eliminado = false;
+            this.Facturado = false;
         }
     }
 }
