@@ -103,7 +103,7 @@
                                                                 <td>@servicio.Nombre</td>
                                                                 <td style="width: 2.5%">
                                                                 @{
-                                                                    if (miservicio.Facturado == false)
+                                                                    if (miservicio.Facturado == false && servicio.Nombre != "Consulta")
                                                                     {
                                                                         <a href="/Factura/GenerarFactura/@servicio.IdServicio&-1&@expediente.IdExpediente" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Facturar">
                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-receipt" viewBox="0 0 16 16">

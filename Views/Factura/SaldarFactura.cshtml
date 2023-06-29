@@ -13,8 +13,8 @@
 </head>
 
 <body>
-    <form asp-controller="Factura" asp-action="Factura" method="post">
-        <input type="hidden" value="@Model.Factura.IdFactura" name="id_factura">
+    <form asp-controller="Factura" asp-action="ModFactura" method="post">
+        <input type="hidden" value="@Model.Factura.IdFactura" name="idFactura">
         <div class="row m-0 g-3">
             <div class="col-auto fw-bold">
                 <p class="m-0">Información del Abono (Monto actual: @monto):</p>
@@ -45,7 +45,7 @@
                                     <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Modificar Servicio</h1>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="m-0">¿Seguro que desea abonar CANTIDAD?</p>
+                                    <p class="m-0">¿Seguro que desea abonar?</p>
                                 </div>
                                 <div class="modal-footer">
                                     <div class="input-group d-flex justify-content-center">
