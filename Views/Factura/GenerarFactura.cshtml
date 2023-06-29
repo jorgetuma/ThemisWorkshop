@@ -24,6 +24,10 @@
         var cita = citas.Where(e => e.IdCita == consulta.IdCita).FirstOrDefault();
         cliente = cita.IdCliente;
     }
+
+    List<Servicio> servicios = FacturaController._temp.Servicio.ToList();
+    var servicio = servicios.Where(e => e.IdServicio == Model.IdServicio).FirstOrDefault();
+    var precioFijo = servicio.Preciofijo;
 }
 <html>
 <head>
@@ -32,7 +36,7 @@
 </head>
 
 <body>
-    <form asp-controller="Factura" asp-action="AddFactura" method="post">
+    <form asp-controller="Factura" asp-action="AddFactura" method="post" onsubmit="return validarFechaLimite()">
         <input type="hidden" value="@Model.IdServicio" name="idServicio">
         <input type="hidden" value="@Model.IdExpediente" name="idExpediente">
         <input type="hidden" value="@Model.IdConsulta" name="idConsulta">
@@ -45,13 +49,13 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="form-floating">
-                    <input required type="number" class="form-control" id="costo" placeholder="costo" value="" name="costo" maxlength="100" step="0.01">
+                    <input readonly type="number" class="form-control" id="costo" placeholder="@precioFijo" value="@precioFijo" name="costo" maxlength="100" step="0.01">
                     <label for="costo">Costo</label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-floating">
-                    <input disabled type="date" class="form-control" id="fechaEmision" placeholder="fechaEmision" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="fechaEmision" timezone="-240">
+                    <input readonly type="date" class="form-control" id="fechaEmision" placeholder="fechaEmision" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="fechaEmision" timezone="-240">
                     <label for="fechaEmision">Fecha de Emisión</label>
                 </div>
             </div>
@@ -64,7 +68,7 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="form-floating">
-                    <input required type="number" class="form-control" id="montoVariable" placeholder="montoVariable" value="" name="montoVariable" maxlength="100" step="0.01">
+                    <input required type="number" class="form-control" id="montoVariable" placeholder="montoVariable" value="0.00" name="montoVariable" maxlength="100" step="0.01" oninput="sumar_montoTotal()">
                     <label for="montoVariable">Monto Variable</label>
                 </div>
             </div>
@@ -86,6 +90,14 @@
         </div>
         <div class="row m-0 g-3">
             <div class="col">
+                <div class="form-floating">
+                    <input readonly type="number" class="form-control" id="montoTotal" placeholder="@precioFijo" value="@precioFijo" name="montoTotal" maxlength="100" step="0.01">
+                    <label for="montoTotal">Monto Total (Costo + Monto Variable)</label>
+                </div>
+            </div>
+        </div>
+        <div class="row m-0 g-3">
+            <div class="col">
                 <div class="input-group d-flex justify-content-end">
                     @if (Model.IdConsulta == -1)
                     {
@@ -100,5 +112,18 @@
             </div>
         </div>
     </form>
+
+    <script>
+        function sumar_montoTotal() {
+            var precioFijo = parseFloat(@precioFijo);
+            var montoVariable = parseFloat(document.getElementById("montoVariable").value);
+            var montoTotal = precioFijo + (isNaN(montoVariable) ? 0 : montoVariable);
+
+            if (!isNaN(montoTotal)) {
+                document.getElementById("montoTotal").value = montoTotal.toFixed(2);
+            }
+        }
+    </script>
+
 </body>
 </html>

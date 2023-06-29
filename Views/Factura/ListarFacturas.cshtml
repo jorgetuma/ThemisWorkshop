@@ -1,0 +1,123 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @using ThemisWorkshop.Controllers;
+    ViewData["Title"] = "Facturas";
+    @model List<Factura> 
+    int cantidadPag = FacturaController.ObtenerPaginasFronted(10) + 1;
+
+    List<Servicio> servicios = FacturaController._temp.Servicio.ToList();
+    List<Detalleservicio> detalle_servicios = FacturaController._temp.Detalleservicio.ToList();
+}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div class="row my-3">
+        <div class="col">
+            <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
+        </div>
+        <div class="col-auto ps-0">
+            <a class="btn btn-positive" href="/Expediente/ListarExpedientes/1" role="button">Facturar</a>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <table class="table table-responsive table-hover" id="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Factura</th>
+                        <th scope="col">Servicio</th>
+                        <th scope="col">Costo</th>
+                        <th scope="col">Fecha Emision</th>
+                        <th scope="col">Fecha Limite</th>
+                        <th style="width: 2.5%;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var factura in Model)
+                    {
+                        <tr>
+                            <td>@factura.IdFactura</td>
+                            @{
+                                var servicio = servicios.Where(e => e.IdServicio == factura.IdServicio).First();
+                                <td>@servicio.Nombre</td>
+                            }
+                            <td>@factura.Costo</td>
+                            <td>@factura.FechaEmision</td>
+                            <td>@factura.FechaLimite</td>
+                            <td>
+                                <a href="/Factura/SaldarFactura/@factura.IdFactura">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-cash" viewBox="0 0 16 16">
+                                        <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                                        <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+      @if (cantidadPag > 1)
+    {
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="/Factura/ListarFacturas/1" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @for (int i = 1; i <= cantidadPag; i++)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="/Factura/ListarFacturas/@i">@i</a>
+                            </li>
+                        }
+                        <li class="page-item">
+                            <a class="page-link" href="/Factura/ListarFacturas/@cantidadPag" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    }
+    <script>
+        function filter_table() {
+            var input, filter, table, tr, td, i, j, visible;
+            input = document.getElementById("search_filter");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                visible = false;
+                if (tr[i].getElementsByTagName("th").length == 0) {
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            visible = true;
+                        }
+                    }
+                } else {
+                    visible = true;
+                }
+                if (visible) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
