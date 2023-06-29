@@ -150,7 +150,7 @@ namespace ThemisWorkshop.Controllers
                     factura.FechaLimite = DateTime.SpecifyKind(factura.FechaLimite, DateTimeKind.Utc);
                     _context.Factura.Update(factura);
                     _context.SaveChanges();
-                    return RedirectToAction("Factura/ListarFacturas/1");
+                    return Redirect("/Factura/ListarFacturas/1");
                 }else {
                     return RedirectToAction("FacturaSinPagar");   
                  }
