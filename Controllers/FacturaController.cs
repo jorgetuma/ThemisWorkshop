@@ -110,6 +110,32 @@ namespace ThemisWorkshop.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult modFactura() 
+        {
+            int id = int.Parse(Request.Form["idFactura"].ToString());
+            Factura? factura = _context.Factura.Find(id);
+            if (factura != null)
+            {
+                decimal abono = decimal.Parse(Request.Form["abono"].ToString());
+                Cliente? cliente = _context.Clientes.Find(factura.IdCliente);
+                factura.MontoPorPagar -= abono;
+                cliente.Credito -= abono;
+
+                factura.FechaEmision = DateTime.SpecifyKind(factura.FechaEmision,DateTimeKind.Utc);
+                factura.FechaLimite = DateTime.SpecifyKind(factura.FechaLimite,DateTimeKind.Utc);
+                _context.Factura.Update(factura);
+                _context.SaveChanges();
+                return Redirect("/Factura/ListarFacturas/1");
+            }
+            else
+            { 
+             return RedirectToAction("Error");
+            }
+
+        } 
+
         [HttpGet]
         [Route("/Factura/EliminarFactura/{id}")]
         public ActionResult EliminarFactura(int id) 
