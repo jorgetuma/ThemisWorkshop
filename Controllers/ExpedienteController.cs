@@ -136,19 +136,29 @@ namespace ThemisWorkshop.Controllers
    
                 if (!idsMod.Equals("empty"))
                 {
+                    List<int> serFacturado = new List<int>();
                     for (int i = 0; i < servicios.Count(); i++)
                     {
                         Detalleservicio ds = servicios.ElementAt(i);
-                        _context.Detalleservicio.Remove(ds);
-                        _context.SaveChanges();
+                        if (ds.Facturado == false)
+                        {
+                            _context.Detalleservicio.Remove(ds);
+                            _context.SaveChanges();
+                        }
+                        else {
+                            serFacturado.Add(servicios.ElementAt(i).IdServicio);
+                        }
                     }
 
                     for (int i = 0; i < serviciosMod.Count(); i++)
                     {
                         int idServ = int.Parse(serviciosMod.ElementAt(i).ToString());
-                        Detalleservicio ds = new Detalleservicio(idServ, expediente.IdExpediente);
-                        _context.Detalleservicio.Add(ds);
-                        _context.SaveChanges();
+                        if (!serFacturado.Contains(idServ))
+                        {
+                            Detalleservicio ds = new Detalleservicio(idServ, expediente.IdExpediente);
+                            _context.Detalleservicio.Add(ds);
+                            _context.SaveChanges();
+                        }
                     }
                 }
 

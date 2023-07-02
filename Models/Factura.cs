@@ -8,6 +8,8 @@
 
         public int IdCliente { get; set;}
 
+        public string titulo { get; set; }
+
         public decimal Costo { get; set;}
 
         public decimal MontoVariable { get; set;}
@@ -22,7 +24,7 @@
 
         public bool Eliminado { get; set; }
 
-        public Factura(int idServicio, int idCliente,decimal costo, decimal montoVariable,DateTime fechaEmision,DateTime fechaLimite,bool esCredito) 
+        public Factura(int idServicio, int idCliente,decimal costo, decimal montoVariable,DateTime fechaEmision,DateTime fechaLimite,bool esCredito,string titulo) 
         { 
             this.IdServicio = idServicio;
             this.IdCliente = idCliente;
@@ -32,6 +34,7 @@
             this.FechaEmision = fechaEmision;
             this.FechaLimite = fechaLimite;
             this.EsCredito = esCredito;
+            this.titulo = titulo;
             this.Eliminado = false;
         } 
     }

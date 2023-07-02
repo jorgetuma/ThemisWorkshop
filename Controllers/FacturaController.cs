@@ -43,6 +43,7 @@ namespace ThemisWorkshop.Controllers
             int idConsulta = int.Parse(Request.Form["idConsulta"].ToString());
             int idExpediente = int.Parse(Request.Form["idExpediente"].ToString());
             int idCliente = int.Parse(Request.Form["IdCliente"].ToString());
+            string titulo = Request.Form["titulo"].ToString();
             Cliente? cliente = _context.Clientes.FirstOrDefault(c => c.IdClientes == idCliente);
             Servicio? servicio = _context.Servicio.Find(idServicio);
             DateTime  fechaEmision = DateTime.Today;
@@ -86,7 +87,7 @@ namespace ThemisWorkshop.Controllers
                 consulta.Facturado = true;
             }
 
-            Factura factura = new Factura(idServicio, idCliente, costo, montoVariable, fechaEmisionUtc, fechaLimiteUtc, esCredito);
+            Factura factura = new Factura(idServicio, idCliente, costo, montoVariable, fechaEmisionUtc, fechaLimiteUtc, esCredito,titulo);
             factura.MontoPorPagar = montoPorPagar;
 
             _context.Factura.Add(factura);

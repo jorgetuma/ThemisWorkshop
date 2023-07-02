@@ -4,10 +4,20 @@ using ThemisWorkshop.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages().AddSessionStateTempDataProvider();
+builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
+
+builder.Services.AddDistributedMemoryCache();
+
 
 builder.Services.AddDbContext<ThemisworkshopContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("ThemisContex"));
+});
+
+builder.Services.AddSession(options => { 
+    options.IdleTimeout = TimeSpan.FromSeconds(1800);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();
@@ -26,6 +36,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.UseStatusCodePagesWithRedirects("/{0}");
 
