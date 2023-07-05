@@ -2,13 +2,18 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    @using ThemisWorkshop.Controllers;
     ViewData["Title"] = "Facturas";
+
+    @using ThemisWorkshop.Controllers;
     @model List<Factura> 
+
     int cantidadPag = FacturaController.ObtenerPaginasFronted(10) + 1;
+    string color;
 
     List<Servicio> servicios = FacturaController._temp.Servicio.ToList();
     List<Cliente> clientes = FacturaController._temp.Clientes.ToList();
+    List<Factura> facturasPendientes = Model.Where(factura => factura.MontoPorPagar > 0).ToList();
+    List<Factura> facturasPagadas = Model.Where(factura => !facturasPendientes.Contains(factura)).ToList();
 }
 <html>
 <head>
@@ -18,115 +23,267 @@
 
 <body>
     <div class="row my-3">
-        <div class="col">
+        <div class="col-2">
+            <select class="form-select" id="filter_combobox" onchange="filter_cards_2()">
+                <option selected value="0">Pendientes</option>
+                <option value="1">Pagados</option>
+            </select>
+        </div>
+        <div class="col ps-0">
             <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
         </div>
         <div class="col-auto ps-0">
             <a class="btn btn-positive" href="/Expediente/ListarExpedientes/1" role="button">Facturar</a>
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="col">
-            <table class="table table-responsive table-hover" id="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Factura</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Servicio</th>
-                        <th scope="col">Costo</th>
-                        <th scope="col">Fecha Emision</th>
-                        <th scope="col">Fecha Limite</th>
-                        <th style="width: 2.5%;"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var factura in Model)
+    <div class="row my-3">
+        <div class="col" id="pendientes">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                @{
+                    foreach (var factura in facturasPendientes)
                     {
-                        <tr>
-                            <td>@factura.IdFactura</td>
-                            @{
-                                var servicio = servicios.Where(e => e.IdServicio == factura.IdServicio).First();
-                                <td>@servicio.Nombre</td>
-                            }
-                            @{
-                                var cliente = clientes.Where(e => e.IdClientes == factura.IdCliente).First();
-                                <td>@cliente.Nombre @cliente.Apellido</td>
-                            }
-                            <td>@factura.Costo</td>
-                            <td>@factura.FechaEmision</td>
-                            <td>@factura.FechaLimite</td>
-                            @if (factura.MontoPorPagar != 0 && factura.EsCredito)
-                            {
-                                <td>
-                                    <a href="/Factura/SaldarFactura/@factura.IdFactura">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-cash" viewBox="0 0 16 16">
-                                            <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
-                                            <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
-                                        </svg>
-                                    </a>
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    <!-- Trigger modal -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@factura.IdFactura">
-                                        <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                                    </svg>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modal-@factura.IdFactura" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
-                                            <div class="modal-content text-center">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Archivar Factura</h1>
+                        color = "#FF6663";
+
+                        var cliente = clientes.Where(e => e.IdClientes == factura.IdCliente).First();
+                        var servicio = servicios.Where(e => e.IdServicio == factura.IdServicio).First();
+
+                        <div class="col">
+                            <div class="card mb-3" style="border-color: @color;">
+                                <div class="card-body p-0">
+                                    <div class="row g-0">
+                                        <div class="col text-center" style="background-color: @color; color: white;">
+                                            <b class="text-nowrap">@factura.titulo</b>
+                                        </div>
+                                    </div>
+                                    <div class="row g-0">
+                                        <div class="col p-3">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                                                        <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z" />
+                                                    </svg>
+                                                    <span class="badge" style="background-color: @color;">
+                                                        @servicio.Nombre
+                                                    </span>
                                                 </div>
-                                                <div class="modal-body">
-                                                    ¿Seguro que desea archivar esta factura?<br>
+                                                <div class="col text-end">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                                                    </svg>
+                                                    <span class="badge" style="background-color: @color;">
+                                                        @cliente.Nombre @cliente.Apellido
+                                                    </span>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <div class="input-group d-flex justify-content-center">
-                                                        <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                                        <a href="/Factura/EliminarFactura/@factura.IdFactura" class="btn btn-positive">Aceptar</a>
-                                                    </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    Monto total:
+                                                </div>
+                                                <div class="col-auto text-end">
+                                                    @factura.Costo $
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    Pagado:
+                                                </div>
+                                                @{
+                                                    var pagado = factura.Costo - factura.MontoPorPagar;
+                                                }
+                                                <div class="col-auto text-end">
+                                                    @pagado $
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    Saldo pendiente:
+                                                </div>
+                                                <div class="col-auto text-end">
+                                                    @factura.MontoPorPagar $
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alarm" viewBox="0 0 16 16">
+                                                        <path d="M8.5 5.5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5z" />
+                                                        <path d="M6.5 0a.5.5 0 0 0 0 1H7v1.07a7.001 7.001 0 0 0-3.273 12.474l-.602.602a.5.5 0 0 0 .707.708l.746-.746A6.97 6.97 0 0 0 8 16a6.97 6.97 0 0 0 3.422-.892l.746.746a.5.5 0 0 0 .707-.708l-.601-.602A7.001 7.001 0 0 0 9 2.07V1h.5a.5.5 0 0 0 0-1h-3zm1.038 3.018a6.093 6.093 0 0 1 .924 0 6 6 0 1 1-.924 0zM0 3.5c0 .753.333 1.429.86 1.887A8.035 8.035 0 0 1 4.387 1.86 2.5 2.5 0 0 0 0 3.5zM13.5 1c-.753 0-1.429.333-1.887.86a8.035 8.035 0 0 1 3.527 3.527A2.5 2.5 0 0 0 13.5 1z" />
+                                                    </svg>
+                                                    <span class="badge" style="background-color: @color">
+                                                        @factura.FechaEmision
+                                                    </span>
+                                                    <span class="badge" style="background-color: @color">
+                                                        @factura.FechaLimite
+                                                    </span>
+                                                </div>
+                                                <div class="col-auto text-end">
+                                                @{
+                                                    if (factura.MontoPorPagar != 0 && factura.EsCredito)
+                                                    {
+                                                        <a href="/Factura/SaldarFactura/@factura.IdFactura">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-cash" viewBox="0 0 16 16">
+                                                                <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                                                                <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                                                            </svg>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <!-- Trigger modal -->
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@factura.IdFactura">
+                                                            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                                                        </svg>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="modal-@factura.IdFactura" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                <div class="modal-content text-center">
+                                                                    <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Archivar Factura</h1>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        ¿Seguro que desea archivar esta factura?<br>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <div class="input-group d-flex justify-content-center">
+                                                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                            <a href="/Factura/EliminarFactura/@factura.IdFactura" class="btn btn-positive">Aceptar</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </td>
-                            }
-                        </tr>
+                                </div>
+                            </div>
+                        </div>
                     }
-                </tbody>
-            </table>
-        </div>
-    </div>
-      @if (cantidadPag > 1)
-    {
-        <div class="row">
-            <div class="col d-flex justify-content-center">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="/Factura/ListarFacturas/1" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        @for (int i = 1; i <= cantidadPag; i++)
-                        {
-                            <li class="page-item">
-                                <a class="page-link" href="/Factura/ListarFacturas/@i">@i</a>
-                            </li>
-                        }
-                        <li class="page-item">
-                            <a class="page-link" href="/Factura/ListarFacturas/@cantidadPag" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                }
             </div>
         </div>
+        <div class="col" id="pagados">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                @{
+                    foreach (var factura in facturasPagadas)
+                    {
+                        color = "#9EE09E";
+
+                        var cliente = clientes.Where(e => e.IdClientes == factura.IdCliente).First();
+                        var servicio = servicios.Where(e => e.IdServicio == factura.IdServicio).First();
+
+                        <div class="col">
+                            <div class="card mb-3" style="border-color: @color;">
+                                <div class="card-body p-0">
+                                    <div class="row g-0">
+                                        <div class="col text-center" style="background-color: @color; color: white;">
+                                            <b class="text-nowrap">@factura.titulo</b>
+                                        </div>
+                                    </div>
+                                    <div class="row g-0">
+                                        <div class="col p-3">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                                                        <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z" />
+                                                    </svg>
+                                                    <span class="badge" style="background-color: @color;">
+                                                        @servicio.Nombre
+                                                    </span>
+                                                </div>
+                                                <div class="col text-end">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                                                    </svg>
+                                                    <span class="badge" style="background-color: @color;">
+                                                        @cliente.Nombre @cliente.Apellido
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    Monto total:
+                                                </div>
+                                                <div class="col-auto text-end">
+                                                    @factura.Costo $
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    Pagado:
+                                                </div>
+                                                @{
+                                                    var pagado = factura.Costo - factura.MontoPorPagar;
+                                                }
+                                                <div class="col-auto text-end">
+                                                    @pagado $
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    Saldo pendiente:
+                                                </div>
+                                                <div class="col-auto text-end">
+                                                    @factura.MontoPorPagar $
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alarm" viewBox="0 0 16 16">
+                                                        <path d="M8.5 5.5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5z" />
+                                                        <path d="M6.5 0a.5.5 0 0 0 0 1H7v1.07a7.001 7.001 0 0 0-3.273 12.474l-.602.602a.5.5 0 0 0 .707.708l.746-.746A6.97 6.97 0 0 0 8 16a6.97 6.97 0 0 0 3.422-.892l.746.746a.5.5 0 0 0 .707-.708l-.601-.602A7.001 7.001 0 0 0 9 2.07V1h.5a.5.5 0 0 0 0-1h-3zm1.038 3.018a6.093 6.093 0 0 1 .924 0 6 6 0 1 1-.924 0zM0 3.5c0 .753.333 1.429.86 1.887A8.035 8.035 0 0 1 4.387 1.86 2.5 2.5 0 0 0 0 3.5zM13.5 1c-.753 0-1.429.333-1.887.86a8.035 8.035 0 0 1 3.527 3.527A2.5 2.5 0 0 0 13.5 1z" />
+                                                    </svg>
+                                                    <span class="badge" style="background-color: @color">
+                                                        @factura.FechaEmision
+                                                    </span>
+                                                    <span class="badge" style="background-color: @color">
+                                                        @factura.FechaLimite
+                                                    </span>
+                                                </div>                      
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    @{
+        if (cantidadPag > 1)
+        {
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="/Factura/ListarFacturas/1" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            @for (int i = 1; i <= cantidadPag; i++)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="/Factura/ListarFacturas/@i">@i</a>
+                                </li>
+                            }
+                            <li class="page-item">
+                                <a class="page-link" href="/Factura/ListarFacturas/@cantidadPag" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        }
     }
+
     <script>
         function filter_table() {
             var input, filter, table, tr, td, i, j, visible;
@@ -154,6 +311,45 @@
                 }
             }
         }
+    </script>
+
+    <script>
+        function filter_cards_2() {
+            var selectedOption = document.getElementById("filter_combobox").value;
+            var pendientesElements = document.querySelectorAll('[id="pendientes"]');
+            var pagadosElements = document.querySelectorAll('[id="pagados"]');
+
+
+            if (selectedOption === "0") {
+                pendientesElements.forEach(function (element) {
+                    element.style.display = "block";
+                });
+
+                pagadosElements.forEach(function (element) {
+                    element.style.display = "none";
+                });
+            } else if (selectedOption === "1") {
+                pendientesElements.forEach(function (element) {
+                    element.style.display = "none";
+                });
+
+                pagadosElements.forEach(function (element) {
+                    element.style.display = "block";
+                });
+            } else if (selectedOption === "2") {
+                pendientesElements.forEach(function (element) {
+                    element.style.display = "block";
+                });
+
+                pagadosElements.forEach(function (element) {
+                    element.style.display = "block";
+                });
+            }
+        }
+
+        window.addEventListener('load', function () {
+            filter_cards_2();
+        });
     </script>
 </body>
 </html>

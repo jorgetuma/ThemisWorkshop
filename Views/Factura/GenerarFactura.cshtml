@@ -6,13 +6,19 @@
     ViewData["Title"] = "Agregar/Modificar Factura";
     @model FacturaViewModel
     ViewData["Title"] = "Registrar Factura";
+
     var cliente = 0;
+    string asunto;
+    string ruta;
 
     if (Model.IdConsulta == -1)
     {
         List<Expediente> expedientes = FacturaController._temp.Expediente.ToList();
         var expediente = expedientes.Where(e => e.IdExpediente == Model.IdExpediente).FirstOrDefault();
         cliente = expediente.IdCliente;
+
+        asunto = expediente.Asunto;
+        ruta = "/Expediente/ListarExpedientes/1";
     }
     else
     {
@@ -23,6 +29,9 @@
 
         var cita = citas.Where(e => e.IdCita == consulta.IdCita).FirstOrDefault();
         cliente = cita.IdCliente;
+
+        asunto = cita.Asunto;
+        ruta = "/Consulta/ListarConsultas/1";
     }
 
     List<Servicio> servicios = FacturaController._temp.Servicio.ToList();
@@ -44,6 +53,14 @@
         <div class="row m-0 g-3">
             <div class="col-auto fw-bold">
                 <p class="m-0">Información General:</p>
+            </div>
+        </div>
+        <div class="row m-0 g-3">
+            <div class="col">
+                <div class="form-floating">
+                    <input required type="text" class="form-control" id="titulo" placeholder="@asunto" value="@asunto" name="titulo" maxlength="60">
+                    <label for="titulo">Título</label>
+                </div>
             </div>
         </div>
         <div class="row m-0 g-3">
@@ -99,14 +116,7 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="input-group d-flex justify-content-end">
-                    @if (Model.IdConsulta == -1)
-                    {
-                        <a href="/Expediente/ListarExpedientes/1" class="btn btn-negative">Cancelar</a>
-                    }
-                    else
-                    {
-                        <a href="/Consulta/ListarConsultas/1" class="btn btn-negative">Cancelar</a>   
-                    }
+                    <a href="@ruta" class="btn btn-negative">Cancelar</a>
                     <button type="submit" class="btn btn-positive">Registrar</button>
                 </div>
             </div>
