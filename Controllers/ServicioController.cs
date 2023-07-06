@@ -151,7 +151,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return _temp.Servicio.Count(e => e.Eliminado == false) / cantidadPorpagina;
+            return (int)Math.Ceiling((double)_temp.Servicio.Count(e => e.Eliminado == false) / cantidadPorpagina);
         }
     }
 }

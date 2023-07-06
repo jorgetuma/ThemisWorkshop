@@ -179,7 +179,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return _temp.Cita.Count(e => e.Realizado == false) / cantidadPorpagina;
+            return (int)Math.Ceiling((double)_temp.Cita.Count(e => e.Realizado == false) / cantidadPorpagina);
         }
     }
 }
