@@ -134,6 +134,7 @@ namespace ThemisWorkshop.Controllers
                     tarea.Realizado = false;
                 }
                 tarea.Fecha = DateTime.SpecifyKind(tarea.Fecha,DateTimeKind.Utc);
+                tarea.Fecha = tarea.Fecha.AddDays(1);
                 _context.Tarea.Update(tarea);
                 _context.SaveChanges();
                 return Redirect("/Tarea/ListarTareas/1");

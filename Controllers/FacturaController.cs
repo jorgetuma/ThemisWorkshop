@@ -126,6 +126,8 @@ namespace ThemisWorkshop.Controllers
 
                 factura.FechaEmision = DateTime.SpecifyKind(factura.FechaEmision,DateTimeKind.Utc);
                 factura.FechaLimite = DateTime.SpecifyKind(factura.FechaLimite,DateTimeKind.Utc);
+                factura.FechaEmision = factura.FechaEmision.AddDays(1);
+                factura.FechaLimite = factura.FechaLimite.AddDays(1);
                 _context.Factura.Update(factura);
                 _context.SaveChanges();
                 return Redirect("/Factura/ListarFacturas/1");
@@ -149,6 +151,8 @@ namespace ThemisWorkshop.Controllers
                     factura.Eliminado = true;
                     factura.FechaEmision = DateTime.SpecifyKind(factura.FechaEmision, DateTimeKind.Utc);
                     factura.FechaLimite = DateTime.SpecifyKind(factura.FechaLimite, DateTimeKind.Utc);
+                    factura.FechaEmision = factura.FechaEmision.AddDays(1);
+                    factura.FechaLimite = factura.FechaLimite.AddDays(1);
                     _context.Factura.Update(factura);
                     _context.SaveChanges();
                     return Redirect("/Factura/ListarFacturas/1");

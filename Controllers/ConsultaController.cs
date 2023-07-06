@@ -56,6 +56,7 @@ namespace ThemisWorkshop.Controllers
             var cita = _context.Cita.Find(idCita);
             cita.Realizado = true;
             cita.Fecha = DateTime.SpecifyKind(cita.Fecha,DateTimeKind.Utc);
+            cita.Fecha = cita.Fecha.AddDays(1);
             _context.Cita.Update(cita);
             var consulta = new Consulta(idCita,idExpediente,horaini,horafin,costo);
             _context.Consulta.Add(consulta);
@@ -75,6 +76,7 @@ namespace ThemisWorkshop.Controllers
 
                 cita.Realizado = false;
                 cita.Fecha = DateTime.SpecifyKind(cita.Fecha, DateTimeKind.Utc);
+                cita.Fecha = cita.Fecha.AddDays(1);
                 _context.Cita.Update(cita);
                 _context.SaveChanges();
                 return Redirect("/Consulta/ListarConsultas/1");

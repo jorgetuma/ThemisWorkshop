@@ -121,6 +121,7 @@ namespace ThemisWorkshop.Controllers
             {
                 cita.Realizado = true;
                 cita.Fecha = DateTime.SpecifyKind(cita.Fecha,DateTimeKind.Utc);
+                cita.Fecha = cita.Fecha.AddDays(1);
                 _context.Cita.Update(cita);
                 _context.SaveChanges();
                 return Redirect("/Cita/ListarCitas/1");

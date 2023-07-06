@@ -148,6 +148,7 @@ namespace ThemisWorkshop.Controllers
                 {
                     cliente.Eliminado = true;
                     cliente.Fechanacimiento = DateTime.SpecifyKind(cliente.Fechanacimiento, DateTimeKind.Utc);
+                    cliente.Fechanacimiento = cliente.Fechanacimiento.AddDays(1);
                     _context.Update(cliente);
                     _context.SaveChanges();
                     return Redirect("/Cliente/ListarClientes/1");

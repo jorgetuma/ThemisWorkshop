@@ -7,10 +7,12 @@ namespace ThemisWorkshop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        public static ThemisworkshopContext _temp;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,ThemisworkshopContext context)
         {
             _logger = logger;
+            _temp = context;
         }
 
         public IActionResult Index(int? id)

@@ -170,6 +170,7 @@ namespace ThemisWorkshop.Controllers
             {
                 user.Eliminado = true;
                 user.Fechanacimiento = DateTime.SpecifyKind(user.Fechanacimiento, DateTimeKind.Utc);
+                user.Fechanacimiento = user.Fechanacimiento.AddDays(1);
                 _context.Update(user);
                 _context.SaveChanges(true);
                 return Redirect("/Empleado/ListarEmpleados/1");

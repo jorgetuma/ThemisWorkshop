@@ -131,6 +131,7 @@ namespace ThemisWorkshop.Controllers
                 expediente.Asunto = titulo;
                 expediente.Descripcion = descripcion;
                 expediente.FechaApertura = DateTime.SpecifyKind(expediente.FechaApertura, DateTimeKind.Utc);
+                expediente.FechaApertura = expediente.FechaApertura.AddDays(1);
                 _context.Expediente.Update(expediente);
                 _context.SaveChanges();
    
@@ -180,6 +181,7 @@ namespace ThemisWorkshop.Controllers
             {
                 expediente.Activo = false;
                 expediente.FechaApertura = DateTime.SpecifyKind(expediente.FechaApertura, DateTimeKind.Utc);
+                expediente.FechaApertura = expediente.FechaApertura.AddDays(1);
                 _context.Expediente.Update(expediente);
                 _context.SaveChanges();
 
