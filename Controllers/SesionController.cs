@@ -7,6 +7,7 @@ namespace ThemisWorkshop.Controllers
     {
         private readonly ThemisworkshopContext _context;
         public static ThemisworkshopContext _temp;
+        private Usuario? user;
 
         public SesionController(ThemisworkshopContext context) 
         { 
@@ -30,6 +31,7 @@ namespace ThemisWorkshop.Controllers
             if (Autenticar(userName, password) && ModelState.IsValid)
             {
                 HttpContext.Session.SetString("usuario", userName);
+                ViewData["usuario"] = user;
                 return Redirect("/Home");
             }
             else
@@ -41,7 +43,7 @@ namespace ThemisWorkshop.Controllers
 
         private bool Autenticar(string userName, string password) 
         {
-            Usuario? user = _context.Usuario.Where(e => e.UserName == userName && e.Password == password).FirstOrDefault();
+             user = _context.Usuario.Where(e => e.UserName == userName && e.Password == password).FirstOrDefault();
             if (user == null)
             {
                 return false;
