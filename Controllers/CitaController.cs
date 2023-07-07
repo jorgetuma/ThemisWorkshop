@@ -8,6 +8,7 @@ namespace ThemisWorkshop.Controllers
         private readonly ThemisworkshopContext _context;
 
         public static ThemisworkshopContext _temp;
+        public static Usuario? usuario;
 
         public CitaController(ThemisworkshopContext context)
         {
@@ -19,6 +20,11 @@ namespace ThemisWorkshop.Controllers
         [Route("Cita/ListarCitas/{pag}")]
         public ActionResult ListarCitas(int pag)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             if (pag <= 0)
             {
                 pag = 1;
@@ -31,6 +37,11 @@ namespace ThemisWorkshop.Controllers
         [Route("Cita/AgregarCita/{idCliente}")]
         public ActionResult AgregarCita(int idCliente)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Cliente? cliente = _context.Clientes.Find(idCliente);
             if (cliente != null)
             {
@@ -57,7 +68,7 @@ namespace ThemisWorkshop.Controllers
             TimeOnly horaini = TimeOnly.Parse(Request.Form["horainicial"].ToString());
             TimeOnly horafin = TimeOnly.Parse("00:00");
 
-            var cita = new Cita(idcliente, 1, asunto, lugar, descripcion, fechautc, horaini, horafin);
+            var cita = new Cita(idcliente, usuario.IdUsuario, asunto, lugar, descripcion, fechautc, horaini, horafin);
             _context.Cita.Add(cita);
             _context.SaveChanges();
             return Redirect("/Cita/ListarCitas/1");
@@ -66,6 +77,11 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         [Route("/Cita/ReagendarCita/{id}")]
         public ActionResult ReagendarCita(int id) {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Cita? cita = _context.Cita.Find(id);
             if (cita != null)
             {
@@ -115,7 +131,12 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         [Route("Cita/EliminarCita/{id}")]
         public ActionResult EliminarCita(int id)
-        { 
+        {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Cita? cita = _context.Cita.Find(id);
             if (cita != null)
             {
@@ -142,13 +163,21 @@ namespace ThemisWorkshop.Controllers
         [Route("/Calendario")]
         public ActionResult Calendario()
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             List<Cita> citas = _context.Cita.ToList(); 
             return View("Calendario",citas);
         }
 
         private int CantidadCitas()
         {
-            return _context.Cita.Count(e => e.Realizado == false);
+            if (usuario.Rol == ((int)Rolesapp.Secretario)) {
+                return _context.Cita.Count(e => e.Realizado == false);
+            }
+            return _context.Cita.Count(e => e.Realizado == false && e.IdUsuario == usuario.IdUsuario);
         }
 
         private List<Cita> LoadCitas(int numPag)
@@ -173,13 +202,27 @@ namespace ThemisWorkshop.Controllers
                 .Skip(indIni)
                 .Take(max)
                 .ToList();
+
+            if (usuario.Rol != ((int)Rolesapp.Secretario))
+            {
+                citas = _context.Cita
+                .Where(e => e.Realizado == false && e.IdUsuario == usuario.IdUsuario)
+                .OrderBy(e => e.IdCita)
+                .Skip(indIni)
+                .Take(max)
+                .ToList();
+            }
             return citas;
 
         }
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return (int)Math.Ceiling((double)_temp.Cita.Count(e => e.Realizado == false) / cantidadPorpagina);
+            if(usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                return (int)Math.Ceiling((double)_temp.Cita.Count(e => e.Realizado == false) / cantidadPorpagina);
+            }
+            return (int)Math.Ceiling((double)_temp.Cita.Count(e => e.Realizado == false && e.IdUsuario == usuario.IdUsuario) / cantidadPorpagina);
         }
     }
 }

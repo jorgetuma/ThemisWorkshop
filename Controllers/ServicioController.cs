@@ -7,6 +7,7 @@ namespace ThemisWorkshop.Controllers
     {
         private readonly ThemisworkshopContext _context;
         public static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
+        public static Usuario? usuario;
 
         public ServicioController(ThemisworkshopContext context) 
         { 
@@ -18,6 +19,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Servicio/ListarServicios/{pag}")]
         public ActionResult ListarServicios(int pag)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             if (pag <= 0)
             { 
                 pag = 1;
@@ -29,6 +35,11 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult AgregarServicio() 
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             return View("AgregarServicio");
         }
         
@@ -52,6 +63,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Servicio/ModificarServicio/{id}")]
         public ActionResult ModificarServicio(int id)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Servicio? servicio = _context.Servicio.Find(id);
 
             if (servicio != null)
@@ -96,6 +112,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Servicio/EliminarServicio/{id}")]
         public ActionResult EliminarServicio(int id)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Servicio? servicio = _context.Servicio.Find(id);
 
             if (servicio != null)

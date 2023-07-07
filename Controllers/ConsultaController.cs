@@ -7,6 +7,7 @@ namespace ThemisWorkshop.Controllers
     {
         private ThemisworkshopContext _context;
         public static ThemisworkshopContext _temp;
+        public static Usuario? usuario;
 
         public ConsultaController(ThemisworkshopContext context) 
         {
@@ -18,6 +19,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Consulta/ListarConsultas/{pag}")]
         public ActionResult ListarConsultas(int pag)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             if (pag <= 0) 
             {
                 pag = 1;
@@ -30,6 +36,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Consulta/AgregarConsulta/{idCita}")]
         public ActionResult AgregarConsulta(int idCita) 
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Cita? cita  = _context.Cita.Find(idCita);
             if (cita != null)
             {
@@ -58,7 +69,7 @@ namespace ThemisWorkshop.Controllers
             cita.Fecha = DateTime.SpecifyKind(cita.Fecha,DateTimeKind.Utc);
             cita.Fecha = cita.Fecha.AddDays(1);
             _context.Cita.Update(cita);
-            var consulta = new Consulta(idCita,idExpediente,horaini,horafin,costo);
+            var consulta = new Consulta(idCita,idExpediente,usuario.IdUsuario,horaini,horafin,costo);
             _context.Consulta.Add(consulta);
             _context.SaveChanges();
             return Redirect("/Consulta/ListarConsultas/1");
@@ -67,6 +78,11 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         [Route("/Consulta/EliminarConsulta/{id}")]
         public ActionResult EliminarConsulta(int id) {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Consulta? consulta = _context.Consulta.Find(id);
             if (consulta != null)
             {
@@ -95,7 +111,7 @@ namespace ThemisWorkshop.Controllers
 
         private int CantidadConsulta()
         {
-            return _context.Consulta.Count(e => e.Eliminado == false);
+            return _context.Consulta.Count(e => e.Eliminado == false && e.IdUsuario == usuario.IdUsuario);
         }
 
         private List<Consulta> LoadConsultas(int numPag)
@@ -115,7 +131,7 @@ namespace ThemisWorkshop.Controllers
             }
 
             List<Consulta> consultas = _context.Consulta
-                .Where(e => e.Eliminado == false)
+                .Where(e => e.Eliminado == false && e.IdUsuario == usuario.IdUsuario)
                 .OrderBy(e => e.IdConsulta)
                 .Skip(indIni)
                 .Take(max)
@@ -124,9 +140,15 @@ namespace ThemisWorkshop.Controllers
 
         }
 
+        public static int BuscarUsuarioByCita(int idCita) 
+        { 
+            Cita? cita = _temp.Cita.Find(idCita);
+            return cita.IdUsuario;
+        }
+
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return (int)Math.Ceiling((double)_temp.Consulta.Count(e => e.Eliminado == false) / cantidadPorpagina);
+            return (int)Math.Ceiling((double)_temp.Consulta.Count(e => e.Eliminado == false && e.IdUsuario == usuario.IdUsuario) / cantidadPorpagina);
         }
     }
 }

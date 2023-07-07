@@ -1,7 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    @using ThemisWorkshop.Controllers
+    Usuario user = HomeController.usuario;
 }
 
 <div class="text-center">
     <h1 class="display-4">Themis Workshop</h1>
+    <h1>Usuario: @user.Nombre</h1>
 </div>

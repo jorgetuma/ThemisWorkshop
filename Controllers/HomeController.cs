@@ -8,6 +8,7 @@ namespace ThemisWorkshop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         public static ThemisworkshopContext _temp;
+        public static Usuario? usuario;
 
         public HomeController(ILogger<HomeController> logger,ThemisworkshopContext context)
         {
@@ -17,7 +18,15 @@ namespace ThemisWorkshop.Controllers
 
         public IActionResult Index(int? id)
         {
-            return View();
+            if (HttpContext.Session.GetString("usuario") != null)
+            {
+                usuario = _temp.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).First();
+                return View();
+            }
+            else 
+            {
+               return Redirect("/Sesion/IniciarSesion");
+            }
         }
 
         public IActionResult Privacy()

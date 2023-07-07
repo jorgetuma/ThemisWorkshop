@@ -7,6 +7,7 @@ namespace ThemisWorkshop.Controllers
     {
         private readonly ThemisworkshopContext _context;
         public static ThemisworkshopContext? _temp; /*Para uso exclusivo en el frontend*/
+        public static Usuario? usuario;
 
         public ExpedienteController(ThemisworkshopContext context)
         {
@@ -18,6 +19,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Expediente/ListarExpedientes/{pag}")]
         public ActionResult ListarExpedientes(int pag)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             if (pag <= 0)
             {
                 pag = 1;
@@ -30,6 +36,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Expediente/AgregarExpediente/{idCliente}")]
         public ActionResult AgregarExpediente(int idCliente)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Cliente? cliente = _context.Clientes.Find(idCliente);
             if (cliente != null)
             {
@@ -64,7 +75,7 @@ namespace ThemisWorkshop.Controllers
                 servicios.Add(ids);
             }
 
-            var expediente = new Expediente(idCliente,1,titulo,descripcion,fechaUtc); // Se debe asociar al usuario en sesion.
+            var expediente = new Expediente(idCliente,usuario.IdUsuario,titulo,descripcion,fechaUtc);
 
 
              _context.Expediente.Add(expediente);
@@ -84,6 +95,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Expediente/ModificarExpediente/{id}")]
         public ActionResult ModificarExpediente(int id)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Expediente? expediente = _context.Expediente.Find(id);
             if (expediente != null)
             {
@@ -175,6 +191,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Expediente/EliminarExpediente/{id}")]
         public ActionResult EliminarExpediente(int id)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Expediente? expediente = _context.Expediente.Find(id);
 
             if (expediente != null)
@@ -201,7 +222,7 @@ namespace ThemisWorkshop.Controllers
 
         private int CantidadExpedientes()
         {
-            return _context.Expediente.Count();
+            return _context.Expediente.Count(e => e.IdUsuario == usuario.IdUsuario);
         }
 
         private List<Expediente> LoadExpedientes(int numPag)
@@ -221,6 +242,7 @@ namespace ThemisWorkshop.Controllers
             }
 
             List<Expediente> expedientes = _context.Expediente
+                .Where(e => e.IdUsuario == usuario.IdUsuario)
                 .OrderBy(e => e.IdExpediente)
                 .Skip(indIni)
                 .Take(max)
@@ -231,7 +253,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return (int)Math.Ceiling((double)_temp.Expediente.Count() / cantidadPorpagina);
+            return (int)Math.Ceiling((double)_temp.Expediente.Count(e => e.IdUsuario == usuario.IdUsuario) / cantidadPorpagina);
         }
     }
 }

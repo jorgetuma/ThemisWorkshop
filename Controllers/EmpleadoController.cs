@@ -7,6 +7,7 @@ namespace ThemisWorkshop.Controllers
     {
         private readonly ThemisworkshopContext _context;
         public static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
+        public static Usuario? usuario;
 
         public EmpleadoController(ThemisworkshopContext context)
         {
@@ -18,6 +19,11 @@ namespace ThemisWorkshop.Controllers
         [Route("Empleado/ListarEmpleados/{pag}")]
         public ActionResult ListarEmpleados(int pag)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             if (pag <= 0) 
             {
                 pag = 1;
@@ -80,6 +86,11 @@ namespace ThemisWorkshop.Controllers
         [Route("Empleado/ModificarEmpleado/{id}")]
         public ActionResult ModificarEmpleado(int id)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Usuario? user = _context.Usuario.Find(id);
             if (user!=null) 
             {
@@ -132,8 +143,6 @@ namespace ThemisWorkshop.Controllers
                     comision = decimal.Parse(Request.Form["comision"].ToString());
                 }
 
-                Console.WriteLine(rol);
-
                 user.UserName = userName; 
                 user.Password = password;
                 user.Nombre = nombre;
@@ -165,6 +174,11 @@ namespace ThemisWorkshop.Controllers
         [Route("Empleado/EliminarEmpleado/{id}")]
         public ActionResult EliminarEmpleado(int id)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Usuario? user = _context.Usuario.Find(id);
             if (user != null)
             {

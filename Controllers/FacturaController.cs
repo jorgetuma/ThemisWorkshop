@@ -9,6 +9,8 @@ namespace ThemisWorkshop.Controllers
 
         public static ThemisworkshopContext _temp;
 
+        public static Usuario? usuario;
+
         public FacturaController(ThemisworkshopContext context)
         {
             _context = context;
@@ -19,6 +21,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Factura/ListarFacturas/{pag}")]
         public ActionResult ListarFacturas(int pag)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             if (pag <= 0)
             {
                 pag = 1;
@@ -31,6 +38,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Factura/GenerarFactura/{idServicio}&{idConsulta}&{idExpediente}")]
         public ActionResult GenerarFactura(int idServicio, int idConsulta,int idExpediente)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             FacturaViewModel model = new FacturaViewModel(idServicio,idConsulta,idExpediente,null);
             return View("GenerarFactura",model);
         }
@@ -98,7 +110,12 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         [Route("/Factura/SaldarFactura/{id}")]
         public ActionResult SaldarFactura(int id) 
-        { 
+        {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Factura? factura = _context.Factura.Find(id);
             if (factura != null)
             {
@@ -143,6 +160,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Factura/EliminarFactura/{id}")]
         public ActionResult EliminarFactura(int id) 
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Factura? factura = _context.Factura.Find(id);
             if (factura != null)
             {

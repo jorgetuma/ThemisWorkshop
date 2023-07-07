@@ -7,6 +7,7 @@ namespace ThemisWorkshop.Controllers
     {
         private readonly ThemisworkshopContext _context;
         public static ThemisworkshopContext _temp; /*Para uso exclusivo en el frontend*/
+        public static Usuario? usuario;
 
 
         public ClienteController(ThemisworkshopContext context)
@@ -20,6 +21,11 @@ namespace ThemisWorkshop.Controllers
         [Route("Cliente/ListarClientes/{pag}")]
         public ActionResult ListarClientes(int pag)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             if (pag <= 0)
             {
                 pag = 1;
@@ -34,6 +40,11 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult AgregarCliente()
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             // Devolver una vista con el formulario de agregar cliente vacío
             return View("AgregarCliente");
         }
@@ -73,7 +84,11 @@ namespace ThemisWorkshop.Controllers
         [Route("Cliente/ModificarCliente/{id}")]
         public ActionResult ModificarCliente(int id)
         {
-
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             int idClienteSelecionado = id;
             Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);
 
@@ -140,6 +155,11 @@ namespace ThemisWorkshop.Controllers
         [Route("Cliente/EliminarCliente/{id}")]
         public ActionResult EliminarCliente(int id)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             int idClienteSelecionado = id;
             Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);
             if (cliente != null)

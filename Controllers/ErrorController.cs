@@ -5,13 +5,6 @@ namespace ThemisWorkshop.Controllers
     public class ErrorController : Controller
     {
         [HttpGet]
-        [Route("/401")]
-        public ActionResult InicieSesion()
-        {
-            return View("401");
-        }
-
-        [HttpGet]
         [Route("/403")]
         public ActionResult AccesoDenegado()
         { 

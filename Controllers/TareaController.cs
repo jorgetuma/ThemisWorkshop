@@ -10,7 +10,7 @@ namespace ThemisWorkshop.Controllers
 
         public static ThemisworkshopContext _temp;
 
-        Usuario? usuario; // se va al implementar sesiones
+       public static Usuario? usuario;
 
         public TareaController(ThemisworkshopContext context)
         {
@@ -22,6 +22,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Tarea/ListarTareas/{pag}")]
         public ActionResult ListarTareas(int pag) 
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             if (pag <= 0) 
             { 
                 pag = 1;
@@ -33,7 +38,11 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult AgregarTarea()
         {
-            usuario = _context.Usuario.Find(1);
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             TareaViewModel model = new TareaViewModel(null,usuario,false);
             return View("AgregarTarea",model);
         }
@@ -60,8 +69,12 @@ namespace ThemisWorkshop.Controllers
         [Route("/Tarea/ModificarTarea/{id}")]
         public ActionResult ModificarTarea(int id) 
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Tarea? tarea = _context.Tarea.Find(id);
-            usuario = _context.Usuario.Find(1);
             if (tarea != null)
             {
                 TareaViewModel model = new TareaViewModel(tarea,usuario,true);
@@ -106,6 +119,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Tarea/EliminarTarea/{id}")]
         public ActionResult EliminarTarea(int id)
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Tarea? tarea = _context.Tarea.Find(id);
             if (tarea != null)
             {
@@ -123,6 +141,11 @@ namespace ThemisWorkshop.Controllers
         [Route("/Tarea/RealizarTarea/{id}")]
         public ActionResult RealizarTarea(int id) 
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             Tarea? tarea = _context.Tarea.Find(id);
             if (tarea != null)
             {
@@ -153,7 +176,7 @@ namespace ThemisWorkshop.Controllers
 
         private int CantidadTareas()
         {
-            return _context.Tarea.Count();
+            return _context.Tarea.Count(e => e.IdUsuario == usuario.IdUsuario);
         }
 
         private List<Tarea> LoadTareas(int numPag)
@@ -173,6 +196,7 @@ namespace ThemisWorkshop.Controllers
             }
 
             List<Tarea> tareas = _context.Tarea
+                .Where(e => e.IdUsuario == usuario.IdUsuario)
                 .OrderBy(e => e.IdTarea)
                 .Skip(indIni)
                 .Take(max)
@@ -183,7 +207,7 @@ namespace ThemisWorkshop.Controllers
 
         public static int ObtenerPaginasFronted(int cantidadPorpagina)
         {
-            return (int)Math.Ceiling((double)_temp.Tarea.Count() / cantidadPorpagina);
+            return (int)Math.Ceiling((double)_temp.Tarea.Count(e => e.IdUsuario == usuario.IdUsuario) / cantidadPorpagina);
         }
     }
 }
