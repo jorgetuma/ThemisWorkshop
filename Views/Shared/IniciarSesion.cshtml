@@ -3,36 +3,206 @@
 *@
 @{
     ViewData["Title"] = "Iniciar Sesión";
+
+    Layout = null;
+
 }
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ThemisWorkshop.styles.css" asp-append-version="true" />
+
     <style>
-        .content {
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        /* Font */
+
+        body {
+            color: #323232 !important;
         }
 
-        #navbar {
+        /* Buttons */
+
+        .btn-positive {
+            background-color: #323232;
+            color: #FFFFFF !important;
+            width: 8rem;
+        }
+
+        .btn-positive:hover {
+            color: #323232 !important;
+        }
+
+        .btn-positive-twice {
+            background-color: #323232;
+            color: #FFFFFF !important;
+            width: 16rem;
+        }
+
+        .btn-positive-twice:hover {
+            color: #323232 !important;
+        }
+
+        .btn-positive-free {
+            background-color: #323232;
+            color: #FFFFFF !important;
+            width: 100%;
+        }
+
+            .btn-positive-free:hover {
+            color: #323232 !important;
+        }
+
+        .btn-negative {
+            border: none;
+            outline-offset: -2px;
+            outline: 2px solid #323232;
+            color: #323232 !important;
+            width: 8rem;
+        }
+
+        .btn-negative:hover {
+            color: #FFFFFF !important;
+        }
+
+        a.btn-disabled {
+            pointer-events: none;
+            color: #4b4b4b;
+        }
+
+        /* Navbar's setting */
+
+        .bg-black-dark {
+            background-color: #323232;
+            color: #FFF;
+        }
+
+        .bg-black-light {
+            background-color: #4B4B4B;
+            color: #FFF;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #FFF !important;
+        }
+
+        .hover-to-bg-black-light:hover {
+            background-color: #FFF !important;
+            color: #323232 !important;
+            font-weight: bold;
+        }
+
+        .navbar-height-3 {
+            height: 3rem;
+        }
+
+        .navbar-height-4 {
+            height: 4rem;
+        }
+
+        .fixed-navbar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+        }
+
+        .navbar-shown {
+            width: 12rem;
+        }
+
+        .navbar-hidden {
+            width: 4rem;
+        }
+            
+        .fixed-topbar-shown {
+            position: fixed;
+            top: 0;
+            padding-left: 12rem;
+        }
+
+        .fixed-topbar-hidden {
+            position: fixed;
+            top: 0;
+            padding-left: 4rem;
+        }
+
+        .content-shown {
+            padding-left: 12rem;
+            padding-top: 4rem;
+        }
+
+        .content-hidden {
+            padding-left: 4rem;
+            padding-top: 4rem;
+        }
+
+        .hidden {
             display: none;
         }
 
         #topbar {
+            z-index: 1;
+        }
+
+        #navbar {
+            z-index: 1;
+        }
+
+         /* Modal */
+
+        .modal-backdrop {
             display: none;
         }
 
-        .content-shown {
-            padding-left: 0;
-            padding-top: 0;
+        /* Pagination */
+
+        .page-link {
+            background-color: #323232;
         }
 
-        .content-hidden {
-            padding-left: 0;
-            padding-top: 0;
+        .page-link:hover {
+            background-color: #4b4b4b;
+            color: #4b4b4b !important;
         }
+
+        /* Colors */
+
+        .pink{
+            color: #E4ADC8;
+        }
+
+        .red {
+            color: #FF6663;
+        }
+
+        .yellow {
+            color: #FDFD97;
+        }
+
+        .orange {
+            color: #EAB892;
+        }
+
+        .green {
+            color: #9EE09E;
+        }
+
+        .blue {
+            color: #B4D2E4;
+        }
+
+        .grey {
+            color: #C7C1B7;
+        }
+
+        .grey-2 {
+            color: #A3A2A5;
+        }
+
     </style>
 </head>
 <body>
@@ -70,5 +240,9 @@
             </div>
         </div>
     </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

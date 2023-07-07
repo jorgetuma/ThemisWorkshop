@@ -229,7 +229,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="usuario" placeholder="usuario" value="@Model.Nombre" name="usuario" maxlength="50">
+                        <input required type="text" class="form-control" id="usuario" placeholder="usuario" value="@Model.UserName" name="usuario" maxlength="50">
                         <label for="usuario">Usuario</label>
                     </div>
                 </div>
@@ -248,13 +248,13 @@
                 <div class="col-2">
                     <div class="form-floating">
                         <select class="form-select" id="rol" name="rol">
-                            @if (Model.Rol.Equals("Secretario"))
+                            @if (Model.Rol == 2)
                             {
                                 <option selected value="2">Secretario</option>
                                 <option value="1">Abogado</option>
                                 <option value="0">Administrador</option>
                             }
-                            else if (Model.Rol.Equals("Abogado"))
+                            else if (Model.Rol == 1)
                             {
                                 <option value="2">Secretario</option>
                                 <option selected value="1">Abogado</option>
@@ -279,19 +279,19 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="number" class="form-control" id="sueldo" placeholder="sueldo" value="@Model.Sueldo" name="sueldo" maxlength="50">
+                        <input required type="number" class="form-control" id="sueldo" placeholder="sueldo" value="@Model.Sueldo" name="sueldo" maxlength="50" min="0">
                         <label for="sueldo">Sueldo</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="@Model.Incentivo" name="incentivo" maxlength="50">
+                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="@Model.Incentivo" name="incentivo" maxlength="50" min="0">
                         <label for="incentivo">Incentivo</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="@Model.Comision" name="comision" maxlength="50">
+                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="@Model.Comision" name="comision" maxlength="50" min="0">
                         <label for="comision">Comisión</label>
                     </div>
                 </div>

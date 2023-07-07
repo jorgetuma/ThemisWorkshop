@@ -31,7 +31,6 @@ namespace ThemisWorkshop.Controllers
             if (Autenticar(userName, password) && ModelState.IsValid)
             {
                 HttpContext.Session.SetString("usuario", userName);
-                ViewData["usuario"] = user;
                 return Redirect("/Home");
             }
             else

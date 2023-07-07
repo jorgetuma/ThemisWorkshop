@@ -3,8 +3,11 @@
 *@
 @{
     ViewData["Title"] = "Agregar/Modificar Cita";
+
+    @using ThemisWorkshop.Controllers
     @model CitaViewModel
-    @if (Model.EsMod == false) // Si no hay nada, significa que esta agregando una Cita
+
+    if (Model.EsMod == false) // Si no hay nada, significa que esta agregando una Cita
     {
         ViewData["Title"] = "Agendar Cita";
     }
@@ -12,6 +15,9 @@
     {
         ViewData["Title"] = "Modificar Cita";
     }
+
+    Usuario usuario = CitaController.usuario;
+    List<Usuario> abogados = CitaController._temp.Usuario.Where(usuario => usuario.Rol != 2 && usuario.Eliminado == false).ToList();
 }
 <html>
 <head>
@@ -29,6 +35,32 @@
                     Detalles de la Cita de @Model.Cliente.Nombre @Model.Cliente.Apellido:
                 </div>
             </div>
+            @{
+                if (usuario.Rol != 2)
+                {
+                    <input type="hidden" value="@usuario.IdUsuario" name="idUsuario">
+                }
+                else
+                {
+                    <div class="row m-0 g-3">
+                        <div class="col">
+                            <div class="form-floating">
+                                <select class="form-select" id="idUsuario" name="idUsuario">
+                                    @{
+                                        foreach (var abogado in abogados)
+                                        {
+                                            <option value="@abogado.IdUsuario">
+                                                @abogado.Nombre @abogado.Apellido | @abogado.Especialidad
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                                <label for="idUsuario">Abogado</label>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
@@ -91,6 +123,41 @@
                     Detalles de la Cita de @Model.Cliente.Nombre @Model.Cliente.Apellido:
                 </div>
             </div>
+            @{
+                if (usuario.Rol != 2)
+                {
+                    <input type="hidden" value="@usuario.IdUsuario" name="idUsuario">
+                }
+                else
+                {
+                    <div class="row m-0 g-3">
+                        <div class="col">
+                            <div class="form-floating">
+                                <select class="form-select" id="idUsuario" name="idUsuario">
+                                    @{
+                                        foreach (var abogado in abogados)
+                                        {
+                                            if (abogado.IdUsuario.Equals(Model.Cita.IdUsuario))
+                                            {
+                                                <option selected value="@abogado.IdUsuario">
+                                                    @abogado.Nombre @abogado.Apellido | @abogado.Especialidad
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@abogado.IdUsuario">
+                                                    @abogado.Nombre @abogado.Apellido | @abogado.Especialidad
+                                                </option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <label for="idUsuario">Abogado</label>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">

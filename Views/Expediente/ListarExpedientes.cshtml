@@ -7,7 +7,7 @@
     @using ThemisWorkshop.Controllers;
     @model List<Expediente> 
 
-    int cantidadPag = ExpedienteController.ObtenerPaginasFronted(10) + 1;
+    int cantidadPag = ExpedienteController.ObtenerPaginasFronted(10);
     string color;
     int counter = 1;
 
@@ -291,7 +291,7 @@
             </div>
         </div>
         @{
-        if (cantidadPag > 1)
+        if (cantidadPag != 1)
         {
             <div class="row">
                 <div class="col d-flex justify-content-center">

@@ -7,7 +7,7 @@
     @using ThemisWorkshop.Controllers;
     @model List<Consulta> 
 
-    int cantidadPag = ConsultaController.ObtenerPaginasFronted(10) + 1;
+    int cantidadPag = ConsultaController.ObtenerPaginasFronted(10);
     string color = "#9EE09E";
 }
 <html>
@@ -30,7 +30,7 @@
                     var cita = ConsultaController._temp.Cita.Where(e => e.IdCita == consulta.IdCita).First();
 
                     <div class="col">
-                        <div class="card mb-3" style="border-color: @color">
+                        <div class="card" style="border-color: @color">
                             <div class="card-body p-0">
                                 <div class="row g-0">
                                     <div class="col-auto" style="background-color: @color">
@@ -92,7 +92,7 @@
     </div>
 
     @{
-        if (cantidadPag > 1)
+        if (cantidadPag != 1)
         {
             <div class="row">
                 <div class="col d-flex justify-content-center">

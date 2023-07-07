@@ -10,7 +10,7 @@
     @using ThemisWorkshop.Controllers;
     @model List<Tarea>
 
-    int cantidadPag = TareaController.ObtenerPaginasFronted(10) + 1;
+    int cantidadPag = TareaController.ObtenerPaginasFronted(10);
     string color;
 
     var todayTareas = Model.Where(tarea =>
@@ -311,7 +311,7 @@
         </div>
     </div>
     @{
-        if (cantidadPag > 1)
+        if (cantidadPag != 1)
         {
             <div class="row">
                 <div class="col d-flex justify-content-center">
