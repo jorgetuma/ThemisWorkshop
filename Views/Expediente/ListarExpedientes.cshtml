@@ -288,10 +288,10 @@
                     }
                 }
             }
-            </div>
         </div>
-        @{
-        if (cantidadPag != 1)
+    </div>
+    @{
+        if (cantidadPag > 1)
         {
             <div class="row">
                 <div class="col d-flex justify-content-center">
@@ -302,11 +302,13 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            @for (int i = 1; i <= cantidadPag; i++)
-                            {
-                                <li class="page-item">
-                                    <a class="page-link" href="/Expediente/ListarExpediente/@i">@i</a>
-                                </li>
+                            @{
+                                for (int i = 1; i <= cantidadPag; i++)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="/Expediente/ListarExpediente/@i">@i</a>
+                                    </li>
+                                }
                             }
                             <li class="page-item">
                                 <a class="page-link" href="/Expediente/ListarExpediente/@cantidadPag" aria-label="Next">
@@ -319,7 +321,6 @@
             </div>
         }
     }
-
     <script>
         var botonesServicios = document.querySelectorAll('.btn-servicios');
 
@@ -335,7 +336,6 @@
             });
         });
     </script>
-
     <script>
         function filter_cards() {
             var searchValue = document.getElementById('search_filter').value.toLowerCase();
@@ -353,7 +353,6 @@
             }
         }
     </script>
-
     <script>
         function filter_cards_2() {
             var selectedOption = document.getElementById("filter_combobox").value;
