@@ -198,6 +198,11 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult Error()
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             return View("Error");
         }
 

@@ -188,13 +188,23 @@ namespace ThemisWorkshop.Controllers
 
         //Vista para manejar errores
         [HttpGet]
-        public ActionResult Error() { 
-        return View("Error");
+        public ActionResult Error() {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
+            return View("Error");
         }
 
         [HttpGet]
         public ActionResult CreditoPendiente() 
-        { 
+        {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             return View("CreditoPendiente");
         }
 

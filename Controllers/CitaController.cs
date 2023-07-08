@@ -59,6 +59,7 @@ namespace ThemisWorkshop.Controllers
         public ActionResult AddCita()
         {
             int idcliente = int.Parse(Request.Form["idcliente"].ToString());
+            int idusurio = int.Parse(Request.Form["idUsuario"].ToString());
             string asunto = Request.Form["asunto"].ToString();
             string descripcion = Request.Form["descripcion"].ToString();
             string lugar = Request.Form["lugar"].ToString();
@@ -68,7 +69,7 @@ namespace ThemisWorkshop.Controllers
             TimeOnly horaini = TimeOnly.Parse(Request.Form["horainicial"].ToString());
             TimeOnly horafin = TimeOnly.Parse("00:00");
 
-            var cita = new Cita(idcliente, usuario.IdUsuario, asunto, lugar, descripcion, fechautc, horaini, horafin);
+            var cita = new Cita(idcliente, idusurio, asunto, lugar, descripcion, fechautc, horaini, horafin);
             _context.Cita.Add(cita);
             _context.SaveChanges();
             return Redirect("/Cita/ListarCitas/1");
@@ -103,6 +104,7 @@ namespace ThemisWorkshop.Controllers
             Cita? cita = _context.Cita.Find(id);
             if (cita != null)
             {
+                int idusurio = int.Parse(Request.Form["idUsuario"].ToString());
                 string asunto = Request.Form["asunto"].ToString();
                 string descripcion = Request.Form["descripcion"].ToString();
                 string lugar = Request.Form["lugar"].ToString();
@@ -111,6 +113,7 @@ namespace ThemisWorkshop.Controllers
                 fechautc = fechautc.AddDays(1);
                 TimeOnly horaini = TimeOnly.Parse(Request.Form["horainicial"].ToString());
 
+                cita.IdUsuario = idusurio;
                 cita.Asunto = asunto;
                 cita.Descripcion = descripcion;
                 cita.Lugar = lugar;
@@ -156,6 +159,11 @@ namespace ThemisWorkshop.Controllers
         [HttpGet]
         public ActionResult Error() 
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
             return View("Error");
         }
 
