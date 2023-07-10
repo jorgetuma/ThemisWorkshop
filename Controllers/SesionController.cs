@@ -40,9 +40,16 @@ namespace ThemisWorkshop.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult CerrarSesion() 
+        {
+            HttpContext.Session.Remove("usuario");
+            return RedirectToAction("IniciarSesion");
+        }
+
         private bool Autenticar(string userName, string password) 
         {
-             user = _context.Usuario.Where(e => e.UserName == userName && e.Password == password).FirstOrDefault();
+             user = _context.Usuario.Where(e => e.UserName == userName && e.Password == password && e.Eliminado == false).FirstOrDefault();
             if (user == null)
             {
                 return false;
