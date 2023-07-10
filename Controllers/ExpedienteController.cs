@@ -215,6 +215,32 @@ namespace ThemisWorkshop.Controllers
         }
 
         [HttpGet]
+        [Route("/Expediente/ReabrirExpediente/{id}")]
+        public ActionResult ReabrirExpediente(int id)
+        {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
+            Expediente? expediente = _context.Expediente.Find(id);
+
+            if (expediente != null)
+            {
+                expediente.Activo = true;
+                expediente.FechaApertura = DateTime.SpecifyKind(expediente.FechaApertura, DateTimeKind.Utc);
+                expediente.FechaApertura = expediente.FechaApertura.AddDays(1);
+                _context.Update(expediente);
+                _context.SaveChanges();
+                return Redirect("/Expediente/ListarExpedientes/1");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        [HttpGet]
         public ActionResult Error()
         {
             usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
