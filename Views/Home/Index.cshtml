@@ -29,7 +29,7 @@
         cantidadClientes = uniqueIdClientes.Count();
 
         citas = HomeController._temp.Cita.ToList();
-        cantidadCitas = citas.Count();
+        cantidadCitas = citas.Count(cita => cita.Realizado == false);
         todayCitas = citas.Where(cita =>
         {
             string fechaString = cita.Fecha.Date.ToShortDateString();
