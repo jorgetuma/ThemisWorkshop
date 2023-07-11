@@ -24,6 +24,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             if (pag <= 0) 
             {
                 pag = 1;
@@ -40,6 +45,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             Cita? cita  = _context.Cita.Find(idCita);
             if (cita != null)
@@ -83,6 +93,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             Consulta? consulta = _context.Consulta.Find(id);
             if (consulta != null)
             {
@@ -110,6 +125,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             return View("Error");
         }

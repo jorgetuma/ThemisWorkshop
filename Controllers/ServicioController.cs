@@ -24,6 +24,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             if (pag <= 0)
             { 
                 pag = 1;
@@ -39,6 +44,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             return View("AgregarServicio");
         }
@@ -67,6 +77,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             Servicio? servicio = _context.Servicio.Find(id);
 
@@ -117,6 +132,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             Servicio? servicio = _context.Servicio.Find(id);
 
             if (servicio != null)
@@ -140,6 +160,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             return View("Error");
         }

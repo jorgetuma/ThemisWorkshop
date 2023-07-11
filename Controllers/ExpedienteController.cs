@@ -24,6 +24,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             if (pag <= 0)
             {
                 pag = 1;
@@ -40,6 +45,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             Cliente? cliente = _context.Clientes.Find(idCliente);
             if (cliente != null)
@@ -99,6 +109,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             Expediente? expediente = _context.Expediente.Find(id);
             if (expediente != null)
@@ -196,6 +211,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             Expediente? expediente = _context.Expediente.Find(id);
 
             if (expediente != null)
@@ -223,6 +243,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             Expediente? expediente = _context.Expediente.Find(id);
 
             if (expediente != null)
@@ -247,6 +272,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             return View("Error");
         }

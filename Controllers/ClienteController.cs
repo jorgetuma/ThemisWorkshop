@@ -45,6 +45,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Abogado))
+            {
+                Response.StatusCode = 403;
+                 return Redirect("/"+ Response.StatusCode.ToString());
+            }
             // Devolver una vista con el formulario de agregar cliente vacío
             return View("AgregarCliente");
         }
@@ -88,6 +93,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Abogado))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             int idClienteSelecionado = id;
             Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);
@@ -159,6 +169,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Abogado))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             int idClienteSelecionado = id;
             Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);

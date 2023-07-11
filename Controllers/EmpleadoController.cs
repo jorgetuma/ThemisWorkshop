@@ -24,6 +24,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             if (pag <= 0) 
             {
                 pag = 1;
@@ -36,6 +41,16 @@ namespace ThemisWorkshop.Controllers
         [Route("Empleado/AgregarEmpleado")]
         public ActionResult AgregarEmpleado()
         {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             return View("AgregarEmpleado");
         }
 
@@ -90,6 +105,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             Usuario? user = _context.Usuario.Find(id);
             if (user!=null) 
@@ -179,6 +199,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
             Usuario? user = _context.Usuario.Find(id);
             if (user != null)
             {
@@ -202,6 +227,11 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Abogado) || usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
             }
             return View("Error");
         }
