@@ -14,6 +14,8 @@
     List<Cliente> clientes = FacturaController._temp.Clientes.ToList();
     List<Factura> facturasPendientes = Model.Where(factura => factura.MontoPorPagar > 0).ToList();
     List<Factura> facturasPagadas = Model.Where(factura => !facturasPendientes.Contains(factura)).ToList();
+
+    Usuario usuario = FacturaController.usuario;
 }
 <html>
 <head>
@@ -21,20 +23,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div class="row my-3">
-        <div class="col-2">
-            <select class="form-select" id="filter_combobox" onchange="filter_cards_2()">
-                <option selected value="0">Pendientes</option>
-                <option value="1">Pagados</option>
-            </select>
-        </div>
-        <div class="col ps-0">
-            <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
-        </div>
-        <div class="col-auto ps-0">
-            <a class="btn btn-positive" href="/Expediente/ListarExpedientes/1" role="button">Facturar</a>
-        </div>
-    </div>
+    @{
+        if (Model.Count.Equals(0))
+        {
+            if (usuario.Rol != 2)
+            {
+                <div class="row text-center my-3">
+                    <div class="col">
+                        No hay facturas registradas, ¡Registra tu primera factura!
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col">
+                        <div class="text-center">
+                            <a class="btn btn-positive-twice" href="/Expediente/ListarExpedientes/1" role="button">Ver Expedientes</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row text-center my-3">
+                    <div class="col">
+                        No hay facturas registradas.
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="row my-3">
+                <div class="col-2">
+                    <select class="form-select" id="filter_combobox" onchange="filter_cards_2()">
+                        @{
+                            <option selected value="0">Pendientes</option>
+                            if (!facturasPagadas.Count.Equals(0))
+                            {
+                                <option value="1">Pagados</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col ps-0">
+                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
+                </div>
+                <div class="col-auto ps-0">
+                    <a class="btn btn-positive" href="/Expediente/ListarExpedientes/1" role="button">Facturar</a>
+                </div>
+            </div>
+        }
+    }
+    @{
+        if (facturasPendientes.Count.Equals(0))
+        {
+            <div class="row my-3" id="pendientes">
+                <div class="col">
+                    <div class="text-center">
+                        ¡No hay facturas pendientes!
+                    </div>
+                </div>
+            </div>
+        }
+    }
     <div class="row my-3">
         <div class="col" id="pendientes">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -115,43 +165,43 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-auto text-end">
-                                                @{
-                                                    if (factura.MontoPorPagar != 0 && factura.EsCredito)
-                                                    {
-                                                        <a href="/Factura/SaldarFactura/@factura.IdFactura">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-cash" viewBox="0 0 16 16">
-                                                                <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
-                                                                <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                                                    @{
+                                                        if (factura.MontoPorPagar != 0 && factura.EsCredito)
+                                                        {
+                                                            <a href="/Factura/SaldarFactura/@factura.IdFactura">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-cash" viewBox="0 0 16 16">
+                                                                    <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                                                                    <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                                                                </svg>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <!-- Trigger modal -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@factura.IdFactura">
+                                                                <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
                                                             </svg>
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <!-- Trigger modal -->
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@factura.IdFactura">
-                                                            <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                                                        </svg>
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="modal-@factura.IdFactura" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
-                                                                <div class="modal-content text-center">
-                                                                    <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Archivar Factura</h1>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        ¿Seguro que desea archivar esta factura?<br>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <div class="input-group d-flex justify-content-center">
-                                                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                                                            <a href="/Factura/EliminarFactura/@factura.IdFactura" class="btn btn-positive">Aceptar</a>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="modal-@factura.IdFactura" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                    <div class="modal-content text-center">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Archivar Factura</h1>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            ¿Seguro que desea archivar esta factura?<br>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <div class="input-group d-flex justify-content-center">
+                                                                                <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                                <a href="/Factura/EliminarFactura/@factura.IdFactura" class="btn btn-positive">Aceptar</a>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        }
                                                     }
-                                                }
                                                 </div>
                                             </div>
                                         </div>
@@ -209,7 +259,7 @@
                                                     @factura.Costo $
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row mb-3">
                                                 <div class="col">
                                                     Pagado:
                                                 </div>
@@ -218,14 +268,6 @@
                                                 }
                                                 <div class="col-auto text-end">
                                                     @pagado $
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col">
-                                                    Saldo pendiente:
-                                                </div>
-                                                <div class="col-auto text-end">
-                                                    @factura.MontoPorPagar $
                                                 </div>
                                             </div>
                                             <div class="row">

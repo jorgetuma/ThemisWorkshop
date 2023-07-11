@@ -464,26 +464,35 @@
             </div>
         </form>
     }
-
     <script>
-        const mySelect = document.getElementById("rol");
-        const especialidadInput = document.getElementById("especialidad");
-        const incentivoInput = document.getElementById("incentivo");
-        const comisionInput = document.getElementById("comision");
+        function handleSelectChange() {
+            const mySelect = document.getElementById("rol");
+            const especialidadInput = document.getElementById("especialidad");
+            const incentivoInput = document.getElementById("incentivo");
+            const comisionInput = document.getElementById("comision");
 
-        mySelect.addEventListener("change", function () {
             if (mySelect.value == 0 || mySelect.value == 1) {
                 especialidadInput.disabled = false;
                 incentivoInput.disabled = false;
                 comisionInput.disabled = false;
+                especialidadInput.required = true;
+                incentivoInput.required = true;
+                comisionInput.required = true;
             } else {
                 especialidadInput.disabled = true;
                 incentivoInput.disabled = true;
                 comisionInput.disabled = true;
+                especialidadInput.required = false;
+                incentivoInput.required = false;
+                comisionInput.required = false;
             }
-        });
-    </script>
+        }
 
+        const mySelect = document.getElementById("rol");
+        mySelect.addEventListener("change", handleSelectChange);
+
+        window.addEventListener("load", handleSelectChange);
+    </script>
     <script>
         const passwordInput = document.getElementById("password");
         const confirmPasswordInput = document.getElementById("password2");
