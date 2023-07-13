@@ -36,6 +36,14 @@
                         </div>
                     </div>
                 }
+                else
+                {
+                    <div class="row mb-3">
+                        <div class="col">
+                            <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_cards()">
+                        </div>
+                    </div>
+                }
             }
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             @{
@@ -135,5 +143,24 @@
             </div>
         }
     }
+    <script>
+        function filter_cards() {
+            var searchValue = document.getElementById('search_filter').value.toLowerCase();
+            var cards = document.getElementsByClassName('card');
+
+            for (var i = 0; i < cards.length; i++) {
+                var card = cards[i];
+                var col = card.closest('.col');
+
+                var cardContent = card.textContent || card.innerText;
+
+                if (cardContent.toLowerCase().indexOf(searchValue) > -1) {
+                    col.style.display = '';
+                } else {
+                    col.style.display = 'none';
+                }
+            }
+        }
+    </script>
 </body>
 </html>

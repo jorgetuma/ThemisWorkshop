@@ -1,10 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
-
     System.Globalization.CultureInfo spanishCulture = new System.Globalization.CultureInfo("es-ES");
     System.Threading.Thread.CurrentThread.CurrentCulture = spanishCulture;
 
     @using ThemisWorkshop.Controllers
+    @using System.Web
 
     int cantidadExpedientes = 0;
     int cantidadClientes = 0;
@@ -18,6 +17,8 @@
     List<Cita> todayCitas = null;
     List<Tarea> tareas = null;
     List<Tarea> todayTareas = null;
+
+    ViewData["Title"] = "Bienvenido, " + usuario.Nombre.ToString() + " " + usuario.Apellido.ToString();
 
     if (usuario.Rol != 2)
     {
@@ -273,6 +274,12 @@
                     }
                 </div>
             </div>
+        }
+        else
+        {
+            <script>
+                window.location.href = '@Url.Action("ListarClientes", "Cliente", new { id = 1 })';
+            </script>
         }
     }
 </div>
