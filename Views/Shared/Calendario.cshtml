@@ -8,6 +8,7 @@
 
     @model List<Cita>
     
+    Usuario usuario = CitaController.usuario;
     List<String> dias = new List<String>();
     dias.Add("Domingo");
     dias.Add("Lunes");
@@ -16,7 +17,10 @@
     dias.Add("Jueves");
     dias.Add("Viernes");
     dias.Add("Sábado");
+    List<Tarea> tareas = null;
     string color;
+
+    tareas = CitaController._temp.Tarea.Where(tarea => tarea.IdUsuario == usuario.IdUsuario && tarea.Realizado == false).ToList();
 
     DateTime currentDate = DateTime.UtcNow.AddHours(-4);
     int year = currentDate.Year;
@@ -56,7 +60,7 @@
                     @{
                         for (int row = 0; row < numRows; row++)
                         {
-                            <tr>
+                            <tr style="height: 100px;">
                                 @{
                                     for (int col = 0; col < 7; col++)
                                     {
@@ -67,6 +71,7 @@
                                         {
                                             DateTime currentDateOfMonth = new DateTime(year, month, dayNumber);
                                             var citasForDay = Model.Where(cita => cita.Fecha == currentDateOfMonth.Date).ToList();
+                                            var tareasForDay = tareas.Where(tarea => tarea.Fecha == currentDateOfMonth.Date).ToList();
 
                                             if (dayNumber == currentDate.Day)
                                             {
@@ -78,14 +83,33 @@
                                                             @{
                                                                 foreach (var cita in citasForDay)
                                                                 {
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                                                                        <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z" />
+                                                                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                                                                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                                                                    </svg>
                                                                     <span class="badge" style="background-color: @color;">
                                                                         @cita.Asunto
-                                                                    </span><br>
+                                                                    </span>
+                                                                }
+                                                                foreach (var tarea in tareasForDay)
+                                                                {
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                                                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                        <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                                                    </svg>
+                                                                    <span class="badge" style="background-color: @color;">
+                                                                        @tarea.Asunto
+                                                                    </span>
+
+                                                                    <br>
                                                                 }
                                                             }
                                                         </div>
                                                         <div class="col-auto">
-                                                            <small>@formattedDayNumber</small>
+                                                            <span class="badge" style="background-color: @color;">
+                                                                @formattedDayNumber
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -112,9 +136,38 @@
                                                                     {
                                                                         color = "#B4D2E4";
                                                                     }
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                                                                        <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z" />
+                                                                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                                                                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                                                                    </svg>
                                                                     <span class="badge" style="background-color: @color;">
                                                                         @cita.Asunto
-                                                                    </span><br>
+                                                                    </span>
+
+                                                                    <br>
+                                                                }
+                                                                foreach (var tarea in tareasForDay)
+                                                                {
+                                                                    DateTime tareaDate = tarea.Fecha.Date;
+
+                                                                    if (tareaDate < currentDate.Date)
+                                                                    {
+                                                                        color = "#FF6663";
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        color = "#B4D2E4";
+                                                                    }
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                                                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                        <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                                                    </svg>
+                                                                    <span class="badge" style="background-color: @color;">
+                                                                        @tarea.Asunto
+                                                                    </span>
+
+                                                                    <br>
                                                                 }
                                                             }
                                                         </div>
