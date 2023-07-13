@@ -91,7 +91,7 @@
                                             </div>
                                         </div>
                                         <small>@expediente.Descripcion</small><br>
-                                        <table class="table table-sm table-hover tabla-servicios mt-3">
+                                        <table class="table table-sm table-hover tabla-servicios border mt-3">
                                             <tbody>
                                                 @{
                                                     foreach (var servicio in servicios)
@@ -236,7 +236,7 @@
                                         </div>
                                         <small>@expediente.Descripcion</small><br>
                                         <div class="table-responsive">
-                                            <table class="table table-sm table-hover tabla-servicios mt-3">
+                                            <table class="table table-sm table-hover tabla-servicios border mt-3">
                                                 <tbody>
                                                     @{
                                                         var misServicios = @ExpedienteController._temp.Detalleservicio.Where(e => e.IdExpediente == expediente.IdExpediente).ToList();
