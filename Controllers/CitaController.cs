@@ -191,7 +191,11 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
-            List<Cita> citas = _context.Cita.ToList(); 
+            List<Cita> citas = _context.Cita.Where(e => e.IdUsuario == usuario.IdUsuario).ToList();
+            if (usuario.Rol == ((int)Rolesapp.Secretario)) 
+            { 
+             citas = _context.Cita.ToList();
+            }
             return View("Calendario",citas);
         }
 
