@@ -65,7 +65,7 @@
                     </select>
                 </div>
                 <div class="col ps-0">
-                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
+                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_cards()">
                 </div>
                 <div class="col-auto ps-0">
                     <a class="btn btn-positive" href="/Expediente/ListarExpedientes/1" role="button">Facturar</a>
@@ -326,29 +326,20 @@
         }
     }
     <script>
-        function filter_table() {
-            var input, filter, table, tr, td, i, j, visible;
-            input = document.getElementById("search_filter");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("table");
-            tr = table.getElementsByTagName("tr");
+        function filter_cards() {
+            var searchValue = document.getElementById('search_filter').value.toLowerCase();
+            var cards = document.getElementsByClassName('card');
 
-            for (i = 0; i < tr.length; i++) {
-                visible = false;
-                if (tr[i].getElementsByTagName("th").length == 0) {
-                    td = tr[i].getElementsByTagName("td");
-                    for (j = 0; j < td.length; j++) {
-                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                            visible = true;
-                        }
-                    }
+            for (var i = 0; i < cards.length; i++) {
+                var card = cards[i];
+                var col = card.closest('.col');
+
+                var cardContent = card.textContent || card.innerText;
+
+                if (cardContent.toLowerCase().indexOf(searchValue) > -1) {
+                    col.style.display = '';
                 } else {
-                    visible = true;
-                }
-                if (visible) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+                    col.style.display = 'none';
                 }
             }
         }
