@@ -83,7 +83,7 @@ namespace ThemisWorkshop.Controllers
                 Response.StatusCode = 403;
                 return Redirect("/" + Response.StatusCode.ToString());
             }
-            Servicio? servicio = _context.Servicio.Find(id);
+            Servicio? servicio = _context.Servicio.Where(e => e.IdServicio == id && e.Eliminado == false).FirstOrDefault();
 
             if (servicio != null)
             {

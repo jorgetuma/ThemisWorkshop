@@ -56,6 +56,7 @@ namespace ThemisWorkshop.Controllers
         public ActionResult CerrarSesion() 
         {
             HttpContext.Session.Remove("usuario");
+            Response.Cookies.Delete("Themisworkshop");
             SesionViewModel model = new SesionViewModel("","",false);
             return View("IniciarSesion",model);
         }

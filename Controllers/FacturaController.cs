@@ -116,7 +116,7 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
-            Factura? factura = _context.Factura.Find(id);
+            Factura? factura = _context.Factura.Where(e => e.IdFactura == id && e.Eliminado == false).FirstOrDefault();
             if (factura != null)
             {
                 FacturaViewModel model = new FacturaViewModel(-1,-1,-1,factura);

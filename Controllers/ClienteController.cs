@@ -100,7 +100,7 @@ namespace ThemisWorkshop.Controllers
                 return Redirect("/" + Response.StatusCode.ToString());
             }
             int idClienteSelecionado = id;
-            Cliente? cliente = _context.Clientes.Find(idClienteSelecionado);
+            Cliente? cliente = _context.Clientes.Where(e => e.IdClientes == idClienteSelecionado && e.Eliminado == false).FirstOrDefault();
 
             if (cliente != null)
             {

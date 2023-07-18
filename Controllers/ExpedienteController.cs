@@ -115,7 +115,7 @@ namespace ThemisWorkshop.Controllers
                 Response.StatusCode = 403;
                 return Redirect("/" + Response.StatusCode.ToString());
             }
-            Expediente? expediente = _context.Expediente.Find(id);
+            Expediente? expediente = _context.Expediente.Where(e => e.IdExpediente == id && e.Activo == true).FirstOrDefault();
             if (expediente != null)
             {
                 Cliente cliente = _context.Clientes.Find(expediente.IdCliente);

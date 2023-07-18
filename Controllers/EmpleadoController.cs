@@ -111,7 +111,7 @@ namespace ThemisWorkshop.Controllers
                 Response.StatusCode = 403;
                 return Redirect("/" + Response.StatusCode.ToString());
             }
-            Usuario? user = _context.Usuario.Find(id);
+            Usuario? user = _context.Usuario.Where(e => e.IdUsuario == id && e.Eliminado == false).FirstOrDefault();
             if (user!=null) 
             {
                 return View("AgregarEmpleado", user);
