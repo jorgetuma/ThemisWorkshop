@@ -22,6 +22,8 @@
 
     tareas = CitaController._temp.Tarea.Where(tarea => tarea.IdUsuario == usuario.IdUsuario && tarea.Realizado == false).ToList();
 
+    // Monthly
+
     DateTime currentDate = DateTime.UtcNow.AddHours(-4);
     int year = currentDate.Year;
     int month = currentDate.Month;
@@ -31,6 +33,21 @@
     int startDay = (int)currentMonth.DayOfWeek;
     int emptyCells = startDay == 0 ? 6 : startDay - 1;
     int numRows = (int)Math.Ceiling((double)(daysInMonth + emptyCells) / 7);
+
+    // Weekly
+
+    int day = currentDate.Day;
+
+    DateTime currentWeekStart = currentDate.AddDays(-(int)currentDate.DayOfWeek);
+    int daysInWeek = 7;
+
+    int startDayWeek = (int)currentWeekStart.DayOfWeek;
+    int emptyCellsWeek = startDayWeek == 0 ? 6 : startDayWeek - 1;
+
+    if (currentWeekStart.Month < month)
+    {
+        emptyCellsWeek += 7;
+    }
 }
 <html>
 <head>
@@ -38,9 +55,200 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div class="row mt-3">
-        <div class="col">
+    <div class="row my-3">
+        <div class="col-2">
+            <select class="form-select" id="filter_combobox" onchange="filter_calendar()">
+                <option selected value="0">Mensual</option>
+                <option value="1">Semanal</option>
+            </select>
+        </div>
+        <div class="col ps-0 text-end">
+            <a class="btn btn-positive" href="/Cita/ListarCitas/1" role="button">Ver Citas</a>
+        </div>
+        <div class="col-auto ps-0">
+            <a class="btn btn-positive" href="/Tarea/ListarTareas/1" role="button">Ver Tareas</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" id="weekly" style="display: none;">
             <table class="table table-responsive  table-bordered" id="table">
+                <tbody>
+                    <tr class="text-center">
+                        @{
+                            <td>Hora</td>
+
+                            for (int i = 0; i < daysInWeek; i++)
+                            {
+                                DateTime currentDay = currentWeekStart.AddDays(i);
+                                DateTime today = DateTime.Today;
+
+                                if (i == 0 || i == 6)
+                                {
+                                    <td style="width: 2.5%; background-color: #FAFAFA;">
+                                        <small class="grey">@currentDay.Day</small>
+                                    </td>
+                                }
+                                else if (today.Day == currentDay.Day)
+                                {
+                                    color = "#E4ADC8";
+
+                                    <td class="fw-bold border-3" style="width: 18%; border-color: @color; color: @color">@dias[i] @currentDay.Day</td>
+                                }
+                                else
+                                {
+                                    <td class="fw-bold" style="width: 18%;">@dias[i] @currentDay.Day</td>
+                                }
+                            }
+                        }
+                    </tr>
+                    @{
+                        for (int hour = 8; hour <= 18; hour++)
+                        {
+                            <tr>
+                                <td class="text-center">@hour:00</td>
+
+                                @{
+                                    for (int i = 0; i < daysInWeek; i++)
+                                    {
+                                        DateTime currentDay = currentWeekStart.AddDays(i);
+                                        DateTime today = DateTime.Today;
+
+                                        var citasForDay = Model.Where(cita => cita.Fecha == currentDay.Date &&
+                                        cita.HoraInicial.Hour >= hour &&
+                                        cita.HoraInicial.Hour < hour + 1).ToList();
+
+                                        var tareasForDay = tareas.Where(tarea => tarea.Fecha == currentDay.Date &&
+                                        tarea.Hora.Hour >= hour &&
+                                        tarea.Hora.Hour < hour + 1).ToList();
+        
+                                        if (i == 0 || i == 6)
+                                        {
+                                            <td class="text-end" style="background-color: #FAFAFA;"></td>
+                                        }
+                                        else if (today.Day == currentDay.Day)
+                                        {
+                                            color = "#E4ADC8";
+
+                                            <td class="fw-bold hover-cell">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        @{
+                                                            foreach (var cita in citasForDay)
+                                                            {
+                                                                DateTime citaDate = cita.Fecha.Date;
+
+                                                                if (citaDate.Hour < currentDate.Hour)
+                                                                {
+                                                                    color = "#FF6663";
+                                                                }
+                                                                else
+                                                                {
+                                                                    color = "#B4D2E4";
+                                                                }
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                                                                    <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z" />
+                                                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                                                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                                                                </svg>
+                                                                <span class="badge" style="background-color: @color;">
+                                                                    @cita.Asunto
+                                                                </span>
+
+                                                                <br />
+                                                            }
+                                                            foreach (var tarea in tareasForDay)
+                                                            {
+                                                                DateTime tareaDate = tarea.Fecha.Date;
+
+                                                                if (tareaDate.Hour < currentDate.Hour)
+                                                                {
+                                                                    color = "#FF6663";
+                                                                }
+                                                                else
+                                                                {
+                                                                    color = "#B4D2E4";
+                                                                }
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                                                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                    <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                                                </svg>
+                                                                <span class="badge" style="background-color: @color;">
+                                                                    @tarea.Asunto
+                                                                </span>
+
+                                                                <br />
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="hover-cell">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        @{
+                                                            foreach (var cita in citasForDay)
+                                                            {
+                                                                DateTime citaDate = cita.Fecha.Date;
+
+                                                                if (citaDate < currentDate.Date)
+                                                                {
+                                                                    color = "#FF6663";
+                                                                }
+                                                                else
+                                                                {
+                                                                    color = "#B4D2E4";
+                                                                }
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                                                                    <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z" />
+                                                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                                                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                                                                </svg>
+                                                                <span class="badge" style="background-color: @color;">
+                                                                    @cita.Asunto
+                                                                </span>
+
+                                                                <br />
+                                                            }
+                                                            foreach (var tarea in tareasForDay)
+                                                            {
+                                                                DateTime tareaDate = tarea.Fecha.Date;
+
+                                                                if (tareaDate < currentDate.Date)
+                                                                {
+                                                                    color = "#FF6663";
+                                                                }
+                                                                else
+                                                                {
+                                                                    color = "#B4D2E4";
+                                                                }
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                                                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                                    <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                                                                </svg>
+                                                                <span class="badge" style="background-color: @color;">
+                                                                    @tarea.Asunto
+                                                                </span>
+
+                                                                <br />
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+                                    }
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col" id="monthly">
+            <table class="table table-responsive table-bordered" id="table">
                 <tbody>
                     <tr class="text-center fw-bold">
                         @{
@@ -91,6 +299,8 @@
                                                                     <span class="badge" style="background-color: @color;">
                                                                         @cita.Asunto
                                                                     </span>
+
+                                                                    <br />
                                                                 }
                                                                 foreach (var tarea in tareasForDay)
                                                                 {
@@ -102,7 +312,7 @@
                                                                         @tarea.Asunto
                                                                     </span>
 
-                                                                    <br>
+                                                                    <br />
                                                                 }
                                                             }
                                                         </div>
@@ -145,7 +355,7 @@
                                                                         @cita.Asunto
                                                                     </span>
 
-                                                                    <br>
+                                                                    <br />
                                                                 }
                                                                 foreach (var tarea in tareasForDay)
                                                                 {
@@ -167,7 +377,7 @@
                                                                         @tarea.Asunto
                                                                     </span>
 
-                                                                    <br>
+                                                                    <br />
                                                                 }
                                                             }
                                                         </div>
@@ -191,5 +401,22 @@
             </table>
         </div>
     </div>
+    <script>
+        function filter_calendar() {
+            var combobox = document.getElementById("filter_combobox");
+            var selectedOption = combobox.value;
+
+            var weeklyElement = document.getElementById("weekly");
+            var monthlyElement = document.getElementById("monthly");
+
+            if (selectedOption === "0") {
+                weeklyElement.style.display = "none";
+                monthlyElement.style.display = "block";
+            } else if (selectedOption === "1") {
+                weeklyElement.style.display = "block";
+                monthlyElement.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

@@ -220,7 +220,7 @@
                         }
                     }
                 </div>
-                <div class="col">
+                <div class="col ps-0">
                     @{
                         if (todayTareas.Count.Equals(0))
                         {
@@ -278,7 +278,7 @@
         else
         {
             <script>
-                window.location.href = '@Url.Action("ListarClientes", "Cliente", new { id = 1 })';
+                window.location.href = '@Url.Action("ListarCitas", "Cita", new { id = 1 })';
             </script>
         }
     }
