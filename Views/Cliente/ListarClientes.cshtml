@@ -11,6 +11,15 @@
     string color = null;
 
     Usuario usuario = ClienteController.usuario;
+
+    List<String> paises = new List<String>();
+    paises.Add("República Dominicana");
+    paises.Add("Estados Unidos");
+    paises.Add("Cuba");
+    paises.Add("Venezuela");
+    paises.Add("Colombia");
+    paises.Add("Haití");
+    paises.Add("Otro");
 }
 <html>
 <head>
@@ -93,6 +102,149 @@
                                     <small style="color: #A3A2A5;">@cliente.Pais</small>
                                 </td>
                                 <td class="align-middle" style="width: 2.5%;">
+                                    <!-- Button trigger modal -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-eye" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@cliente.IdClientes">
+                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                    </svg>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modal-@cliente.IdClientes" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered d-flex align-items-center" style="width: 80%; max-width: 1200px;">
+                                            <div class="modal-content text-center">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Examinando Cliente</h1>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col-auto fw-bold">
+                                                            Información de Personal:
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="text" class="form-control" id="nombre" placeholder="nombre" value="@cliente.Nombre" name="nombre" maxlength="50">
+                                                                <label for="nombre">Nombre</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="text" class="form-control" id="apellido" placeholder="apellido" value="@cliente.Apellido" name="apellido" maxlength="50">
+                                                                <label for="apellido">Apellido</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="text" class="form-control" id="docIdentidad" placeholder="docIdentidad" value="@cliente.Cedula" name="docIdentidad" minlength="9" maxlength="11">
+                                                                <label for="docIdentidad">Documento de Identidad</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <select disabled class="form-select" id="sexo" name="sexo">
+                                                                    @if (cliente.Sexo.Equals("Masculino"))
+                                                                    {
+                                                                        <option selected value="Masculino">Masculino</option>
+                                                                        <option value="Femenino">Femenino</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="Masculino">Masculino</option>
+                                                                        <option selected value="Femenino">Femenino</option>
+                                                                    }
+                                                                </select>
+                                                                <label for="sexo">Sexo</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <select disabled class="form-select" id="nacionalidad" name="nacionalidad">
+                                                                    @foreach (var pais in paises)
+                                                                    {
+                                                                        @if (pais.Equals(cliente.Pais))
+                                                                        {
+                                                                            <option selected value="@pais">@pais</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@pais">@pais</option>
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                                <label for="nacionalidad">Nacionalidad</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <select disabled class="form-select" id="estadoCivil" name="estadoCivil">
+                                                                    @if (cliente.EstadoCivil.Equals("Soltero"))
+                                                                    {
+                                                                        <option selected value="Soltero">Soltero</option>
+                                                                        <option value="Casado">Casado</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="Soltero">Soltero</option>
+                                                                        <option selected value="Casado">Casado</option>
+                                                                    }
+                                                                </select>
+                                                                <label for="estadoCivil">Estado Cívil</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                @{
+                                                                    string dataStr = cliente.Fechanacimiento.ToString();
+                                                                    DateTime date = DateTime.Parse(dataStr);
+                                                                }
+                                                                <input disabled type="date" class="form-control" id="fecha" placeholder="fecha" value="@date.ToString("yyyy-MM-dd")" name="fecha" timezone="-240">
+                                                                <label for="fecha">Fecha de Nacimiento</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col-auto fw-bold">
+                                                            Información de Contacto:
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="text" class="form-control" id="direccion" placeholder="direccion" value="@cliente.Direccion" name="direccion" maxlength="250">
+                                                                <label for="direccion">Dirección</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="text" class="form-control" id="correo" placeholder="correo" value="@cliente.Correo" name="correo" maxlength="150">
+                                                                <label for="correo">Correo Electrónico</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="tel" class="form-control" id="telefono" placeholder="telefono" value="@cliente.Telefono" name="telefono" maxlength="15">
+                                                                <label for="telefono">Teléfono</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div class="input-group d-flex justify-content-center">
+                                                        <button type="button" class="btn btn-positive" data-bs-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle" style="width: 2.5%;">
                                     <a href="/Cita/AgregarCita/@cliente.IdClientes" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Agendar Cita">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-calendar4-week" viewBox="0 0 16 16">
                                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z" />
@@ -125,17 +277,17 @@
                                         </td>
                                         <td class="align-middle" style="width: 2.5%;">
                                             <!-- Button trigger modal -->
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#exampleModal-@cliente.IdClientes">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal2-@cliente.IdClientes">
                                                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
                                                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                                             </svg>
 
                                             <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal-@cliente.IdClientes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="modal2-@cliente.IdClientes" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
                                                     <div class="modal-content text-center">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Eliminar Cliente</h1>
+                                                            <h1 class="modal-title fs-5 mx-auto" id="modal2Label">Eliminar Cliente</h1>
                                                         </div>
                                                         <div class="modal-body">
                                                             ¿Seguro que desea eliminar este registro?<br>

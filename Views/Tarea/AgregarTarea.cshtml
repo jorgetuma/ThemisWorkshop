@@ -51,7 +51,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="asunto" placeholder="asunto" value="" name="asunto" maxlength="50">
+                        <input required type="text" class="form-control" id="asunto" placeholder="asunto" value="" name="asunto" maxlength="100">
                         <label for="asunto">Asunto</label>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <textarea class="form-control" id="descripcion" placeholder="descripcion" value="" name="descripcion" style="height: 100px" maxlength="100"></textarea>
+                        <textarea class="form-control" id="descripcion" placeholder="descripcion" value="" name="descripcion" style="height: 100px" maxlength="250"></textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="asunto" placeholder="asunto" value="@Model.Tarea.Asunto" name="asunto" maxlength="50">
+                        <input required type="text" class="form-control" id="asunto" placeholder="asunto" value="@Model.Tarea.Asunto" name="asunto" maxlength="100">
                         <label for="asunto">Asunto</label>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <textarea class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Tarea.Descripcion" name="descripcion" style="height: 100px" maxlength="100">@Model.Tarea.Descripcion</textarea>
+                        <textarea class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Tarea.Descripcion" name="descripcion" style="height: 100px" maxlength="250">@Model.Tarea.Descripcion</textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>

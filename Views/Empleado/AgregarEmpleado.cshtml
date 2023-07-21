@@ -20,6 +20,7 @@
     paises.Add("Venezuela");
     paises.Add("Colombia");
     paises.Add("Haití");
+    paises.Add("Otro");
 
     List<String> especialidades = new List<String>();
     especialidades.Add("Cívil");
@@ -87,19 +88,19 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="number" class="form-control" id="sueldo" placeholder="sueldo" value="" name="sueldo" maxlength="50">
+                        <input required type="number" class="form-control" id="sueldo" placeholder="sueldo" value="" name="sueldo">
                         <label for="sueldo">Sueldo</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="" name="incentivo" maxlength="50">
+                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="" name="incentivo">
                         <label for="incentivo">Incentivo</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="" name="comision" maxlength="50">
+                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="" name="comision">
                         <label for="comision">Comisión</label>
                     </div>
                 </div>
@@ -187,7 +188,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="" name="direccion" maxlength="100">
+                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="" name="direccion" maxlength="200">
                         <label for="direccion">Dirección</label>
                     </div>
                 </div>
@@ -195,7 +196,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="correo" placeholder="correo" value="" name="correo" maxlength="100">
+                        <input required type="text" class="form-control" id="correo" placeholder="correo" value="" name="correo" maxlength="150">
                         <label for="correo">Correo Electrónico</label>
                     </div>
                 </div>
@@ -278,19 +279,19 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="number" class="form-control" id="sueldo" placeholder="sueldo" value="@Model.Sueldo" name="sueldo" maxlength="50" min="0">
+                        <input required type="number" class="form-control" id="sueldo" placeholder="sueldo" value="@Model.Sueldo" name="sueldo" min="0">
                         <label for="sueldo">Sueldo</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="@Model.Incentivo" name="incentivo" maxlength="50" min="0">
+                        <input disabled type="number" class="form-control" id="incentivo" placeholder="incentivo" value="@Model.Incentivo" name="incentivo" min="0">
                         <label for="incentivo">Incentivo</label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="@Model.Comision" name="comision" maxlength="50" min="0">
+                        <input disabled type="number" class="form-control" id="comision" placeholder="comision" value="@Model.Comision" name="comision" min="0">
                         <label for="comision">Comisión</label>
                     </div>
                 </div>
@@ -412,7 +413,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="@Model.Direccion" name="direccion" maxlength="100">
+                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="@Model.Direccion" name="direccion" maxlength="250">
                         <label for="direccion">Dirección</label>
                     </div>
                 </div>
@@ -420,7 +421,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="correo" placeholder="correo" value="@Model.Correo" name="correo" maxlength="100">
+                        <input required type="text" class="form-control" id="correo" placeholder="correo" value="@Model.Correo" name="correo" maxlength="150">
                         <label for="correo">Correo Electrónico</label>
                     </div>
                 </div>

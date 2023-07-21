@@ -12,7 +12,7 @@
     {
         ViewData["Title"] = "Modificar Cliente";
     }
-    
+
     List<String> paises = new List<String>();
     paises.Add("República Dominicana");
     paises.Add("Estados Unidos");
@@ -20,7 +20,7 @@
     paises.Add("Venezuela");
     paises.Add("Colombia");
     paises.Add("Haití");
-
+    paises.Add("Otro");
 }
 <html>
 <head>
@@ -104,7 +104,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="" name="direccion" maxlength="100">
+                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="" name="direccion" maxlength="200">
                         <label for="direccion">Dirección</label>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="correo" placeholder="correo" value="" name="correo" maxlength="100">
+                        <input required type="text" class="form-control" id="correo" placeholder="correo" value="" name="correo" maxlength="150">
                         <label for="correo">Correo Electrónico</label>
                     </div>
                 </div>
@@ -236,7 +236,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="@Model.Direccion" name="direccion" maxlength="100">
+                        <input required type="text" class="form-control" id="direccion" placeholder="direccion" value="@Model.Direccion" name="direccion" maxlength="250">
                         <label for="direccion">Dirección</label>
                     </div>
                 </div>
@@ -244,7 +244,7 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="correo" placeholder="correo" value="@Model.Correo" name="correo" maxlength="100">
+                        <input required type="text" class="form-control" id="correo" placeholder="correo" value="@Model.Correo" name="correo" maxlength="150">
                         <label for="correo">Correo Electrónico</label>
                     </div>
                 </div>
