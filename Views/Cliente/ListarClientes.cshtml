@@ -84,7 +84,7 @@
                                     }
                                     else
                                     {
-                                        color = "#EAB892";
+                                        color = "#9EE09E";
                                     }
                                 }
                                 <td class="align-middle" style="width: 2.5%; background-color: @color;">
@@ -141,7 +141,139 @@
                                                     <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Examinando Cliente</h1>
                                                 </div>
                                                 <div class="modal-body">
-                                                    
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col-auto fw-bold">
+                                                            Información de Personal:
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col-4">
+                                                            <div class="form-floating">
+                                                                <select disabled class="form-select" id="tipo" name="tipo">
+                                                                    <option>Físico</option>
+                                                                </select>
+                                                                <label for="tipo">Tipo de Cliente</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="text" class="form-control" id="docIdentidad" placeholder="" value="@cliente.Cedula" name="docIdentidad" minlength="11" maxlength="13">
+                                                                <label for="docIdentidad">Documento de Identidad</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @{
+                                                        if (cliente.Tipo.Equals("Fisico"))
+                                                        {
+                                                            <div class="row m-0 g-3">
+                                                                <div class="col">
+                                                                    <div class="form-floating">
+                                                                        <input disabled type="text" class="form-control" id="nombre" placeholder="" value="@cliente.Nombre" name="nombre" maxlength="50">
+                                                                        <label for="nombre">Nombre</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-floating">
+                                                                        <input disabled type="text" class="form-control" id="apellido" placeholder="" value="@cliente.Apellido" name="apellido" maxlength="50">
+                                                                        <label for="apellido">Apellido</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m-0 g-3">
+                                                                <div class="col-2">
+                                                                    <div class="form-floating">
+                                                                        <select disabled class="form-select" id="sexo" name="sexo">
+                                                                            <option>@cliente.Sexo</option>
+                                                                        </select>
+                                                                        <label for="sexo">Sexo</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-floating">
+                                                                        <select disabled class="form-select" id="nacionalidad" name="nacionalidad">
+                                                                            <option>@cliente.Pais</option>
+                                                                        </select>
+                                                                        <label for="nacionalidad">Nacionalidad</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <div class="form-floating">
+                                                                        <select disabled class="form-select" id="estadoCivil" name="estadoCivil">
+                                                                            <option>@cliente.EstadoCivil</option>
+                                                                        </select>
+                                                                        <label for="estadoCivil">Estado Cívil</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-floating">
+                                                                        @{
+                                                                            string dataString = cliente.Fechanacimiento.ToString();
+                                                                            DateTime date = DateTime.Parse(dataString);
+                                                                        }
+                                                                        <input disabled type="date" class="form-control" id="fecha" placeholder="" value="@date.ToString("yyyy-MM-dd")" name="fecha" timezone="-240">
+                                                                        <label for="fecha">Fecha de Nacimiento</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="row m-0 g-3">
+                                                                <div class="col">
+                                                                    <div class="form-floating">
+                                                                        <input disabled type="text" class="form-control" id="nombre" placeholder="" value="@cliente.Nombre" name="nombre" maxlength="50">
+                                                                        <label for="nombre">Nombre</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-floating">
+                                                                        <select disabled class="form-select" id="nacionalidad" name="nacionalidad">
+                                                                            <option>@cliente.Pais</option>
+                                                                        </select>
+                                                                        <label for="nacionalidad">Nacionalidad</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    } 
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col-auto fw-bold">
+                                                            Información de Contacto:
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="text" class="form-control" id="direccion" placeholder="" value="@cliente.Direccion" name="direccion" maxlength="200">
+                                                                <label for="direccion">Dirección</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row m-0 g-3">
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <input disabled type="text" class="form-control" id="correo" placeholder="" value="@cliente.Correo" name="correo" maxlength="150">
+                                                                <label for="correo">Correo Electrónico</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-floating">
+                                                                <input disabled type="tel" class="form-control" id="telefono" placeholder="" value="@cliente.Telefono" name="telefono" maxlength="15">
+                                                                <label for="telefono">Teléfono 1</label>
+                                                            </div>
+                                                        </div>
+                                                        @{
+                                                            if (cliente.Telefono2.Length > 0)
+                                                            {
+                                                                <div class="col-3">
+                                                                    <div class="form-floating">
+                                                                        <input disabled type="tel" class="form-control" id="telefono2" placeholder="" value="@cliente.Telefono2" name="telefono2" maxlength="15">
+                                                                        <label for="telefono2">Teléfono 2</label>
+                                                                    </div>
+                                                                </div>
+                                                            }                                                                
+                                                        } 
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <div class="input-group d-flex justify-content-center">

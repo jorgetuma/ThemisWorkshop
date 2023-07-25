@@ -42,15 +42,21 @@
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <input required type="text" class="form-control" id="titulo" placeholder="titulo" value="" name="titulo" maxlength="100">
+                        <input required type="text" class="form-control" id="titulo" placeholder="" value="" name="titulo" maxlength="100">
                         <label for="titulo">Título</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-floating">
+                        <input required type="numeracion" class="form-control" id="numeracion" placeholder="" value="" name="numeracion" maxlength="100">
+                        <label for="numeracion">Numeración</label>
                     </div>
                 </div>
             </div>
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
-                        <textarea required class="form-control" id="descripcion" placeholder="descripcion" value="" name="descripcion" style="height: 100px" maxlength="250"></textarea>
+                        <textarea required class="form-control" id="descripcion" placeholder="" value="" name="descripcion" style="height: 100px" maxlength="250"></textarea>
                         <label for="descripcion">Descripción</label>
                     </div>
                 </div>
@@ -128,6 +134,12 @@
                     <div class="form-floating">
                         <input required type="text" class="form-control" id="titulo" placeholder="titulo" value="@Model.Expediente.Asunto" name="titulo" maxlength="100">
                         <label for="titulo">Título</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-floating">
+                        <input required type="numeracion" class="form-control" id="numeracion" placeholder="" value="@Model.Expediente.Numeracion" name="numeracion" maxlength="100">
+                        <label for="numeracion">Numeración</label>
                     </div>
                 </div>
                 <div class="col-auto">

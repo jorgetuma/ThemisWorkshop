@@ -195,7 +195,7 @@
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="apellido" placeholder="" value="" name="@Model.Apellido" maxlength="50">
+                        <input type="text" class="form-control" id="apellido" placeholder="" value="@Model.Apellido" name="apellido" maxlength="50">
                         <label for="apellido">Apellido</label>
                     </div>
                 </div>
@@ -205,15 +205,23 @@
                     <div class="form-floating">
                         <select class="form-select" id="sexo" name="sexo">
                             @{
-                                if (Model.Sexo.Equals("Masculino"))
+                                if (Model.Sexo == null)
                                 {
                                     <option selected value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
                                 }
                                 else
                                 {
-                                    <option value="Masculino">Masculino</option>
-                                    <option selected value="Femenino">Femenino</option>
+                                    if (Model.Sexo.Equals("Masculino"))
+                                    {
+                                        <option selected value="Masculino">Masculino</option>
+                                        <option value="Femenino">Femenino</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Masculino">Masculino</option>
+                                        <option selected value="Femenino">Femenino</option>
+                                    }
                                 }
                             }
                         </select>
@@ -226,9 +234,16 @@
                             @{
                                 foreach (var pais in paises)
                                 {
-                                    if (pais.Equals(Model.Pais))
+                                    if (Model.Pais == null)
                                     {
-                                        <option selected value="@pais">@pais</option>
+                                        if (pais.Equals(Model.Pais))
+                                        {
+                                            <option selected value="@pais">@pais</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@pais">@pais</option>
+                                        }
                                     }
                                     else
                                     {
@@ -244,15 +259,23 @@
                     <div class="form-floating">
                         <select class="form-select" id="estadoCivil" name="estadoCivil">
                             @{
-                                if (Model.EstadoCivil.Equals("Soltero"))
+                                if (Model.EstadoCivil == null)
                                 {
                                     <option selected value="Soltero">Soltero</option>
-                                    <option value="Casado">Casado</option>
+                                    <option value="Casado">Casado</option>                                    
                                 }
                                 else
                                 {
-                                    <option value="Soltero">Soltero</option>
-                                    <option selected value="Casado">Casado</option>
+                                    if (Model.EstadoCivil.Equals("Soltero"))
+                                    {
+                                        <option selected value="Soltero">Soltero</option>
+                                        <option value="Casado">Casado</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="Soltero">Soltero</option>
+                                        <option selected value="Casado">Casado</option>
+                                    }
                                 }
                             }
                         </select>
@@ -298,16 +321,8 @@
                 </div>
                 <div class="col-3">
                     <div class="form-floating">
-                        <input type="tel" class="form-control" id="telefono2" placeholder="" value="" name="@Model.Telefono2" maxlength="15">
+                        <input type="tel" class="form-control" id="telefono2" placeholder="" value="@Model.Telefono2" name="telefono2" maxlength="15">
                         <label for="telefono2">Teléfono 2</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="input-group d-flex justify-content-end">
-                        <a href="/Cliente/ListarClientes/1" class="btn btn-negative">Cancelar</a>
-                        <button type="submit" class="btn btn-positive">Registrar</button>
                     </div>
                 </div>
             </div>

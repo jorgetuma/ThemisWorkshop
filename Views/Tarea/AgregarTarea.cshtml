@@ -3,15 +3,21 @@
 *@
 @{
     ViewData["Title"] = "Agregar/Modificar Tarea";
+
+    @using ThemisWorkshop.Controllers
     @model TareaViewModel
-    @if (Model.EsMod == false) // Si no hay nada, significa que esta agregando una Tarea
+
+    if (Model.EsMod == false)
     {
         ViewData["Title"] = "Agendar Tarea";
     }
-    else // Si hay algo, significa que esta modificando una Tarea
+    else
     {
         ViewData["Title"] = "Modificar Tarea";
     }
+
+    Usuario usuario = TareaController.usuario;
+    List<Expediente> expedientes = TareaController._temp.Expediente.Where(expediente => expediente.IdUsuario == usuario.IdUsuario && expediente.Activo == true).ToList();
 }
 <html>
 <head>
@@ -40,6 +46,26 @@
                     <div class="form-floating">
                         <input required type="time" class="form-control" id="hora" placeholder="hora" value="@DateTime.Now.ToString("HH:mm")" name="hora" timezone="-240">
                         <label for="hora">Hora</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="idExpediente" name="idExpediente">
+                            @{
+                                foreach (var expediente in expedientes)
+                                {
+                                    <option value="@expediente.IdExpediente">
+                                        @expediente.Asunto
+                                    </option>
+                                }
+                                <option value="-1">
+                                    NA
+                                </option>
+                            }
+                        </select>
+                        <label for="idExpediente">Expedientes Activos</label>
                     </div>
                 </div>
             </div>
@@ -102,6 +128,35 @@
                         }
                         <input required type="time" class="form-control" id="hora" placeholder="hora" value="@hora.ToString("HH:mm")" name="hora" timezone="-240">
                         <label for="hora">Hora</label>
+                    </div>
+                </div>
+            </div>>
+            <div class="row m-0 g-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="idExpediente" name="idExpediente">
+                            @{
+                                foreach (var expediente in expedientes)
+                                {
+                                    if (expediente.IdExpediente == Model.IdExpediente)
+                                    {
+                                        <option selected value="@expediente.IdExpediente">
+                                            @expediente.Asunto
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@expediente.IdExpediente">
+                                            @expediente.Asunto
+                                        </option>
+                                    }
+                                }
+                                <option value="-1">
+                                    NA
+                                </option>
+                            }
+                        </select>
+                        <label for="idExpediente">Expedientes Activos</label>
                     </div>
                 </div>
             </div>
