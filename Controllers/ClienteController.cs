@@ -71,17 +71,21 @@ namespace ThemisWorkshop.Controllers
             String direccion = Request.Form["direccion"].ToString();
             String telefono2 = Request.Form["telefono2"].ToString();
             String tipo = Request.Form["tipo"].ToString();
-            DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString());
-            DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
-            fechaUtc = fechaUtc.AddDays(1);
+
+            DateTime fechanacimiento;
+            DateTime fechaUtc;  
 
             Cliente cliente;
             if (!tipo.Equals("Moral"))
             {
+                fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString());
+                fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
+                fechaUtc = fechaUtc.AddDays(1);
+
                 cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc, direccion, telefono2, tipo);
             }
             else 
-            { 
+            {
              cliente = new Cliente(nombre,cedula,pais,correo,telefono,telefono2,tipo,direccion);
             }
 

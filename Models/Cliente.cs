@@ -67,6 +67,5 @@ public partial class Cliente
         this.Direccion = direccion;
         this.Telefono2 = telefono2;
         this.Tipo = tipo;
-
     }
 }
