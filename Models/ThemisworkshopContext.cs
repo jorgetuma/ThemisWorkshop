@@ -67,10 +67,16 @@ public partial class ThemisworkshopContext : DbContext
                 .HasColumnName("sexo");
             entity.Property(e => e.Telefono)
                 .HasMaxLength(15)
+                .HasColumnName("telefono2");
+            entity.Property(e => e.Telefono2)
+                .HasMaxLength(15)
                 .HasColumnName("telefono");
             entity.Property(e => e.Direccion)
             .HasMaxLength(200)
             .HasColumnName("direccion");
+            entity.Property(e => e.Tipo)
+                .HasMaxLength(6)
+                .HasColumnName("tipo");
             entity.Property(e => e.Eliminado)
             .HasColumnName("eliminado");
         });

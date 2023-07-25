@@ -69,11 +69,13 @@ namespace ThemisWorkshop.Controllers
             String correo = Request.Form["correo"].ToString();
             String telefono = Request.Form["telefono"].ToString();
             String direccion = Request.Form["direccion"].ToString();
+            String telefono2 = Request.Form["telefono2"].ToString();
+            String tipo = Request.Form["tipo"].ToString();
             DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString());
             DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
             fechaUtc = fechaUtc.AddDays(1);
 
-            var cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc, direccion);
+            var cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc, direccion,telefono2,tipo);
 
             _context.Clientes.Add(cliente);
             _context.SaveChanges();
@@ -132,6 +134,8 @@ namespace ThemisWorkshop.Controllers
                 String correo = Request.Form["correo"].ToString();
                 String telefono = Request.Form["telefono"].ToString();
                 String direccion = Request.Form["direccion"].ToString();
+                String telefono2 = Request.Form["telefono2"].ToString();
+                String tipo = Request.Form["tipo"].ToString();
                 DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString()).Date;
                 DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
                 fechaUtc =  fechaUtc.AddDays(1);
@@ -145,6 +149,8 @@ namespace ThemisWorkshop.Controllers
                 cliente.Correo = correo;
                 cliente.Telefono = telefono;
                 cliente.Direccion = direccion;
+                cliente.Telefono2 = telefono2;
+                cliente.Tipo = tipo;
                 cliente.Fechanacimiento = fechaUtc;
 
                 _context.Clientes.Update(cliente);
