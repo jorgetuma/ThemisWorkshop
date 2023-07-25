@@ -52,6 +52,7 @@ namespace ThemisWorkshop.Controllers
         public ActionResult AddTarea() 
         {
             int idUsuario = int.Parse(Request.Form["idUsuario"].ToString());
+            int idExpediente = int.Parse(Request.Form["idExpediente"].ToString());
             string asunto = Request.Form["asunto"].ToString();
             string descripcion = Request.Form["descripcion"].ToString();
             DateTime fecha = DateTime.Parse(Request.Form["fecha"].ToString());
@@ -59,7 +60,7 @@ namespace ThemisWorkshop.Controllers
             fechaUtc = fechaUtc.AddDays(1);
             TimeOnly hora = TimeOnly.Parse(Request.Form["hora"].ToString());
 
-            var Tarea = new Tarea(idUsuario,asunto,descripcion,fechaUtc,hora);
+            var Tarea = new Tarea(idUsuario,idExpediente,asunto,descripcion,fechaUtc,hora);
             _context.Tarea.Add(Tarea);
             _context.SaveChanges();
             return RedirectToAction("AgregarTarea");
@@ -94,6 +95,7 @@ namespace ThemisWorkshop.Controllers
             Tarea? tarea = _context.Tarea.Find(id);
             if (tarea != null)
             {
+                int idExpediente = int.Parse(Request.Form["idExpediente"].ToString());
                 string asunto = Request.Form["asunto"].ToString();
                 string descripcion = Request.Form["descripcion"].ToString();
                 DateTime fecha = DateTime.Parse(Request.Form["fecha"].ToString());
@@ -101,6 +103,7 @@ namespace ThemisWorkshop.Controllers
                 fechaUtc = fechaUtc.AddDays(1);
                 TimeOnly hora = TimeOnly.Parse(Request.Form["hora"].ToString());
 
+                tarea.IdExpediente = idExpediente;
                 tarea.Asunto = asunto;
                 tarea.Fecha = fechaUtc;
                 tarea.Descripcion = descripcion;

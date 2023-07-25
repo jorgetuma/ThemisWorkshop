@@ -262,6 +262,7 @@ public partial class ThemisworkshopContext : DbContext
 
             entity.Property(e => e.IdTarea).HasColumnName("id_tarea");
             entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
+            entity.Property(e => e.IdExpediente).HasColumnName("id_expediente");
             entity.Property(e => e.Asunto)
             .HasMaxLength(100)
                 .HasColumnName("asunto");
