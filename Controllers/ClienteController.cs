@@ -148,22 +148,42 @@ namespace ThemisWorkshop.Controllers
                 String direccion = Request.Form["direccion"].ToString();
                 String telefono2 = Request.Form["telefono2"].ToString();
                 String tipo = Request.Form["tipo"].ToString();
-                DateTime fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString()).Date;
-                DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
-                fechaUtc =  fechaUtc.AddDays(1);
+                DateTime fechanacimiento;
+                DateTime fechaUtc;
 
-                cliente.Nombre = nombre;
-                cliente.Apellido = apellido;
-                cliente.Cedula = cedula;
-                cliente.Sexo = sexo;
-                cliente.EstadoCivil = estadoCivil;
-                cliente.Pais = pais;
-                cliente.Correo = correo;
-                cliente.Telefono = telefono;
-                cliente.Direccion = direccion;
-                cliente.Telefono2 = telefono2;
-                cliente.Tipo = tipo;
-                cliente.Fechanacimiento = fechaUtc;
+                if (!cliente.Tipo.Equals("Moral"))
+                {
+                    fechanacimiento = DateTime.Parse(Request.Form["fecha"].ToString());
+                    fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
+                    fechaUtc = fechaUtc.AddDays(1);
+
+                    cliente.Nombre = nombre;
+                    cliente.Apellido = apellido;
+                    cliente.Cedula = cedula;
+                    cliente.Sexo = sexo;
+                    cliente.EstadoCivil = estadoCivil;
+                    cliente.Pais = pais;
+                    cliente.Correo = correo;
+                    cliente.Telefono = telefono;
+                    cliente.Direccion = direccion;
+                    cliente.Telefono2 = telefono2;
+                    cliente.Tipo = tipo;
+                    cliente.Fechanacimiento = fechaUtc;
+                }
+                else 
+                {
+                    cliente.Nombre = nombre;
+                    cliente.Cedula = cedula;
+                    cliente.Pais = pais;
+                    cliente.Correo = correo;
+                    cliente.Telefono = telefono;
+                    cliente.Direccion = direccion;
+                    cliente.Telefono2 = telefono2;
+                    cliente.Tipo = tipo;
+                    cliente.Sexo = null;
+                    cliente.EstadoCivil = null;
+                    cliente.Apellido = null;
+                }
 
                 _context.Clientes.Update(cliente);
                 _context.SaveChanges(true);
