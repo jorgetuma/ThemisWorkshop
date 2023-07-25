@@ -10,18 +10,18 @@ public partial class Cliente
 
     public string Nombre { get; set; } = null!;
 
-    public string Apellido { get; set; } 
+    public string? Apellido { get; set; } 
 
     public string Cedula { get; set; } = null!;
 
-    public string Pais { get; set; }
+    public string? Pais { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
     public DateTime Fechanacimiento { get; set; }
 
-    public String Sexo { get; set; }
+    public String? Sexo { get; set; }
 
-    public string EstadoCivil { get; set; }
+    public string? EstadoCivil { get; set; }
 
     public string? Correo { get; set; }
 
@@ -53,5 +53,20 @@ public partial class Cliente
         this.Direccion = direccion;
         this.Telefono2 = telefono2;
         this.Tipo = tipo;
+    }
+
+    public Cliente(string nombre,string cedula, string pais, string correo, string telefono, string telefono2, string tipo, string direccion) 
+    {
+        this.Nombre = nombre;
+        this.Cedula = cedula;
+        this.Pais = pais;
+        this.Correo = correo;
+        this.Telefono = telefono;
+        this.Credito = 0;
+        this.Eliminado = false;
+        this.Direccion = direccion;
+        this.Telefono2 = telefono2;
+        this.Tipo = tipo;
+
     }
 }

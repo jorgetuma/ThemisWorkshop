@@ -75,7 +75,15 @@ namespace ThemisWorkshop.Controllers
             DateTime fechaUtc = DateTime.SpecifyKind(fechanacimiento, DateTimeKind.Utc);
             fechaUtc = fechaUtc.AddDays(1);
 
-            var cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc, direccion,telefono2,tipo);
+            Cliente cliente;
+            if (!tipo.Equals("Moral"))
+            {
+                cliente = new Cliente(nombre, apellido, cedula, sexo, estadoCivil, pais, correo, telefono, fechaUtc, direccion, telefono2, tipo);
+            }
+            else 
+            { 
+             cliente = new Cliente(nombre,cedula,pais,correo,telefono,telefono2,tipo,direccion);
+            }
 
             _context.Clientes.Add(cliente);
             _context.SaveChanges();

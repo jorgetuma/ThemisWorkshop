@@ -67,10 +67,10 @@ public partial class ThemisworkshopContext : DbContext
                 .HasColumnName("sexo");
             entity.Property(e => e.Telefono)
                 .HasMaxLength(15)
-                .HasColumnName("telefono2");
+                .HasColumnName("telefono");
             entity.Property(e => e.Telefono2)
                 .HasMaxLength(15)
-                .HasColumnName("telefono");
+                .HasColumnName("telefono2");
             entity.Property(e => e.Direccion)
             .HasMaxLength(200)
             .HasColumnName("direccion");
