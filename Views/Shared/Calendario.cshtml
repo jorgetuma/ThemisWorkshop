@@ -168,7 +168,51 @@
                                                                                         @cita.Asunto
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <a href="/Consulta/AgregarConsulta/@cita.IdCita" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Completar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                                                                <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z" />
+                                                                                                <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                                                            </svg>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="col-auto text-end">
+                                                                                        <a href="/Cita/ReagendarCita/@cita.IdCita" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                            </svg>
+                                                                                        </a>
 
+                                                                                        <!-- Trigger modal -->
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@cita.IdCita">
+                                                                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                        </svg>
+
+                                                                                        <!-- Modal -->
+                                                                                        <div class="modal fade" id="modal-@cita.IdCita" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                                                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                                                <div class="modal-content text-center">
+                                                                                                    <div class="modal-header">
+                                                                                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Eliminar Cita</h1>
+                                                                                                    </div>
+                                                                                                    <div class="modal-body">
+                                                                                                        ¿Seguro que desea eliminar este registro?<br>
+                                                                                                        <b>@cita.Asunto</b>
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <div class="input-group d-flex justify-content-center">
+                                                                                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                                                            <a href="/Cita/EliminarCita/@cita.IdCita" class="btn btn-positive">Aceptar</a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -199,6 +243,51 @@
                                                                                             TAREA
                                                                                         </span>
                                                                                         @tarea.Asunto
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <a href="/Tarea/RealizarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Completar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                                                                <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z" />
+                                                                                                <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                                                            </svg>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="col-auto text-end">
+                                                                                        <a href="/Tarea/ModificarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                            </svg>
+                                                                                        </a>
+
+                                                                                        <!-- Trigger modal -->
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@tarea.IdTarea">
+                                                                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                        </svg>
+
+                                                                                        <!-- Modal -->
+                                                                                        <div class="modal fade" id="modal-@tarea.IdTarea" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                                                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                                                <div class="modal-content text-center">
+                                                                                                    <div class="modal-header">
+                                                                                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Eliminar Tarea</h1>
+                                                                                                    </div>
+                                                                                                    <div class="modal-body">
+                                                                                                        ¿Seguro que desea eliminar este registro?<br>
+                                                                                                        <b>@tarea.Asunto</b>
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <div class="input-group d-flex justify-content-center">
+                                                                                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                                                            <a href="/Tarea/EliminarTarea/@tarea.IdTarea" class="btn btn-positive">Aceptar</a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -244,6 +333,51 @@
                                                                                         @cita.Asunto
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <a href="/Consulta/AgregarConsulta/@cita.IdCita" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Completar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                                                                <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z" />
+                                                                                                <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                                                            </svg>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="col-auto text-end">
+                                                                                        <a href="/Cita/ReagendarCita/@cita.IdCita" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                            </svg>
+                                                                                        </a>
+
+                                                                                        <!-- Trigger modal -->
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@cita.IdCita">
+                                                                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                        </svg>
+
+                                                                                        <!-- Modal -->
+                                                                                        <div class="modal fade" id="modal-@cita.IdCita" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                                                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                                                <div class="modal-content text-center">
+                                                                                                    <div class="modal-header">
+                                                                                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Eliminar Cita</h1>
+                                                                                                    </div>
+                                                                                                    <div class="modal-body">
+                                                                                                        ¿Seguro que desea eliminar este registro?<br>
+                                                                                                        <b>@cita.Asunto</b>
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <div class="input-group d-flex justify-content-center">
+                                                                                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                                                            <a href="/Cita/EliminarCita/@cita.IdCita" class="btn btn-positive">Aceptar</a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -274,6 +408,51 @@
                                                                                             TAREA
                                                                                         </span>
                                                                                         @tarea.Asunto
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <a href="/Tarea/RealizarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Completar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                                                                <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z" />
+                                                                                                <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                                                            </svg>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="col-auto text-end">
+                                                                                        <a href="/Tarea/ModificarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                            </svg>
+                                                                                        </a>
+
+                                                                                        <!-- Trigger modal -->
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@tarea.IdTarea">
+                                                                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                        </svg>
+
+                                                                                        <!-- Modal -->
+                                                                                        <div class="modal fade" id="modal-@tarea.IdTarea" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                                                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                                                <div class="modal-content text-center">
+                                                                                                    <div class="modal-header">
+                                                                                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Eliminar Tarea</h1>
+                                                                                                    </div>
+                                                                                                    <div class="modal-body">
+                                                                                                        ¿Seguro que desea eliminar este registro?<br>
+                                                                                                        <b>@tarea.Asunto</b>
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <div class="input-group d-flex justify-content-center">
+                                                                                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                                                            <a href="/Tarea/EliminarTarea/@tarea.IdTarea" class="btn btn-positive">Aceptar</a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -358,6 +537,51 @@
                                                                                             @cita.Asunto
                                                                                         </div>
                                                                                     </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <a href="/Consulta/AgregarConsulta/@cita.IdCita" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Completar">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                                                                    <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z" />
+                                                                                                    <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                                                                </svg>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <div class="col-auto text-end">
+                                                                                            <a href="/Cita/ReagendarCita/@cita.IdCita" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                                </svg>
+                                                                                            </a>
+
+                                                                                            <!-- Trigger modal -->
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@cita.IdCita">
+                                                                                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                            </svg>
+
+                                                                                            <!-- Modal -->
+                                                                                            <div class="modal fade" id="modal-@cita.IdCita" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                                                                <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                                                    <div class="modal-content text-center">
+                                                                                                        <div class="modal-header">
+                                                                                                            <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Eliminar Cita</h1>
+                                                                                                        </div>
+                                                                                                        <div class="modal-body">
+                                                                                                            ¿Seguro que desea eliminar este registro?<br>
+                                                                                                            <b>@cita.Asunto</b>
+                                                                                                        </div>
+                                                                                                        <div class="modal-footer">
+                                                                                                            <div class="input-group d-flex justify-content-center">
+                                                                                                                <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                                                                <a href="/Cita/EliminarCita/@cita.IdCita" class="btn btn-positive">Aceptar</a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -379,6 +603,51 @@
                                                                                                 TAREA
                                                                                             </span>
                                                                                             @tarea.Asunto
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            <a href="/Tarea/RealizarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Completar">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                                                                    <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z" />
+                                                                                                    <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                                                                </svg>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <div class="col-auto text-end">
+                                                                                            <a href="/Tarea/ModificarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                                </svg>
+                                                                                            </a>
+
+                                                                                            <!-- Trigger modal -->
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@tarea.IdTarea">
+                                                                                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                            </svg>
+
+                                                                                            <!-- Modal -->
+                                                                                            <div class="modal fade" id="modal-@tarea.IdTarea" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                                                                <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                                                    <div class="modal-content text-center">
+                                                                                                        <div class="modal-header">
+                                                                                                            <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Eliminar Tarea</h1>
+                                                                                                        </div>
+                                                                                                        <div class="modal-body">
+                                                                                                            ¿Seguro que desea eliminar este registro?<br>
+                                                                                                            <b>@tarea.Asunto</b>
+                                                                                                        </div>
+                                                                                                        <div class="modal-footer">
+                                                                                                            <div class="input-group d-flex justify-content-center">
+                                                                                                                <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                                                                <a href="/Tarea/EliminarTarea/@tarea.IdTarea" class="btn btn-positive">Aceptar</a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -454,11 +723,13 @@
                                                                                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                                                                                 </svg>
                                                                                             </a>
+
                                                                                             <!-- Trigger modal -->
                                                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@cita.IdCita">
                                                                                                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
                                                                                                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                                                                                             </svg>
+
                                                                                             <!-- Modal -->
                                                                                             <div class="modal fade" id="modal-@cita.IdCita" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                                                                                                 <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
@@ -513,6 +784,51 @@
                                                                                             @tarea.Asunto
                                                                                         </div>
                                                                                     </div>
+                                                                                    <div class="row">
+                                                                                    <div class="col">
+                                                                                        <a href="/Tarea/RealizarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Completar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check2-square" viewBox="0 0 16 16">
+                                                                                                <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z" />
+                                                                                                <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                                                                            </svg>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class="col-auto text-end">
+                                                                                        <a href="/Tarea/ModificarTarea/@tarea.IdTarea" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Reagendar">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                                            </svg>
+                                                                                        </a>
+
+                                                                                        <!-- Trigger modal -->
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-square" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@tarea.IdTarea">
+                                                                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                                                        </svg>
+
+                                                                                        <!-- Modal -->
+                                                                                        <div class="modal fade" id="modal-@tarea.IdTarea" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                                                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                                                                <div class="modal-content text-center">
+                                                                                                    <div class="modal-header">
+                                                                                                        <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Eliminar Tarea</h1>
+                                                                                                    </div>
+                                                                                                    <div class="modal-body">
+                                                                                                        ¿Seguro que desea eliminar este registro?<br>
+                                                                                                        <b>@tarea.Asunto</b>
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <div class="input-group d-flex justify-content-center">
+                                                                                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                                                            <a href="/Tarea/EliminarTarea/@tarea.IdTarea" class="btn btn-positive">Aceptar</a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
