@@ -68,7 +68,8 @@ namespace ThemisWorkshop.Controllers
         [ValidateAntiForgeryToken]
          public ActionResult AddExpediente()
          {
-            int idCliente = int.Parse(Request.Form["idCliente"].ToString()); 
+            int idCliente = int.Parse(Request.Form["idCliente"].ToString());
+            int numeracion = int.Parse(Request.Form["numeracion"].ToString());
             string titulo = Request.Form["titulo"].ToString();
             string descripcion = Request.Form["descripcion"].ToString();
             string ids = Request.Form["id"].ToString();
@@ -85,7 +86,7 @@ namespace ThemisWorkshop.Controllers
                 servicios.Add(ids);
             }
 
-            var expediente = new Expediente(idCliente,usuario.IdUsuario,titulo,descripcion,fechaUtc);
+            var expediente = new Expediente(idCliente,usuario.IdUsuario,titulo,descripcion,fechaUtc,numeracion);
 
 
              _context.Expediente.Add(expediente);
@@ -139,6 +140,7 @@ namespace ThemisWorkshop.Controllers
             {
                 string titulo = Request.Form["titulo"].ToString();
                 string descripcion = Request.Form["descripcion"].ToString();
+                int numeracion = int.Parse(Request.Form["numeracion"].ToString());
                 int estado = int.Parse(Request.Form["estado"].ToString());
                 string ids = Request.Form["id-originales"].ToString();
                 string idsMod = Request.Form["id"].ToString();
@@ -161,6 +163,7 @@ namespace ThemisWorkshop.Controllers
                 
                 expediente.Asunto = titulo;
                 expediente.Descripcion = descripcion;
+                expediente.Numeracion = numeracion;
                 expediente.FechaApertura = DateTime.SpecifyKind(expediente.FechaApertura, DateTimeKind.Utc);
                 expediente.FechaApertura = expediente.FechaApertura.AddDays(1);
                 _context.Expediente.Update(expediente);

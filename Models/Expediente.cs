@@ -9,6 +9,9 @@ public partial class Expediente
     public int IdCliente { get; set; }
 
     public int IdUsuario { get; set; }
+
+    public int Numeracion { get; set; }  
+
     public string Asunto { get; set; }
 
     public string Descripcion { get; set; }
@@ -18,7 +21,7 @@ public partial class Expediente
 
     public bool Activo { get; set; }
 
-    public Expediente(int idCliente, int idUsuario, string asunto, string descripcion, DateTime fechaApertura)
+    public Expediente(int idCliente, int idUsuario, string asunto, string descripcion, DateTime fechaApertura, int numeracion)
     {
         this.IdCliente = idCliente;
         this.IdUsuario = idUsuario;
@@ -26,5 +29,6 @@ public partial class Expediente
         this.Descripcion = descripcion;
         this.Activo = true;
         this.FechaApertura = fechaApertura;
+        this.Numeracion = numeracion;
     }
 }
