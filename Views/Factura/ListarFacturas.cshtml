@@ -74,7 +74,7 @@
         }
     }
     @{
-        if (facturasPendientes.Count.Equals(0))
+        if (facturasPendientes.Count.Equals(0) && !Model.Count.Equals(0))
         {
             <div class="row my-3" id="pendientes">
                 <div class="col">

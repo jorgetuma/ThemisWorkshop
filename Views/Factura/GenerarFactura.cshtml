@@ -2,10 +2,10 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    @using ThemisWorkshop.Controllers;
-    ViewData["Title"] = "Agregar/Modificar Factura";
-    @model FacturaViewModel
     ViewData["Title"] = "Registrar Factura";
+
+    @using ThemisWorkshop.Controllers;
+    @model FacturaViewModel
 
     var cliente = 0;
     string asunto;
@@ -36,7 +36,6 @@
 
     List<Servicio> servicios = FacturaController._temp.Servicio.ToList();
     var servicio = servicios.Where(e => e.IdServicio == Model.IdServicio).FirstOrDefault();
-    var precioFijo = servicio.Preciofijo;
 }
 <html>
 <head>
@@ -66,13 +65,13 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="form-floating">
-                    <input readonly type="number" class="form-control" id="costo" placeholder="@precioFijo" value="@precioFijo" name="costo" step="0.01">
+                    <input required type="number" class="form-control" id="costo" placeholder="" value="" name="costo" min="0" step="0.01">
                     <label for="costo">Costo</label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-floating">
-                    <input readonly type="date" class="form-control" id="fechaEmision" placeholder="fechaEmision" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="fechaEmision" timezone="-240">
+                    <input readonly type="date" class="form-control" id="fechaEmision" placeholder="" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="fechaEmision" timezone="-240">
                     <label for="fechaEmision">Fecha de Emisión</label>
                 </div>
             </div>
@@ -85,13 +84,13 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="form-floating">
-                    <input required type="number" class="form-control" id="montoVariable" placeholder="montoVariable" value="0.00" name="montoVariable" step="0.01" oninput="sumar_montoTotal()">
+                    <input required type="number" class="form-control" id="montoVariable" placeholder="" value="0.00" name="montoVariable" step="0.01" oninput="sumar_montoTotal()">
                     <label for="montoVariable">Monto Variable</label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-floating">
-                    <input required type="date" class="form-control" id="fechaLimite" placeholder="fechaLimite" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="fechaLimite" timezone="-240">
+                    <input required type="date" class="form-control" id="fechaLimite" placeholder="" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="fechaLimite" timezone="-240">
                     <label for="fechaLimite">Fecha Límite</label>
                 </div>
             </div>

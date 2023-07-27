@@ -518,6 +518,11 @@
 
                                                 <td class="fw-bold border-3 hover-cell" style="border-color: @color;">
                                                     <div class="row">
+                                                        <div class="col text-end">
+                                                            <small>@formattedDayNumber</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
                                                         <div class="col">
                                                             @{
                                                                 foreach (var cita in citasForDay)
@@ -656,11 +661,6 @@
                                                                     </div>
                                                                 }
                                                             }
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <span class="badge" style="background-color: @color;">
-                                                                @formattedDayNumber
-                                                            </span>
                                                         </div>
                                                     </div>
                                                 </td>
