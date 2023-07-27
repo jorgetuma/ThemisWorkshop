@@ -59,9 +59,8 @@ namespace ThemisWorkshop.Controllers
         {
             string nombre = Request.Form["nombre"].ToString();
             string descripcion = Request.Form["descripcion"].ToString();
-            decimal precioFijo = decimal.Parse(Request.Form["costo"].ToString());
 
-            var servicio = new Servicio(nombre, descripcion, precioFijo);
+            var servicio = new Servicio(nombre, descripcion);
 
             _context.Servicio.Add(servicio);
             _context.SaveChanges();
@@ -106,11 +105,9 @@ namespace ThemisWorkshop.Controllers
             {
                 string nombre = Request.Form["nombre"].ToString();
                 string descripcion = Request.Form["descripcion"].ToString();
-                decimal precioFijo = decimal.Parse(Request.Form["costo"].ToString());
 
                 servicio.Nombre = nombre;
                 servicio.Descripcion = descripcion;
-                servicio.Preciofijo = precioFijo;
 
                 _context.Servicio.Update(servicio);
                 _context.SaveChanges();

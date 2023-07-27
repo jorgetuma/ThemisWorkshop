@@ -172,10 +172,6 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .HasColumnName("nombre");
-            entity.Property(e => e.Preciofijo)
-                .HasColumnType("money")
-                .HasColumnName("preciofijo");
-
             entity.Property(e => e.Eliminado)
            .HasColumnName("eliminado");
         });

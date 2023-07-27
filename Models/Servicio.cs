@@ -8,15 +8,12 @@ public partial class Servicio
 
     public string Descripcion { get; set; }
 
-    public decimal Preciofijo { get; set; }
-
     public bool Eliminado { get; set; }
 
-    public Servicio(string nombre,string descripcion, decimal preciofijo) 
+    public Servicio(string nombre,string descripcion) 
     {
         this.Nombre = nombre;
         this.Descripcion = descripcion;
-        this.Preciofijo = preciofijo;
         this.Eliminado = false;
     }
 }

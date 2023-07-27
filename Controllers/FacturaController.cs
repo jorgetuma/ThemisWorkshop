@@ -65,16 +65,15 @@ namespace ThemisWorkshop.Controllers
             DateTime fechaLimiteUtc = DateTime.SpecifyKind(fechaLimite, DateTimeKind.Utc);
             fechaLimiteUtc = fechaLimiteUtc.AddDays(1);
             bool esCredito = bool.Parse(Request.Form["esCredito"].ToString());
-            decimal costo = 0;
+            decimal costo = decimal.Parse(Request.Form["costo"].ToString());
             decimal montoVariable = decimal.Parse(Request.Form["montovariable"].ToString());
             decimal montoPorPagar = 0;
 
             if (idExpediente != -1)
             {
-                costo = servicio.Preciofijo + montoVariable;
                 if (esCredito)
                 {
-                    montoPorPagar = servicio.Preciofijo + montoVariable;
+                    montoPorPagar = costo + montoVariable;
                     cliente.Credito += montoPorPagar;
                 }
                 Detalleservicio? ds = _context.Detalleservicio.Where(e => e.IdServicio == idServicio && e.IdExpediente == idExpediente).First();
