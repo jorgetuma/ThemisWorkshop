@@ -68,12 +68,7 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="form-floating">
-                    @{
-                        var costo_por_hora = servicios.Where(e => e.Nombre.Equals("Consulta"));
-                        <input type="hidden" value="@costo_por_hora.FirstOrDefault().Preciofijo" id="costo_por_hora">
-                    }
-                    <input disabled type="number" class="form-control" id="costo" placeholder="costo" value="" name="costo" step="0.01">
-                    <input type="hidden" value="" name="costoHidden">
+                    <input required type="number" class="form-control" id="costo" placeholder="costo" value="" name="costo" step="0.01">
                     <label for="costo">Costo</label>
                 </div>
             </div>
@@ -115,61 +110,4 @@
         </div>
     </form>
 </body>
-
-<script>
-    function calcularCosto() {
-        var horainicial = document.getElementById("horainicial").value;
-        var horafinal = document.getElementById("horafinal").value;
-        var costo_por_hora = document.getElementById("costo_por_hora").value;
-
-        var horaInicial = parseInt(horainicial.split(":")[0]);
-        var horaFinal = parseInt(horafinal.split(":")[0]);
-
-        var costo = (horaFinal - horaInicial) * costo_por_hora;
-        console.log(costo);
-        document.getElementById("costo").value = costo;
-        document.getElementsByName("costoHidden")[0].value = costo;
-    }
-
-
-    window.onload = function () {
-        calcularCosto();
-    };
-</script>
-
-<script>
-    function validarHoraFinal() {
-        var horaInicial = document.getElementById("horainicial").value;
-        var horaFinal = document.getElementById("horafinal").value;
-
-        var horaInicialDate = new Date("2000-01-01T" + horaInicial);
-        var horaFinalDate = new Date("2000-01-01T" + horaFinal);
-
-        var horaMinima = new Date(horaInicialDate.getTime() + 60 * 60 * 1000);
-
-        if (horaFinalDate.getTime() < horaMinima.getTime()) {
-            var nuevaHoraFinal = horaMinima.toTimeString().slice(0, 5);
-            document.getElementById("horafinal").value = nuevaHoraFinal;
-            document.getElementById("horafinal").setAttribute("value", nuevaHoraFinal);
-        }
-
-        calcularCosto();
-    }
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var selectExpediente = document.getElementById('idExpediente');
-        var expedienteSeleccionadoModal = document.getElementById('expedienteSeleccionadoModal');
-
-        selectExpediente.addEventListener('change', function () {
-            expedienteSeleccionadoModal.textContent = selectExpediente.options[selectExpediente.selectedIndex].text;
-        });
-
-        $('#exampleModal').on('show.bs.modal', function () {
-            expedienteSeleccionadoModal.textContent = selectExpediente.options[selectExpediente.selectedIndex].text;
-        });
-    });
-</script>
-
 </html>

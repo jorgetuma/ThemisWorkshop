@@ -65,7 +65,7 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="form-floating">
-                    <input required type="number" class="form-control" id="costo" placeholder="" value="" name="costo" min="0" step="0.01">
+                    <input required type="number" class="form-control" id="costo" placeholder="" value="" name="costo" min="0" step="0.01" oninput="suma()">
                     <label for="costo">Costo</label>
                 </div>
             </div>
@@ -84,7 +84,7 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="form-floating">
-                    <input required type="number" class="form-control" id="montoVariable" placeholder="" value="0.00" name="montoVariable" step="0.01" oninput="sumar_montoTotal()">
+                    <input required type="number" class="form-control" id="montoVariable" placeholder="" value="0.00" name="montoVariable" min="0" step="0.01" oninput="suma()">
                     <label for="montoVariable">Monto Variable</label>
                 </div>
             </div>
@@ -107,7 +107,7 @@
         <div class="row m-0 g-3">
             <div class="col">
                 <div class="form-floating">
-                    <input readonly type="number" class="form-control" id="montoTotal" placeholder="@precioFijo" value="@precioFijo" name="montoTotal" step="0.01">
+                    <input readonly type="number" class="form-control" id="montoTotal" placeholder="" value="" name="montoTotal">
                     <label for="montoTotal">Monto Total (Costo + Monto Variable)</label>
                 </div>
             </div>
@@ -121,18 +121,18 @@
             </div>
         </div>
     </form>
-
     <script>
-        function sumar_montoTotal() {
-            var precioFijo = parseFloat(@precioFijo);
-            var montoVariable = parseFloat(document.getElementById("montoVariable").value);
-            var montoTotal = precioFijo + (isNaN(montoVariable) ? 0 : montoVariable);
+        function suma() {
+            var costo = parseFloat(document.getElementById('costo').value);
+            var montoVariable = parseFloat(document.getElementById('montoVariable').value);
 
-            if (!isNaN(montoTotal)) {
-                document.getElementById("montoTotal").value = montoTotal.toFixed(2);
+            if (!isNaN(num1) && !isNaN(num2)) {
+                var suma = num1 + num2;
+                document.getElementById('montoTotal').value = suma;
+            } else {
+                document.getElementById('montoTotal').value = 0.00;
             }
         }
     </script>
-
 </body>
 </html>
