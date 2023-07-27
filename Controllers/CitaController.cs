@@ -42,11 +42,6 @@ namespace ThemisWorkshop.Controllers
             {
                 return Redirect("/Sesion/IniciarSesion");
             }
-            if (usuario.Rol == ((int)Rolesapp.Abogado))
-            {
-                Response.StatusCode = 403;
-                return Redirect("/" + Response.StatusCode.ToString());
-            }
             Cliente? cliente = _context.Clientes.Find(idCliente);
             if (cliente != null)
             {
@@ -87,11 +82,6 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
-            }
-            if (usuario.Rol == ((int)Rolesapp.Abogado))
-            {
-                Response.StatusCode = 403;
-                return Redirect("/" + Response.StatusCode.ToString());
             }
             Cita? cita = _context.Cita.Find(id);
             if (cita != null)
@@ -149,11 +139,6 @@ namespace ThemisWorkshop.Controllers
             if (usuario == null)
             {
                 return Redirect("/Sesion/IniciarSesion");
-            }
-            if (usuario.Rol == ((int)Rolesapp.Abogado))
-            {
-                Response.StatusCode = 403;
-                return Redirect("/" + Response.StatusCode.ToString());
             }
             Cita? cita = _context.Cita.Find(id);
             if (cita != null)
