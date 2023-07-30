@@ -31,6 +31,8 @@ public partial class ThemisworkshopContext : DbContext
 
     public virtual DbSet<Tarea> Tarea { get; set; }
 
+    public virtual DbSet<Categoria> Categoria { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cliente>(entity =>
@@ -269,6 +271,18 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.Fecha).HasColumnName("fecha");
             entity.Property(e => e.Hora).HasColumnName("hora");
             entity.Property(e => e.Realizado).HasColumnName("realizado");
+        });
+
+        modelBuilder.Entity<Categoria>(entity => 
+        {
+            entity.HasKey(e => e.IdCategoria).HasName("id_categoria_pkey");
+            entity.ToTable("categoria");
+
+            entity.Property(e => e.IdCategoria).HasColumnName("id_categoria");
+            entity.Property(e => e.Nombre)
+            .HasMaxLength(100)
+            .HasColumnName("nombre");
+            entity.Property(e => e.Eliminado).HasColumnName("eliminado");
         });
 
         OnModelCreatingPartial(modelBuilder);
