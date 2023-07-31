@@ -129,7 +129,10 @@
                                                     Monto total:
                                                 </div>
                                                 <div class="col-auto text-end">
-                                                    @factura.Costo $
+                                                @{
+                                                    var montoTotal = factura.Costo + factura.MontoVariable;
+                                                }
+                                                    @montoTotal $
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -137,7 +140,7 @@
                                                     Pagado:
                                                 </div>
                                                 @{
-                                                    var pagado = factura.Costo - factura.MontoPorPagar;
+                                                    var pagado = montoTotal - factura.MontoPorPagar;
                                                 }
                                                 <div class="col-auto text-end">
                                                     @pagado $

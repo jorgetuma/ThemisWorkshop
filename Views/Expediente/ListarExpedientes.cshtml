@@ -11,6 +11,7 @@
     string color;
     int counter = 1;
 
+    List<Categoria> categorias = ExpedienteController._temp.Categoria.ToList();
     List<Servicio> servicios = ExpedienteController._temp.Servicio.ToList();
     List<Expediente> activosExpedientes = Model.Where(expediente => expediente.Activo).ToList();
     List<Expediente> archivadosExpedientes = Model.Where(expediente => !expediente.Activo).ToList();
@@ -40,6 +41,78 @@
         </div>
         <div class="col-auto ps-0">
             <a class="btn btn-positive" href="/Cliente/ListarClientes/1" role="button">Registrar</a>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-auto fw-bold">
+            Categorías
+        </div>
+        <div class="col-auto fw-bold">
+            >
+        </div>
+        <div class="col-auto fw-bold">
+            Clientes
+        </div>
+        <div class="col-auto fw-bold">
+            >
+        </div>
+        <div class="col-auto fw-bold">
+            Expedientes
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="position-relative m-4">
+                <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 1px;">
+                    <div class="progress-bar" style="width: 50%"></div>
+                </div>
+                <button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 8rem; height:2rem;">Categoría</button>
+                <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 8rem; height:2rem;">Cliente</button>
+                <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 8rem; height:2rem;">Expediente</button>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <!-- JORGE AQUI JORGE AQUI JORGE AQUI JORGE AQUI JORGE AQUI JORGE AQUI -->
+        <div class="col-auto">
+            <div class="col-auto ps-0">
+                <!-- Trigger modal -->
+                <a class="btn btn-positive-twice" role="button" data-bs-toggle="modal" data-bs-target="#modal">Nueva Categoria</a>
+                <!-- Modal -->
+                <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                        <div class="modal-content text-center">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Nueva Categoría</h1>
+                            </div>
+                            <form asp-controller="CAMBIAR" asp-action="AddCategoria" method="post">
+                                <div class="modal-body">
+                                    <div class="form-floating">
+                                        <input required type="text" class="form-control" id="categoria" placeholder="" value="" name="categoria" maxlength="100">
+                                        <label for="categoria">Categoría</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="input-group d-flex justify-content-center">
+                                        <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                        <a href="/CAMBIAR" class="btn btn-positive">Registrar</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col fw-bold" id="activos">
+            @{
+                foreach (var categoria in categorias)
+                {
+                    <div>categoria</div>
+                }
+            }
         </div>
     </div>
     <div class="row mb-3">

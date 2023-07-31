@@ -130,32 +130,30 @@
                         <label for="hora">Hora</label>
                     </div>
                 </div>
-            </div>>
+            </div>
             <div class="row m-0 g-3">
                 <div class="col">
                     <div class="form-floating">
                         <select class="form-select" id="idExpediente" name="idExpediente">
                             @{
-                                foreach (var expediente in expedientes)
-                                {
-                                    /*
-                                    if (expediente.IdExpediente == Model.IdExpediente)
-                                    {
-                                    <option selected value="@expediente.IdExpediente">
-                                    @expediente.Asunto
-                                    </option>
-                                    }
-                                    else
-                                    {
-                                    <option value="@expediente.IdExpediente">
-                                    @expediente.Asunto
-                                    </option>
-                                    }
-                                    */
-                                }
                                 <option value="-1">
                                     NA
                                 </option>
+                                foreach (var expediente in expedientes)
+                                {
+                                    if (expediente.IdExpediente == Model.Tarea.IdExpediente)
+                                    {
+                                        <option selected value="@expediente.IdExpediente">
+                                            @expediente.Asunto
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@expediente.IdExpediente">
+                                            @expediente.Asunto
+                                        </option>
+                                    }
+                                }
                             }
                         </select>
                         <label for="idExpediente">Expedientes Activos</label>

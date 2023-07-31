@@ -15,6 +15,9 @@
     }
 
     List<Servicio> servicios = Model.Servicios;
+    List<String> categorias = new List<String>();
+    categorias.Add("Hola");
+    //List<Categoria> categorias = null;
 }
 <html>
 <head>
@@ -47,6 +50,17 @@
                     </div>
                 </div>
                 <div class="col-3">
+                    <div class="form-floating">
+                        <select class="form-select" id="categoria" name="categoria">
+                            @foreach (var categoria in categorias)
+                            {
+                                <option value="@categoria">@categoria</option>
+                            }
+                        </select>
+                        <label for="categoria">Categoría</label>
+                    </div>
+                </div>
+                <div class="col-2">
                     <div class="form-floating">
                         <input required type="number" class="form-control" id="numeracion" placeholder="0" value="0" name="numeracion" min="0">
                         <label for="numeracion">Numeración</label>
@@ -133,6 +147,17 @@
                     <div class="form-floating">
                         <input required type="text" class="form-control" id="titulo" placeholder="titulo" value="@Model.Expediente.Asunto" name="titulo" maxlength="100">
                         <label for="titulo">Título</label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-floating">
+                        <select class="form-select" id="categoria" name="categoria">
+                            @foreach (var categoria in categorias)
+                            {
+                                <option value="@categoria">@categoria</option>
+                            }
+                        </select>
+                        <label for="categoria">Categoría</label>
                     </div>
                 </div>
                 <div class="col-2">
