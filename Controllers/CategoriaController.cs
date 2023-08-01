@@ -41,7 +41,7 @@ namespace ThemisWorkshop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddCategoria()
         {
-            string nombre = Request.Form["nombre"].ToString();
+            string nombre = Request.Form["categoria"].ToString();
             var categoria = new Categoria(nombre);
 
             _context.Categoria.Add(categoria);
@@ -57,7 +57,7 @@ namespace ThemisWorkshop.Controllers
             Categoria? categoria = _context.Categoria.Where(e => e.IdCategoria == id).FirstOrDefault();
             if (categoria != null)
             {
-                string nombre = Request.Form["nombre"].ToString();
+                string nombre = Request.Form["categoria"].ToString();
 
                 categoria.Nombre = nombre;
                 _context.Categoria.Update(categoria);

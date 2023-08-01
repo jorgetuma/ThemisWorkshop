@@ -159,6 +159,7 @@ public partial class ThemisworkshopContext : DbContext
             entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
             entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
             entity.Property(e => e.Numeracion).HasColumnName("numeracion");
+            entity.Property(e => e.IdCategoria).HasColumnName("id_categoria");
         });
 
         modelBuilder.Entity<Servicio>(entity =>

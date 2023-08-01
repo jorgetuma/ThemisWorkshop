@@ -72,6 +72,7 @@ namespace ThemisWorkshop.Controllers
             int numeracion = int.Parse(Request.Form["numeracion"].ToString());
             string titulo = Request.Form["titulo"].ToString();
             string descripcion = Request.Form["descripcion"].ToString();
+            int idCategoria = int.Parse(Request.Form["categoria"].ToString());
             string ids = Request.Form["id"].ToString();
             List<string> servicios = new List<string>();
             DateTime fecha = DateTime.Today;
@@ -86,7 +87,7 @@ namespace ThemisWorkshop.Controllers
                 servicios.Add(ids);
             }
 
-            var expediente = new Expediente(idCliente,usuario.IdUsuario,titulo,descripcion,fechaUtc,numeracion);
+            var expediente = new Expediente(idCliente,usuario.IdUsuario,titulo,descripcion,fechaUtc,numeracion,idCategoria);
 
 
              _context.Expediente.Add(expediente);
@@ -142,6 +143,7 @@ namespace ThemisWorkshop.Controllers
                 string descripcion = Request.Form["descripcion"].ToString();
                 int numeracion = int.Parse(Request.Form["numeracion"].ToString());
                 int estado = int.Parse(Request.Form["estado"].ToString());
+                int idCategoria = int.Parse(Request.Form["categoria"].ToString());
                 string ids = Request.Form["id-originales"].ToString();
                 string idsMod = Request.Form["id"].ToString();
                 List<Detalleservicio> servicios = _context.Detalleservicio.Where(e => e.IdExpediente == expediente.IdExpediente).ToList();
@@ -164,6 +166,7 @@ namespace ThemisWorkshop.Controllers
                 expediente.Asunto = titulo;
                 expediente.Descripcion = descripcion;
                 expediente.Numeracion = numeracion;
+                expediente.IdCategoria = idCategoria;
                 expediente.FechaApertura = DateTime.SpecifyKind(expediente.FechaApertura, DateTimeKind.Utc);
                 expediente.FechaApertura = expediente.FechaApertura.AddDays(1);
                 _context.Expediente.Update(expediente);

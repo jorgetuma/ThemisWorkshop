@@ -85,7 +85,7 @@
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Nueva Categoría</h1>
                             </div>
-                            <form asp-controller="CAMBIAR" asp-action="AddCategoria" method="post">
+                            <form asp-controller="Categoria" asp-action="AddCategoria" method="post">
                                 <div class="modal-body">
                                     <div class="form-floating">
                                         <input required type="text" class="form-control" id="categoria" placeholder="" value="" name="categoria" maxlength="100">
@@ -95,7 +95,7 @@
                                 <div class="modal-footer">
                                     <div class="input-group d-flex justify-content-center">
                                         <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                        <a href="/CAMBIAR" class="btn btn-positive">Registrar</a>
+                                        <button type="submit" class="btn btn-positive">Registrar</button>
                                     </div>
                                 </div>
                             </form>

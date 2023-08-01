@@ -16,7 +16,7 @@
 
     List<Servicio> servicios = Model.Servicios;
     List<String> categorias = new List<String>();
-    categorias.Add("Hola");
+    categorias.Add("N/A");
     //List<Categoria> categorias = null;
 }
 <html>
@@ -54,7 +54,7 @@
                         <select class="form-select" id="categoria" name="categoria">
                             @foreach (var categoria in categorias)
                             {
-                                <option value="@categoria">@categoria</option>
+                                <option value= "-1">@categoria</option>
                             }
                         </select>
                         <label for="categoria">Categoría</label>
@@ -154,7 +154,7 @@
                         <select class="form-select" id="categoria" name="categoria">
                             @foreach (var categoria in categorias)
                             {
-                                <option value="@categoria">@categoria</option>
+                                <option value="-1">@categoria</option>
                             }
                         </select>
                         <label for="categoria">Categoría</label>
