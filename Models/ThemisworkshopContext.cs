@@ -281,7 +281,7 @@ public partial class ThemisworkshopContext : DbContext
 
             entity.Property(e => e.IdCategoria).HasColumnName("id_categoria");
             entity.Property(e => e.Nombre)
-            .HasMaxLength(100)
+            .HasMaxLength(75)
             .HasColumnName("nombre");
             entity.Property(e => e.Eliminado).HasColumnName("eliminado");
         });
