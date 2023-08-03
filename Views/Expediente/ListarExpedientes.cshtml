@@ -36,7 +36,7 @@
             SELECCIONE UN CLIENTE
         </div>
         <div class="col fw-bold h3 paso3">
-            EXPEDIENTES
+            EXPEDIENTES ENCONTRADOS
         </div>
     </div>
     <div class="row mb-3 d-flex justify-content-center">
@@ -107,6 +107,16 @@
                         <option value="1">Archivados</option>
                         <option value="2">Todos</option>
                     </select>
+                </div>
+                <div class="col ps-0">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                            </svg>
+                        </span>
+                        <input readonly id="clienteSeleccionado" type="text" class="form-control" placeholder="No Seleccionado">
+                    </div>
                 </div>
                 <div class="col-auto ps-0">
                     <a class="btn btn-positive" href="/Cliente/ListarClientes/1" role="button">Registrar</a>
@@ -398,6 +408,7 @@
         }
     }
     <script>
+        const next1Button = document.getElementById('next1');
         const categoriaRows = document.querySelectorAll('.categoriaRow');
         const categoriaInput = document.getElementById('categoria');
         categoriaRows.forEach(row => {
@@ -406,6 +417,8 @@
 
                 categoriaInput.value = categoriaText;
                 categoriaInput.placeholder = categoriaText;
+
+                next1Button.removeAttribute('disabled');
             });
         });
     </script>
@@ -438,8 +451,10 @@
         }
     </script>
     <script>
+        const next2Button = document.getElementById('next2');
         const clienteRows = document.querySelectorAll('.clienteRow');
         const clienteInput = document.getElementById('cliente');
+        const clienteSeleccionadoInput = document.getElementById('clienteSeleccionado');
         clienteRows.forEach(row => {
             row.addEventListener('click', () => {
                 const tdElement = row.querySelector('td:nth-child(2)');
@@ -448,8 +463,14 @@
                     const nextSibling = svgElement.nextSibling;
                     if (nextSibling && nextSibling.nodeType === Node.TEXT_NODE) {
                         const clienteText = nextSibling.textContent.trim();
+
                         clienteInput.value = clienteText;
                         clienteInput.placeholder = clienteText;
+
+                        next2Button.removeAttribute('disabled');
+
+                        clienteSeleccionadoInput.value = clienteText;
+                        clienteSeleccionadoInput.placeholder = clienteText;
                     }
                 }
             });
@@ -502,14 +523,14 @@
             });
         }
 
-        const next1Button = document.getElementById('next1');
-        const next2Button = document.getElementById('next2');
+        const next1ButtonEvent = document.getElementById('next1');
+        const next2ButtonEvent = document.getElementById('next2');
 
-        next1Button.addEventListener('click', () => {
+        next1ButtonEvent.addEventListener('click', () => {
             goToStep(paso1Elements, paso3Elements, paso2Elements);
         });
 
-        next2Button.addEventListener('click', () => {
+        next2ButtonEvent.addEventListener('click', () => {
             goToStep(paso1Elements, paso2Elements, paso3Elements);
         });
 
@@ -534,28 +555,6 @@
 
         paso33.addEventListener('click', () => {
             goToStep(paso1Elements, paso2Elements, paso3Elements);
-        });
-    </script>
-    <script>
-        const categoriaInput = document.getElementById('categoria');
-        const next1Button = document.getElementById('next1');
-        const clienteInput = document.getElementById('cliente');
-        const next2Button = document.getElementById('next2');
-
-        categoriaInput.addEventListener('input', () => {
-            if (categoriaInput.value) {
-                next1Button.removeAttribute('disabled');
-            } else {
-                next1Button.setAttribute('disabled', 'true');
-            }
-        });
-
-        clienteInput.addEventListener('input', () => {
-            if (categoriaInput.value) {
-                next2Button.removeAttribute('disabled');
-            } else {
-                next2Button.setAttribute('disabled', 'true');
-            }
         });
     </script>
 </body>
