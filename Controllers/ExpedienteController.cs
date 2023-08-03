@@ -33,7 +33,7 @@ namespace ThemisWorkshop.Controllers
             {
                 pag = 1;
             }
-            List<Expediente> expedientes = LoadExpedientes(pag);
+            List<Expediente> expedientes = _context.Expediente.Where(e => e.IdUsuario == usuario.IdUsuario).ToList();
             return View("ListarExpedientes", expedientes);
         }
 
