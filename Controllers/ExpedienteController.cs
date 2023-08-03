@@ -279,6 +279,24 @@ namespace ThemisWorkshop.Controllers
         }
 
         [HttpGet]
+        [Route("/Expediente/ExpedientesFiltrados/{idCategoria}&{idCliente}")]
+        public ActionResult ExpedientesFiltrados(int idCategoria,int idCliente)
+        {
+            usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
+            if (usuario == null)
+            {
+                return Redirect("/Sesion/IniciarSesion");
+            }
+            if (usuario.Rol == ((int)Rolesapp.Secretario))
+            {
+                Response.StatusCode = 403;
+                return Redirect("/" + Response.StatusCode.ToString());
+            }
+            List<Expediente> expedientesFiltrados = _context.Expediente.Where(e => e.IdUsuario == usuario.IdUsuario && e.IdCategoria == idCategoria && e.IdCliente == idCliente).ToList();
+            return View("ExpedientesFiltrados", expedientesFiltrados);
+        }
+
+        [HttpGet]
         public ActionResult Error()
         {
             usuario = _context.Usuario.Where(e => e.UserName == HttpContext.Session.GetString("usuario")).FirstOrDefault();
