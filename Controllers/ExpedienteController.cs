@@ -92,11 +92,18 @@ namespace ThemisWorkshop.Controllers
 
              _context.Expediente.Add(expediente);
             _context.SaveChanges();
-            for (int i = 0; i < servicios.Count(); i++)
+
+            var consulta = new Detalleservicio(1,expediente.IdExpediente);
+            _context.Detalleservicio.Add(consulta);
+
+            if (!string.IsNullOrEmpty(servicios.ElementAt(0)))
             {
-                int id = int.Parse(servicios.ElementAt(i).ToString());
-                var ds = new Detalleservicio(id, expediente.IdExpediente);
-                _context.Detalleservicio.Add(ds);
+                for (int i = 0; i < servicios.Count(); i++)
+                {
+                    int id = int.Parse(servicios.ElementAt(i).ToString());
+                    var ds = new Detalleservicio(id, expediente.IdExpediente);
+                    _context.Detalleservicio.Add(ds);
+                }
             }
             _context.SaveChanges();
 
