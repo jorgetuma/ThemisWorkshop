@@ -11,7 +11,8 @@
     string color;
     int counter = 1;
 
-    List<Categoria> categorias = ExpedienteController._temp.Categoria.ToList();
+    List<Categoria> categorias = ExpedienteController._temp.Categoria.Where(categoria => !categoria.Eliminado).ToList();
+    List<Cliente> clientes = ExpedienteController._temp.Clientes.ToList();
     List<Servicio> servicios = ExpedienteController._temp.Servicio.ToList();
     List<Expediente> activosExpedientes = Model.Where(expediente => expediente.Activo).ToList();
     List<Expediente> archivadosExpedientes = Model.Where(expediente => !expediente.Activo).ToList();
@@ -20,16 +21,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        .tabla-servicios {
-            display: none;
-        }
-    </style>
 </head>
 <body>
     <div class="row my-3">
-        <div class="col-2">
+        <div class="col-2" id="tieneFiltro">
             <select class="form-select" id="filter_combobox" onchange="filter_cards_2()">
                 <option selected value="0">Activos</option>
                 <option value="1">Archivados</option>
@@ -37,93 +32,121 @@
             </select>
         </div>
         <div class="col ps-0">
-            <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_cards()">
+            <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_table()">
         </div>
         <div class="col-auto ps-0">
             <a class="btn btn-positive" href="/Cliente/ListarClientes/1" role="button">Registrar</a>
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-auto fw-bold">
+        <div class="col">
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tags" viewBox="0 0 16 16">
+                        <path d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z" />
+                        <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" />
+                    </svg>
+                </span>
+                <input id="categoria" type="text" class="form-control" placeholder="No Seleccionado" aria-label="Categoría" aria-describedby="addon-wrapping">
+            </div>
+        </div>
+        <div class="col ps-0">
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                    </svg>
+                </span>
+                <input id="cliente" type="text" class="form-control" placeholder="No Seleccionado" aria-label="Cliente" aria-describedby="addon-wrapping">
+            </div>
+        </div>
+        <div class="col-auto ps-0">
+            <div class="btn btn-positive" role="button" id="queryButton">Buscar</div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-4 fw-bold" id="sinFiltro">
             Categorías
         </div>
-        <div class="col-auto fw-bold">
-            >
-        </div>
-        <div class="col-auto fw-bold">
+        <div class="col-8 ps-0 fw-bold" id="sinFiltro">
             Clientes
         </div>
-        <div class="col-auto fw-bold">
-            >
+    </div>
+    <div class="row mb-3" id="sinFiltro">
+        <div class="col-4">
+            <table class="table table-responsive table-hover border" id="categorias-table">
+                <tbody>
+                    @{
+                        foreach (var categoria in categorias)
+                        {
+                            <tr>
+                                <td>@categoria.Nombre</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
-        <div class="col-auto fw-bold">
-            Expedientes
+        <div class="col-8 ps-0">
+            <table class="table table-responsive table-hover border" id="clientes-table">
+                <tbody>
+                    @{
+                        foreach (var cliente in clientes)
+                        {
+                            <tr>
+                                @{
+                                    if (cliente.Tipo.Equals("Fisico"))
+                                    {
+                                        if (cliente.Sexo.Equals("Masculino"))
+                                        {
+                                            color = "#B4D2E4";
+                                        }
+                                        else
+                                        {
+                                            color = "#E4ADC8";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        color = "#9EE09E";
+                                    }
+                                }
+                                <td class="align-middle" style="width: 2.5%; background-color: @color;">
+                                    @{
+                                        if (cliente.Tipo.Equals("Fisico"))
+                                        {
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFF" class="bi bi-person" viewBox="0 0 16 16">
+                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                                            </svg>
+                                        }
+                                        else
+                                        {
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFF" class="bi bi-building" viewBox="0 0 16 16">
+                                                <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z" />
+                                                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z" />
+                                            </svg>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="@color" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                                        <circle cx="8" cy="8" r="8" />
+                                    </svg>
+                                    @cliente.Nombre @cliente.Apellido <br>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <div class="position-relative m-4">
-                <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 1px;">
-                    <div class="progress-bar" style="width: 50%"></div>
-                </div>
-                <button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 8rem; height:2rem;">Categoría</button>
-                <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 8rem; height:2rem;">Cliente</button>
-                <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 8rem; height:2rem;">Expediente</button>
-            </div>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <!-- JORGE AQUI JORGE AQUI JORGE AQUI JORGE AQUI JORGE AQUI JORGE AQUI -->
-        <div class="col-auto">
-            <div class="col-auto ps-0">
-                <!-- Trigger modal -->
-                <a class="btn btn-positive-twice" role="button" data-bs-toggle="modal" data-bs-target="#modal">Nueva Categoria</a>
-                <!-- Modal -->
-                <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
-                        <div class="modal-content text-center">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Nueva Categoría</h1>
-                            </div>
-                            <form asp-controller="Categoria" asp-action="AddCategoria" method="post">
-                                <div class="modal-body">
-                                    <div class="form-floating">
-                                        <input required type="text" class="form-control" id="categoria" placeholder="" value="" name="categoria" maxlength="100">
-                                        <label for="categoria">Categoría</label>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="input-group d-flex justify-content-center">
-                                        <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-positive">Registrar</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col fw-bold" id="activos">
-            @{
-                foreach (var categoria in categorias)
-                {
-                    <div>categoria</div>
-                }
-            }
-        </div>
-    </div>
-    <div class="row mb-3">
+    <div class="row mb-3" hidden>
         <div class="col fw-bold" id="activos">
             Expedientes activos
         </div>
-        <div class="col fw-bold" id="archivados">
-            Expedientes archivados
-        </div>
     </div>
-    <div class="row mb-3">
+    <div class="row mb-3" hidden>
         <div class="col" id="activos">
             @{
                 if (activosExpedientes.Count.Equals(0))
@@ -151,20 +174,19 @@
                                             <div class="col">
                                                 <b>@expediente.Asunto</b>
                                             </div>
-                                            <div class="col-auto text-end">
-                                                @{
-                                                    var cliente = ExpedienteController._temp.Clientes.Where(e => e.IdClientes == expediente.IdCliente).FirstOrDefault();
+                                            @{
+                                                if (expediente.Numeracion != 0)
+                                                {
+                                                    <div class="col-auto">
+                                                        <span class="badge" style="background-color: @color">
+                                                            @expediente.Numeracion
+                                                        </span>
+                                                    </div>                                                    
                                                 }
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                                                </svg>
-                                                <span class="badge" style="background-color: @color">
-                                                    @cliente.Nombre @cliente.Apellido
-                                                </span>
-                                            </div>
+                                            }
                                         </div>
                                         <small>@expediente.Descripcion</small><br>
-                                        <table class="table table-sm table-hover tabla-servicios border mt-3">
+                                        <table class="table table-sm table-hover border mt-3">
                                             <tbody>
                                                 @{
                                                     foreach (var servicio in servicios)
@@ -197,10 +219,9 @@
                                                                             </td>
                                                                             <td style="width: 2.5%">
                                                                                 <a href="/Factura/GenerarFactura/@servicio.IdServicio&-1&@expediente.IdExpediente" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Facturar">
-                                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#323232" class="bi bi-receipt" viewBox="0 0 16 16">
-                                                                                        <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z" />
-                                                                                        <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
-                                                                                    </svg>
+                                                                                    <span class="badge" style="background-color: @color">
+                                                                                        Facturar
+                                                                                    </span>
                                                                                 </a>
                                                                             </td>
                                                                         }
@@ -225,9 +246,6 @@
                                                 </span>
                                             </div>
                                             <div class="col-auto text-end">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="my-light-black" class="bi bi-collection btn-servicios" viewBox="0 0 16 16" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Servicios">
-                                                    <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z" />
-                                                </svg>
                                                 <a href="/Expediente/ModificarExpediente/@expediente.IdExpediente" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Modificar">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#my-light-black" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -253,124 +271,6 @@
                                                                 <div class="input-group d-flex justify-content-center">
                                                                     <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
                                                                     <a href="/Expediente/EliminarExpediente/@expediente.IdExpediente" class="btn btn-positive">Aceptar</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-        </div>
-        <div class="col" id="archivados">
-            @{
-                if (archivadosExpedientes.Count.Equals(0))
-                {
-                    <div class="text-center">
-                        ¡No hay expedientes archivados!
-                    </div>
-                }
-                else
-                {
-                    color = "#FF6663";
-
-                    @foreach (var expediente in archivadosExpedientes)
-                    {
-                        counter = 1;
-
-                        <div class="card mb-3" style="border-color: @color">
-                            <div class="card-body p-0">
-                                <div class="row g-0">
-                                    <div class="col-auto" style="background-color: @color">
-                                        &nbsp; &nbsp;
-                                    </div>
-                                    <div class="col p-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <b>@expediente.Asunto</b>
-                                            </div>
-                                            <div class="col-auto text-end">
-                                                @{
-                                                    var cliente = ExpedienteController._temp.Clientes.Where(e => e.IdClientes == expediente.IdCliente).FirstOrDefault();
-                                                }
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                                                </svg>
-                                                <span class="badge" style="background-color: @color">
-                                                    @cliente.Nombre @cliente.Apellido
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <small>@expediente.Descripcion</small><br>
-                                        <div class="table-responsive">
-                                            <table class="table table-sm table-hover tabla-servicios border mt-3">
-                                                <tbody>
-                                                    @{
-                                                        var misServicios = @ExpedienteController._temp.Detalleservicio.Where(e => e.IdExpediente == expediente.IdExpediente).ToList();
-
-                                                        foreach (var servicio in servicios)
-                                                        {
-                                                            foreach (var miservicio in misServicios)
-                                                            {
-                                                                if (servicio.IdServicio == miservicio.IdServicio)
-                                                                {
-                                                                    <tr>
-                                                                        <td style="width: 2.5%">
-                                                                            <small class="grey">@counter</small>
-                                                                        </td>
-                                                                        <td colspan="1">
-                                                                            @servicio.Nombre
-                                                                        </td>
-                                                                        <td style="width: 2.5%"></td>
-                                                                    </tr>
-
-                                                                    counter = counter + 1;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="my-light-black" class="bi bi-calendar4-week" viewBox="0 0 16 16">
-                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z" />
-                                                    <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
-                                                </svg>
-                                                <span class="badge" style="background-color: @color">
-                                                    @expediente.FechaApertura.ToShortDateString()
-                                                </span>
-                                            </div>
-                                            <div class="col-auto text-end">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="my-light-black" class="bi bi-collection btn-servicios" viewBox="0 0 16 16" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Servicios">
-                                                    <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z" />
-                                                </svg>
-                                                <!-- Trigger modal -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@expediente.IdExpediente">
-                                                    <path d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96v-.667z" />
-                                                </svg>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="modal-@expediente.IdExpediente" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
-                                                        <div class="modal-content text-center">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Reabrir Expediente</h1>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                ¿Seguro que desea reabrir este registro?<br>
-                                                                <b>@expediente.Asunto</b>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <div class="input-group d-flex justify-content-center">
-                                                                    <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                                                    <a href="/Expediente/ReabrirExpediente/@expediente.IdExpediente" class="btn btn-positive">Aceptar</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -419,73 +319,63 @@
         }
     }
     <script>
-        var botonesServicios = document.querySelectorAll('.btn-servicios');
+        function filter_table() {
+            var input, filter, table, tr, td, i, j, visible;
+            input = document.getElementById("search_filter");
+            filter = input.value.toUpperCase();
 
-        botonesServicios.forEach(function (boton) {
-            boton.addEventListener('click', function () {
-                var tablaServicios = this.parentNode.parentNode.parentNode.querySelector('.tabla-servicios');
-
-                if (tablaServicios.style.display === 'none') {
-                    tablaServicios.style.display = 'block';
+            for (x = 0; x < 2; x++) {
+                if (x == 0) {
+                    table = document.getElementById("categorias-table");
                 } else {
-                    tablaServicios.style.display = 'none';
+                    table = document.getElementById("clientes-table");
+                }
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    visible = false;
+                    if (tr[i].getElementsByTagName("th").length == 0) {
+                        td = tr[i].getElementsByTagName("td");
+                        for (j = 0; j < td.length; j++) {
+                            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                visible = true;
+                            }
+                        }
+                    } else {
+                        visible = true;
+                    }
+                    if (visible) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        function filter_table()() {
+            var idCliente = document.getElementById("search_filter").value;
+            var idCategoria = document.getElementById("categoria").value;
+            var searchInput = document.getElementById("cliente").value;
+
+            $.ajax({
+                type: "GET",
+                url: "/Controller/FilterData",
+                data: {
+                    idCliente: idCliente,
+                    idCategoria: idCategoria,
+                    searchInput: searchInput
+                },
+                success: function (data) {
+                    $("#filteredResults").html(data);
+                },
+                error: function () {
+                    alert("An error occurred while filtering data.");
                 }
             });
-        });
-    </script>
-    <script>
-        function filter_cards() {
-            var searchValue = document.getElementById('search_filter').value.toLowerCase();
-            var cards = document.getElementsByClassName('card');
-
-            for (var i = 0; i < cards.length; i++) {
-                var card = cards[i];
-                var cardContent = card.textContent || card.innerText;
-
-                if (cardContent.toLowerCase().indexOf(searchValue) > -1) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            }
         }
     </script>
-    <script>
-        function filter_cards_2() {
-            var selectedOption = document.getElementById("filter_combobox").value;
-            var activosElements = document.querySelectorAll('[id="activos"]');
-            var archivadosElements = document.querySelectorAll('[id="archivados"]');
 
-            if (selectedOption === "0") {
-                activosElements.forEach(function (element) {
-                    element.style.display = "block";
-                });
-
-                archivadosElements.forEach(function (element) {
-                    element.style.display = "none";
-                });
-            } else if (selectedOption === "1") {
-                activosElements.forEach(function (element) {
-                    element.style.display = "none";
-                });
-
-                archivadosElements.forEach(function (element) {
-                    element.style.display = "block";
-                });
-            } else if (selectedOption === "2") {
-                activosElements.forEach(function (element) {
-                        element.style.display = "block";
-                });
-
-                archivadosElements.forEach(function (element) {
-                    element.style.display = "block";
-                });
-            }
-        }
-
-        window.addEventListener('load', function () {
-            filter_cards_2();
-        });
-    </script>
 </body>
 </html>

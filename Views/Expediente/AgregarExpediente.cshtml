@@ -2,28 +2,27 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    @using ThemisWorkshop.Controllers;
     ViewData["Title"] = "Agregar/Modificar Expediente";
+
+    @using ThemisWorkshop.Controllers;
     @model ExpedienteViewModel
-    @if (Model.EsMod == false) // Si no hay nada, significa que esta agregando un Expediente
+
+    if (Model.EsMod == false)
     {
         ViewData["Title"] = "Registrar Expediente";
     }
-    else // Si hay algo, significa que esta modificando un Expediente
+    else
     {
         ViewData["Title"] = "Modificar Expediente";
     }
 
     List<Servicio> servicios = Model.Servicios;
-    List<String> categorias = new List<String>();
-    categorias.Add("N/A");
-    //List<Categoria> categorias = null;
+    List<Categoria> categorias = ExpedienteController._temp.Categoria.Where(categoria => !categoria.Eliminado).ToList();
 }
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <style>
         .table-responsive {
             min-height: 200px;
@@ -31,266 +30,288 @@
         }
     </style>
 </head>
-    
 <body>
-    @if (Model.EsMod == false)
-    {
-        <form asp-controller="Expediente" asp-action="AddExpediente" method="post">
-            <input type="hidden" value="@Model.Cliente.IdClientes" name="idCliente">
-            <div class="row m-0 g-3">
-                <div class="col-auto fw-bold">
-                    Información del Expediente de @Model.Cliente.Nombre @Model.Cliente.Apellido:
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="form-floating">
-                        <input required type="text" class="form-control" id="titulo" placeholder="" value="" name="titulo" maxlength="100">
-                        <label for="titulo">Título</label>
+    @{
+        if (Model.EsMod == false)
+        {
+            <form asp-controller="Expediente" asp-action="AddExpediente" method="post">
+                <input type="hidden" value="@Model.Cliente.IdClientes" name="idCliente">
+                <div class="row m-0 g-3">
+                    <div class="col-auto fw-bold">
+                        Información del Expediente de @Model.Cliente.Nombre @Model.Cliente.Apellido:
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="form-floating">
-                        <select class="form-select" id="categoria" name="categoria">
-                            @foreach (var categoria in categorias)
-                            {
-                                <option value= "-1">@categoria</option>
-                            }
-                        </select>
-                        <label for="categoria">Categoría</label>
+                <div class="row m-0 g-3">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input required type="text" class="form-control" id="titulo" placeholder="" value="" name="titulo" maxlength="100">
+                            <label for="titulo">Título</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-2">
-                    <div class="form-floating">
-                        <input required type="number" class="form-control" id="numeracion" placeholder="0" value="0" name="numeracion" min="0">
-                        <label for="numeracion">Numeración</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="form-floating">
-                        <textarea required class="form-control" id="descripcion" placeholder="" value="" name="descripcion" style="height: 100px" maxlength="250"></textarea>
-                        <label for="descripcion">Descripción</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col fw-bold">
-                    Servicios:
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" onkeyup="filter_table()">
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col fw-bold">
-                    Servicios Disponibles:
-                </div>
-                <div class="col fw-bold">
-                    Servicios del Expediente:
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <input type="hidden" value="" name="id" id="id-input">
-
-                <div class="col border mx-2">
-                    <div class="table-responsive">
-                        <table class="table table-hover" id="left-table">
-                            <tbody>
-                                @foreach (var servicio in servicios)
-                                {
-                                    <tr class="left-row">
-                                        <input type="hidden" value="@servicio.IdServicio" name="idServicio">
-                                        <td>@servicio.Nombre</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col border mx-2">
-                    <div class="table-responsive">
-                        <table class="table table-hover" id="right-table">
-                            <tbody>
- 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="input-group d-flex justify-content-end">
-                        <a href="/Expediente/ListarExpedientes/1" class="btn btn-negative">Cancelar</a>
-                        <button type="submit" class="btn btn-positive">Registrar</button>
-                    </div>
-                </div>
-            </div> 
-        </form>
-    }
-    else
-    {
-        <form asp-controller="Expediente" asp-action="ModExpediente" method="post">
-            <input type="hidden" value="@Model.Expediente.IdExpediente" name="idExpediente">
-            <input type="hidden" value="@Model.Cliente.IdClientes" name="idCliente">
-
-            <div class="row m-0 g-3">
-                <div class="col-auto fw-bold">
-                    Información del Expediente de @Model.Cliente.Nombre @Model.Cliente.Apellido:
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="form-floating">
-                        <input required type="text" class="form-control" id="titulo" placeholder="titulo" value="@Model.Expediente.Asunto" name="titulo" maxlength="100">
-                        <label for="titulo">Título</label>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="form-floating">
-                        <select class="form-select" id="categoria" name="categoria">
-                            @foreach (var categoria in categorias)
-                            {
-                                <option value="-1">@categoria</option>
-                            }
-                        </select>
-                        <label for="categoria">Categoría</label>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="form-floating">
-                        <input required type="number" class="form-control" id="numeracion" placeholder="" value="@Model.Expediente.Asunto" name="numeracion" min="0">
-                        <label for="numeracion">Numeración</label>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="form-floating">
-                        <select class="form-select" id="estado" name="estado">
-                            @if (Model.Expediente.Activo == true)
-                            {
-                                <option selected value="1">Activo</option>
-                                <option value="0">Archivado</option>
-                            }
-                            else
-                            {
-                                <option value="1">Activo</option>
-                                <option selected value="0">Archivado</option>
-                            }
-                        </select>
-                        <label for="estado">Estado</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="form-floating">
-                        <textarea required class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Expediente.Descripcion" name="descripcion" style="height: 100px" maxlength="250">@Model.Expediente.Descripcion</textarea>
-                        <label for="descripcion">Descripción</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col fw-bold">
-                    Servicios:
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" onkeyup="filter_table()">
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col fw-bold">
-                    Servicios Disponibles:
-                </div>
-                <div class="col fw-bold">
-                    Servicios del Expediente:
-                </div>
-            </div>
-            <div class="row m-0 g-3">
-                @{
-                    var misServicios = @ExpedienteController._temp.Detalleservicio.Where(e => e.IdExpediente == Model.Expediente.IdExpediente).ToList();
-
-                    string concatenatedIds = string.Join("-", misServicios.Select(servicio => servicio.IdServicio));
-                }
-                <input type="hidden" value="@concatenatedIds" name="id-originales">
-
-                <input type="hidden" value="empty" name="id" id="id-input">
-                <div class="col border mx-2">
-                    <div class="table-responsive">
-                        <table class="table table-hover" id="left-table">
-                            <tbody>
-                                @foreach (var servicio in servicios)
-                                {
-                                    var isPresent = false;
-                                    @foreach (var miservicio in misServicios)
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="categoria" name="categoria">
+                                <option selected value="-1">N/A</option>
+                                @{
+                                    foreach (var categoria in categorias)
                                     {
-                                        if (servicio.IdServicio == miservicio.IdServicio)
-                                        {
-                                            isPresent = true;
-                                            break;
-                                        }
-                                    }
-                                    if (!isPresent)
-                                    {
-                                        <tr class="left-row">
-                                            <input type="hidden" value="@servicio.IdServicio" name="idServicio">
-                                            <td>@servicio.Nombre</td>
-                                        </tr>
+                                        <option value="@categoria.IdCategoria">@categoria.Nombre</option>
                                     }
                                 }
-                            </tbody>
-                        </table>
+                            </select>
+                            <label for="categoria">Categoría</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-floating">
+                            <input required type="number" class="form-control" id="numeracion" placeholder="0" value="0" name="numeracion" min="0">
+                            <label for="numeracion">Numeración</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col border mx-2">
-                    <div class="table-responsive">
-                        <table class="table table-hover" id="right-table">
-                            <tbody>
-                                @foreach (var servicio in servicios)
-                                {
-                                    @foreach (var miservicio in misServicios)
-                                    {
-                                        if (servicio.IdServicio == miservicio.IdServicio)
+                <div class="row m-0 g-3">
+                    <div class="col">
+                        <div class="form-floating">
+                            <textarea required class="form-control" id="descripcion" placeholder="" value="" name="descripcion" style="height: 100px" maxlength="250"></textarea>
+                            <label for="descripcion">Descripción</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col fw-bold">
+                        Servicios:
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col">
+                        <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" onkeyup="filter_table()">
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col fw-bold">
+                        Servicios Disponibles:
+                    </div>
+                    <div class="col fw-bold">
+                        Servicios del Expediente:
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <input type="hidden" value="" name="id" id="id-input">
+
+                    <div class="col border mx-2">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="left-table">
+                                <tbody>
+                                    @{
+                                        foreach (var servicio in servicios)
                                         {
-                                            <tr class="right-row">
+                                            <tr class="left-row">
                                                 <input type="hidden" value="@servicio.IdServicio" name="idServicio">
                                                 <td>@servicio.Nombre</td>
                                             </tr>
                                         }
                                     }
-                                }
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col border mx-2">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="right-table">
+                                <tbody>
+ 
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row m-0 g-3">
-                <div class="col">
-                    <div class="input-group d-flex justify-content-end">
-                        <a href="/Expediente/ListarExpedientes/1" class="btn btn-negative">Cancelar</a>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</button>
+                <div class="row m-0 g-3">
+                    <div class="col">
+                        <div class="input-group d-flex justify-content-end">
+                            <a href="/Expediente/ListarExpedientes/1" class="btn btn-negative">Cancelar</a>
+                            <button type="submit" class="btn btn-positive">Registrar</button>
+                        </div>
                     </div>
+                </div> 
+            </form>
+        }
+        else
+        {
+            <form asp-controller="Expediente" asp-action="ModExpediente" method="post">
+                <input type="hidden" value="@Model.Expediente.IdExpediente" name="idExpediente">
+                <input type="hidden" value="@Model.Cliente.IdClientes" name="idCliente">
 
-                    <!-- Modal -->
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
-                                <div class="modal-content text-center">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Modificar Expediente</h1>
-                                    </div>
-                                    <div class="modal-body">
-                                        ¿Seguro que desea guardar los cambios?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="input-group d-flex justify-content-center">
-                                            <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-positive">Aceptar</button>
+                <div class="row m-0 g-3">
+                    <div class="col-auto fw-bold">
+                        Información del Expediente de @Model.Cliente.Nombre @Model.Cliente.Apellido:
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input required type="text" class="form-control" id="titulo" placeholder="titulo" value="@Model.Expediente.Asunto" name="titulo" maxlength="100">
+                            <label for="titulo">Título</label>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="categoria" name="categoria">
+                                <option selected value="-1">N/A</option>
+                                @{
+                                    foreach (var categoria in categorias)
+                                    {
+                                        if (categoria.IdCategoria == Model.Expediente.IdCategoria)
+                                        {
+                                            <option selected value="@categoria.IdCategoria">@categoria.Nombre</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@categoria.IdCategoria">@categoria.Nombre</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                            <label for="categoria">Categoría</label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-floating">
+                            <input required type="number" class="form-control" id="numeracion" placeholder="" value="@Model.Expediente.Numeracion" name="numeracion" min="0">
+                            <label for="numeracion">Numeración</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-floating">
+                            <select class="form-select" id="estado" name="estado">
+                                @{
+                                    if (Model.Expediente.Activo == true)
+                                    {
+                                        <option selected value="1">Activo</option>
+                                        <option value="0">Archivado</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="1">Activo</option>
+                                        <option selected value="0">Archivado</option>
+                                    }
+                                }
+                            </select>
+                            <label for="estado">Estado</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col">
+                        <div class="form-floating">
+                            <textarea required class="form-control" id="descripcion" placeholder="descripcion" value="@Model.Expediente.Descripcion" name="descripcion" style="height: 100px" maxlength="250">@Model.Expediente.Descripcion</textarea>
+                            <label for="descripcion">Descripción</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col fw-bold">
+                        Servicios:
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col">
+                        <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" onkeyup="filter_table()">
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col fw-bold">
+                        Servicios Disponibles:
+                    </div>
+                    <div class="col fw-bold">
+                        Servicios del Expediente:
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    @{
+                        var misServicios = @ExpedienteController._temp.Detalleservicio.Where(e => e.IdExpediente == Model.Expediente.IdExpediente).ToList();
+
+                        string concatenatedIds = string.Join("-", misServicios.Select(servicio => servicio.IdServicio));
+                    }
+                    <input type="hidden" value="@concatenatedIds" name="id-originales">
+
+                    <input type="hidden" value="empty" name="id" id="id-input">
+                    <div class="col border mx-2">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="left-table">
+                                <tbody>
+                                    @{
+                                        foreach (var servicio in servicios)
+                                        {
+                                            var isPresent = false;
+
+                                            foreach (var miservicio in misServicios)
+                                            {
+                                                if (servicio.IdServicio == miservicio.IdServicio)
+                                                {
+                                                    isPresent = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (!isPresent)
+                                            {
+                                                <tr class="left-row">
+                                                    <input type="hidden" value="@servicio.IdServicio" name="idServicio">
+                                                    <td>@servicio.Nombre</td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col border mx-2">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="right-table">
+                                <tbody>
+                                    @{
+                                        foreach (var servicio in servicios)
+                                        {
+                                            foreach (var miservicio in misServicios)
+                                            {
+                                                if (servicio.IdServicio == miservicio.IdServicio)
+                                                {
+                                                    <tr class="right-row">
+                                                        <input type="hidden" value="@servicio.IdServicio" name="idServicio">
+                                                        <td>@servicio.Nombre</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0 g-3">
+                    <div class="col">
+                        <div class="input-group d-flex justify-content-end">
+                            <a href="/Expediente/ListarExpedientes/1" class="btn btn-negative">Cancelar</a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</button>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                    <div class="modal-content text-center">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5 mx-auto" id="exampleModalLabel">Modificar Expediente</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Seguro que desea guardar los cambios?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="input-group d-flex justify-content-center">
+                                                <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-positive">Aceptar</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -298,10 +319,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        }
     }
-
     <script>
         var leftRows = document.getElementsByClassName('left-row');
         for (var i = 0; i < leftRows.length; i++) {
@@ -321,7 +341,7 @@
             if (rightRows.length === 0) {
                 var hiddenInput = document.getElementById('id-input');
                 hiddenInput.value = "empty";
-                return; // Exit the function if there are no rows
+                return;
             }
 
             for (var i = 0; i < rightRows.length; i++) {
@@ -334,26 +354,14 @@
             hiddenInput.value = ids.join('-');
         }
 
-
-
         function moveRowToRightTable() {
-            // Get the clicked row
             var row = this;
-
-            // Clone the row to preserve its content
             var clonedRow = row.cloneNode(true);
-
-            // Remove the click event listener from the cloned row
             clonedRow.removeEventListener('click', moveRowToRightTable);
 
-            // Append the cloned row to the right table
             var rightTable = document.getElementById('right-table').getElementsByTagName('tbody')[0];
             rightTable.appendChild(clonedRow);
-
-            // Remove the clicked row from the left table
             row.parentNode.removeChild(row);
-
-            // Add an event listener to the cloned row to move it back to the left table
             clonedRow.addEventListener('click', moveRowToLeftTable);
             clonedRow.classList.add('right-row');
             updateHiddenInputValue();
@@ -364,23 +372,13 @@
         }
 
         function moveRowToLeftTable() {
-            // Get the clicked row
             var row = this;
-
-            // Clone the row to preserve its content
             var clonedRow = row.cloneNode(true);
-
-            // Remove the click event listener from the cloned row
             clonedRow.removeEventListener('click', moveRowToLeftTable);
 
-            // Append the cloned row to the left table
             var leftTable = document.getElementById('left-table').getElementsByTagName('tbody')[0];
             leftTable.appendChild(clonedRow);
-
-            // Remove the clicked row from the right table
             row.parentNode.removeChild(row);
-
-            // Add an event listener to the cloned row to move it to the right table
             clonedRow.addEventListener('click', moveRowToRightTable);
             clonedRow.classList.remove('right-row');
             updateHiddenInputValue();
@@ -390,7 +388,6 @@
             filter_table();
         }
     </script>
-
     <script>
         function filter_table() {
             var input, filter, table, tr, td, i, j, visible;
