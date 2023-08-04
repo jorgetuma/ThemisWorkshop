@@ -292,8 +292,18 @@ namespace ThemisWorkshop.Controllers
                 Response.StatusCode = 403;
                 return Redirect("/" + Response.StatusCode.ToString());
             }
-            List<Expediente> expedientesFiltrados = _context.Expediente.Where(e => e.IdUsuario == usuario.IdUsuario && e.IdCategoria == idCategoria && e.IdCliente == idCliente).ToList();
-            return View("ExpedientesFiltrados", expedientesFiltrados);
+            List<Expediente> expedientesFiltrados;
+            if (idCategoria != -2)
+            {
+                expedientesFiltrados = _context.Expediente.Where(e => e.IdUsuario == usuario.IdUsuario && e.IdCategoria == idCategoria && e.IdCliente == idCliente).ToList();
+            }
+            else
+            {
+                expedientesFiltrados = _context.Expediente.Where(e => e.IdUsuario == usuario.IdUsuario && e.IdCliente == idCliente).ToList();
+            }
+            Cliente? cliente = _context.Clientes.Find(idCliente);
+            ExpedienteViewModel model = new ExpedienteViewModel(expedientesFiltrados,cliente);
+            return View("ExpedientesFiltrados", model);
         }
 
         [HttpGet]
