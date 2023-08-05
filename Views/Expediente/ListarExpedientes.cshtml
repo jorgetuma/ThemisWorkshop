@@ -22,19 +22,26 @@
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .paso2, .paso3, .fase2 {
+        .paso2, .vista2 {
             display: none;
         }
     </style>
 </head>
 <body>
-    <div class="fase1">
+    <div class="vista1">
         <div class="row my-3">
             <div class="col">
-                <input id="searchInputMain" type="text" class="form-control" placeholder="Escribe para buscar..." onkeyup="filterExpedientesMain()">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                    </span>
+                    <input id="searchInputForExpedientes" type="text" class="form-control" placeholder="Escribe para buscar..." onkeyup="filterCards()">
+                </div>
             </div>
             <div class="col-auto ps-0">
-                <button id="exitFase1" class="btn btn-positive" role="button">Filtrar</button>
+                <button id="exitVista1" class="btn btn-positive" role="button">Filtrar</button>
             </div>
             <div class="col-auto ps-0">
                 <a class="btn btn-positive" href="/Cliente/ListarClientes/1" role="button">Registrar</a>
@@ -69,9 +76,17 @@
                                             &nbsp; &nbsp;
                                         </div>
                                         <div class="col p-3">
-                                            <div class="row">
+                                            <div class="row mb-3">
                                                 <div class="col">
-                                                    <b>@expediente.Asunto</b>
+                                                    @{
+                                                        var cliente = clientes.Where(cliente => cliente.IdClientes == expediente.IdCliente).First();
+                                                    }
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                                                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
+                                                    </svg>
+                                                    <span class="badge" style="background-color: @color">
+                                                        @cliente.Nombre @cliente.Apellido
+                                                    </span>
                                                 </div>
                                                 @{
                                                     if (expediente.Numeracion != 0)
@@ -83,6 +98,11 @@
                                                         </div>
                                                     }
                                                 }
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <b>@expediente.Asunto</b>
+                                                </div>
                                             </div>
                                             <small>@expediente.Descripcion</small><br>
                                             <table class="table table-sm table-hover border mt-3">
@@ -187,16 +207,13 @@
             </div>
         </div>
     </div>
-    <div class="fase2">
+    <div class="vista2">
         <div class="row mt-3 text-center">
             <div class="col fw-bold h3 paso1">
                 SELECCIONE UNA CATEGORÍA
             </div>
             <div class="col fw-bold h3 paso2">
                 SELECCIONE UN CLIENTE
-            </div>
-            <div class="col fw-bold h3 paso3">
-                EXPEDIENTES ENCONTRADOS
             </div>
         </div>
         <div class="row mb-3 d-flex justify-content-center">
@@ -205,9 +222,9 @@
                     <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 2px;">
                         <div class="progress-bar" style="width: 0%; background-color: #9EE09E;"></div>
                     </div>
-                    <button id="paso11" type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Categoría</button>
-                    <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #FF6663; color: #FFF;">Cliente</button>
-                    <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #FF6663; color: #FFF;">Expediente</button>
+                    <button class="position-absolute top-0 start-0 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Categoría</button>
+                    <button class="position-absolute top-0 start-50 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #FF6663; color: #FFF;">Cliente</button>
+                    <button class="position-absolute top-0 start-100 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #FF6663; color: #FFF;">Expediente</button>
                 </div>
             </div>
             <div class="col-8 fw-bold paso2">
@@ -215,19 +232,9 @@
                     <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 2px;">
                         <div class="progress-bar" style="width: 50%; background-color: #9EE09E;"></div>
                     </div>
-                    <button id="paso21" type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Categoría</button>
-                    <button id="paso22" type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Cliente</button>
-                    <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #FF6663; color: #FFF;">Expediente</button>
-                </div>
-            </div>
-            <div class="col-8 fw-bold paso3">
-                <div class="position-relative m-4">
-                    <div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="height: 2px;">
-                        <div class="progress-bar" style="width: 100%; background-color: #9EE09E;"></div>
-                    </div>
-                    <button id="paso31" type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Categoría</button>
-                    <button id="paso32" type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Cliente</button>
-                    <button id="paso33" type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Expediente</button>
+                    <button id="goBackToCategoria" type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Categoría</button>
+                    <button class="position-absolute top-0 start-50 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #9EE09E; color: #FFF;">Cliente</button>
+                    <button class="position-absolute top-0 start-100 translate-middle btn btn-sm rounded-pill" style="width: 6rem; height:2rem; background-color: #FF6663; color: #FFF;">Expediente</button>
                 </div>
             </div>
         </div>
@@ -241,11 +248,16 @@
                         </svg>
                     </span>
                     <input readonly id="categoria" type="text" class="form-control" placeholder="No Seleccionado" value="">
-                    <input id="categoriaHidden" type="text" class="form-control" value="">
+                    <span class="input-group-text" id="erase" onclick="updateInputs()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                        </svg>
+                    </span>
+                    <input id="categoriaHidden" type="text" class="form-control" value="-2" oninput="handleInput()">
                 </div>
             </div>
             <div class="col-auto ps-0 paso1">
-                <button disabled class="btn btn-positive" role="button" id="next1">Siguiente</button>
+                <button class="btn btn-positive" role="button" id="next1">Siguiente</button>
             </div>
             <div class="col paso2">
                 <div class="input-group flex-nowrap">
@@ -261,30 +273,6 @@
             <div class="col-auto ps-0 paso2">
                 <button disabled class="btn btn-positive" value="" role="button" id="next2">Siguiente</button>
             </div>
-            <div class="col paso3">
-                <div class="row">
-                    <div class="col-2">
-                        <select class="form-select" id="filter_combobox" onchange="filter_cards_2()">
-                            <option selected value="0">Activos</option>
-                            <option value="1">Archivados</option>
-                            <option value="2">Todos</option>
-                        </select>
-                    </div>
-                    <div class="col ps-0">
-                        <div class="input-group flex-nowrap">
-                            <span class="input-group-text" id="addon-wrapping">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
-                                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" />
-                                </svg>
-                            </span>
-                            <input readonly id="clienteSeleccionado" type="text" class="form-control" placeholder="No Seleccionado">
-                        </div>
-                    </div>
-                    <div class="col-auto ps-0">
-                        <a class="btn btn-positive" href="/Cliente/ListarClientes/1" role="button">Registrar</a>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="row mb-3">
             <div class="col-4 fw-bold paso1">
@@ -293,19 +281,26 @@
             <div class="col-4 fw-bold paso2">
                 Clientes
             </div>
-            <div class="col-4 fw-bold paso3">
-                Expedientes Activos
-            </div>
         </div>
         <div class="row my-3">
-            <div class="col">
+            <div class="col paso1">
                 <div class="input-group flex-nowrap">
                     <span class="input-group-text">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                         </svg>
                     </span>
-                    <input id="searchInput" type="text" class="form-control" placeholder="Escribe para buscar..." onkeyup="filterTable()">
+                    <input id="searchCategoriaInput" type="text" class="form-control" placeholder="Escribe para buscar..." onkeyup="filterCategoriaTable()">
+                </div>
+            </div>
+            <div class="col paso2">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                    </span>
+                    <input id="searchClienteInput" type="text" class="form-control" placeholder="Escribe para buscar..." onkeyup="filterClienteTable()">
                 </div>
             </div>
         </div>
@@ -400,151 +395,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col paso3">
-                @{
-                    if (expedientesActivos.Count.Equals(0))
-                    {
-                        <div class="text-center">
-                            ¡No hay expedientes activos!
-                        </div>
-                    }
-                    else
-                    {
-                        color = "#9EE09E";
-
-                        foreach (var expediente in expedientesActivos)
-                        {
-                            counter = 1;
-
-                            <div class="card mb-3" style="border-color: @color;">
-                                <div class="card-body p-0">
-                                    <div class="row g-0">
-                                        <div class="col-auto" style="background-color: @color;">
-                                            &nbsp; &nbsp;
-                                        </div>
-                                        <div class="col p-3">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <b>@expediente.Asunto</b>
-                                                </div>
-                                                @{
-                                                    if (expediente.Numeracion != 0)
-                                                    {
-                                                        <div class="col-auto">
-                                                            <span class="badge" style="background-color: @color">
-                                                                @expediente.Numeracion
-                                                            </span>
-                                                        </div>
-                                                    }
-                                                }
-                                            </div>
-                                            <small>@expediente.Descripcion</small><br>
-                                            <table class="table table-sm table-hover border mt-3">
-                                                <tbody>
-                                                    @{
-                                                        foreach (var servicio in servicios)
-                                                        {
-                                                            var misServicios = @ExpedienteController._temp.Detalleservicio.Where(e => e.IdExpediente == expediente.IdExpediente).ToList();
-
-                                                            foreach (var miServicio in misServicios)
-                                                            {
-                                                                if (servicio.IdServicio == miServicio.IdServicio)
-                                                                {
-                                                                    <tr>
-                                                                        @{
-                                                                            if (miServicio.Facturado == true || servicio.Nombre == "Consulta")
-                                                                            {
-                                                                                <td style="width: 2.5%">
-                                                                                    <small class="grey">@counter</small>
-                                                                                </td>
-                                                                                <td style="width: 100%" colspan="1">
-                                                                                    @servicio.Nombre
-                                                                                </td>
-                                                                                <td style="width: 2.5%"></td>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <td style="width: 2.5%">
-                                                                                    <small class="grey">@counter</small>
-                                                                                </td>
-                                                                                <td style="width: 100%">
-                                                                                    @servicio.Nombre
-                                                                                </td>
-                                                                                <td style="width: 2.5%">
-                                                                                    <a href="/Factura/GenerarFactura/@servicio.IdServicio&-1&@expediente.IdExpediente" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Facturar">
-                                                                                        <span class="badge" style="background-color: @color">
-                                                                                            Facturar
-                                                                                        </span>
-                                                                                    </a>
-                                                                                </td>
-                                                                            }
-                                                                        }
-                                                                    </tr>
-
-                                                                    counter = counter + 1;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="my-light-black" class="bi bi-calendar4-week" viewBox="0 0 16 16">
-                                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z" />
-                                                        <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
-                                                    </svg>
-                                                    <span class="badge" style="background-color: @color">
-                                                        @expediente.FechaApertura.ToShortDateString()
-                                                    </span>
-                                                </div>
-                                                <div class="col-auto text-end">
-                                                    <a href="/Expediente/ModificarExpediente/@expediente.IdExpediente" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Modificar">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#my-light-black" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                        </svg>
-                                                    </a>
-                                                    <!-- Trigger modal -->
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@expediente.IdExpediente">
-                                                        <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-                                                    </svg>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="modal-@expediente.IdExpediente" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
-                                                            <div class="modal-content text-center">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Archivar Expediente</h1>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    ¿Seguro que desea archivar este registro?<br>
-                                                                    <b>@expediente.Asunto</b>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <div class="input-group d-flex justify-content-center">
-                                                                        <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
-                                                                        <a href="/Expediente/EliminarExpediente/@expediente.IdExpediente" class="btn btn-positive">Aceptar</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    }
-                }
-            </div>
         </div>
     </div>
     @{
         if (cantidadPag > 1)
         {
-            <div class="row paso3">
+            <div class="row">
                 <div class="col d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
@@ -573,18 +429,135 @@
         }
     }
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const next2next2 = document.getElementById('next2');
-    
-            next2next2.addEventListener('click', () => {
-                const categoriaIdYou = document.getElementById('categoriaHidden');
-                const clienteIdYou = document.getElementById('clienteHidden');
+        function filterCards() {
+            var searchValue = document.getElementById('searchInputForExpedientes').value.toLowerCase();
+            var cards = document.getElementsByClassName('card');
 
-                window.location.href = '/Expediente/ExpedientesFiltrados/' + categoriaIdYou.value + '&' + clienteIdYou.value;
+            for (var i = 0; i < cards.length; i++) {
+                var card = cards[i];
+                var cardContent = card.textContent || card.innerText;
+
+                if (cardContent.toLowerCase().indexOf(searchValue) > -1) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        }
+    </script>
+    <script>
+        const exitVista1 = document.getElementById('exitVista1');
+        const vista1Elements = document.querySelectorAll('.vista1');
+        const vista2Elements = document.querySelectorAll('.vista2');
+
+        function hideAndShowit(elementsToHides, elementsToShows) {
+            elementsToHides.forEach(element => {
+                element.style.display = 'none';
             });
+
+            elementsToShows.forEach(element => {
+                element.style.display = 'block';
+            });
+        }
+
+        exitVista1.addEventListener('click', () => {
+            hideAndShowit(vista1Elements, vista2Elements);
         });
     </script>
     <script>
+        const paso1Elements = document.querySelectorAll('.paso1');
+        const paso2Elements = document.querySelectorAll('.paso2');
+
+        function goToStep(elementsToHide, elementsToShow) {
+            elementsToHide.forEach(element => {
+                element.style.display = 'none';
+            });
+
+            elementsToShow.forEach(element => {
+                element.style.display = 'block';
+            });
+        }
+
+        const next1ButtonEvent = document.getElementById('next1');
+
+        next1ButtonEvent.addEventListener('click', () => {
+            goToStep(paso1Elements, paso2Elements);
+        });
+
+        const goBackToCategoriaButton = document.getElementById('goBackToCategoria');
+
+        goBackToCategoriaButton.addEventListener('click', () => {
+            goToStep(paso2Elements, paso1Elements);
+        });
+    </script>
+    <script>
+        function updateInputs() {
+            var eraseButton = document.getElementById('erase');
+            var categoriaInput = document.getElementById('categoria');
+            var categoriaHiddenInput = document.getElementById('categoriaHidden');
+
+            categoriaInput.value = '';
+            categoriaInput.placeholder = 'No Seleccionado';
+            categoriaHiddenInput.value = '-2';
+        }
+    </script>
+    <script>
+        function filterCategoriaTable() {
+            var input, filter, table, tr, td, i, j, visible;
+            input = document.getElementById("searchCategoriaInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tableCategorias");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                visible = false;
+                if (tr[i].getElementsByTagName("th").length == 0) {
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            visible = true;
+                        }
+                    }
+                } else {
+                    visible = true;
+                }
+                if (visible) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script>
+        function filterClienteTable() {
+            var input, filter, table, tr, td, i, j, visible;
+            input = document.getElementById("searchClienteInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tableClientes");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                visible = false;
+                if (tr[i].getElementsByTagName("th").length == 0) {
+                    td = tr[i].getElementsByTagName("td");
+                    for (j = 0; j < td.length; j++) {
+                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                            visible = true;
+                        }
+                    }
+                } else {
+                    visible = true;
+                }
+                if (visible) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+        <script>
         const next1Button = document.getElementById('next1');
         const categoriaRows = document.querySelectorAll('.categoriaRow');
         const categoriaInput = document.getElementById('categoria');
@@ -612,34 +585,6 @@
         });
     </script>
     <script>
-        function filterTable() {
-            var input, filter, table, tr, td, i, j, visible;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("tableCategorias");
-            tr = table.getElementsByTagName("tr");
-
-            for (i = 0; i < tr.length; i++) {
-                visible = false;
-                if (tr[i].getElementsByTagName("th").length == 0) {
-                    td = tr[i].getElementsByTagName("td");
-                    for (j = 0; j < td.length; j++) {
-                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                            visible = true;
-                        }
-                    }
-                } else {
-                    visible = true;
-                }
-                if (visible) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    </script>
-    <script>
         const next2Button = document.getElementById('next2');
         const clienteRows = document.querySelectorAll('.clienteRow');
         const clienteInput = document.getElementById('cliente');
@@ -660,98 +605,15 @@
         });
     </script>
     <script>
-        function filterTable() {
-            var input, filter, table, tr, td, i, j, visible;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("tableClientes");
-            tr = table.getElementsByTagName("tr");
+        document.addEventListener('DOMContentLoaded', () => {
+            const next2next2 = document.getElementById('next2');
+    
+            next2next2.addEventListener('click', () => {
+                const categoriaIdYou = document.getElementById('categoriaHidden');
+                const clienteIdYou = document.getElementById('clienteHidden');
 
-            for (i = 0; i < tr.length; i++) {
-                visible = false;
-                if (tr[i].getElementsByTagName("th").length == 0) {
-                    td = tr[i].getElementsByTagName("td");
-                    for (j = 0; j < td.length; j++) {
-                        if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                            visible = true;
-                        }
-                    }
-                } else {
-                    visible = true;
-                }
-                if (visible) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    </script>
-    <script>
-        const paso1Elements = document.querySelectorAll('.paso1');
-        const paso2Elements = document.querySelectorAll('.paso2');
-        const paso3Elements = document.querySelectorAll('.paso3');
-
-        function goToStep(elementsToHide1, elementsToHide2, elementsToShow) {
-            elementsToHide1.forEach(element => {
-                element.style.display = 'none';
+                window.location.href = '/Expediente/ExpedientesFiltrados/' + categoriaIdYou.value + '&' + clienteIdYou.value;
             });
-
-            elementsToHide2.forEach(element => {
-                element.style.display = 'none';
-            });
-
-            elementsToShow.forEach(element => {
-                element.style.display = 'block';
-            });
-        }
-
-        const next1ButtonEvent = document.getElementById('next1');
-
-        next1ButtonEvent.addEventListener('click', () => {
-            goToStep(paso1Elements, paso3Elements, paso2Elements);
-        });
-
-        const paso21 = document.getElementById('paso21');
-        const paso31 = document.getElementById('paso31');
-
-        paso21.addEventListener('click', () => {
-            goToStep(paso2Elements, paso3Elements, paso1Elements);
-        });
-
-        paso31.addEventListener('click', () => {
-            goToStep(paso2Elements, paso3Elements, paso1Elements);
-        });
-
-        const paso32 = document.getElementById('paso32');
-
-        paso32.addEventListener('click', () => {
-            goToStep(paso1Elements, paso3Elements, paso2Elements);
-        });
-
-        const paso33 = document.getElementById('paso33');
-
-        paso33.addEventListener('click', () => {
-            goToStep(paso1Elements, paso2Elements, paso3Elements);
-        });
-    </script>
-    <script>
-        const exitFase1 = document.getElementById('exitFase1');
-        const fase1Elements = document.querySelectorAll('.fase1');
-        const fase2Elements = document.querySelectorAll('.fase2');
-
-        function hideIt(elementsToHides, elementsToShows) {
-            elementsToHides.forEach(element => {
-                element.style.display = 'none';
-            });
-
-            elementsToShows.forEach(element => {
-                element.style.display = 'block';
-            });
-        }
-
-        exitFase1.addEventListener('click', () => {
-            hideIt(fase1Elements, fase2Elements);
         });
     </script>
 </body>

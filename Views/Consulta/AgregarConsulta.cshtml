@@ -38,7 +38,7 @@
             </div>
             <div class="col">
                 <div class="form-floating">
-                    <input required type="time" class="form-control" id="horafinal" placeholder="horafinal" value="@horainicial.AddHours(1).ToString("HH:mm")" name="horafinal" timezone="-240" onchange="calcularCosto(); validarHoraFinal()">
+                    <input required type="time" class="form-control" id="horafinal" placeholder="horafinal" value="@horainicial.AddHours(1).ToString("HH:mm")" name="horafinal" timezone="-240" onchange="validarHoraFinal()">
                     <label for="horafinal">Hora Final</label>
                 </div>
             </div>
@@ -83,7 +83,6 @@
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-positive" data-bs-toggle="modal" data-bs-target="#exampleModal">Registrar</button>
                 </div>
-
                 <!-- Modal -->
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -109,5 +108,24 @@
             </div>
         </div>
     </form>
+    <script>
+        function validarHoraFinal() {
+            var horaInicial = document.getElementById("horainicial").value;
+            var horaFinal = document.getElementById("horafinal").value;
+
+            var horaInicialDate = new Date("2000-01-01T" + horaInicial);
+            var horaFinalDate = new Date("2000-01-01T" + horaFinal);
+
+            var horaMinima = new Date(horaInicialDate.getTime() + 60 * 60 * 1000);
+
+            if (horaFinalDate < horaMinima) {
+                var nuevaHoraFinal = horaMinima.toTimeString().slice(0, 5);
+                document.getElementById("horafinal").value = nuevaHoraFinal;
+                document.getElementById("horafinal").setAttribute("value", nuevaHoraFinal);
+            }
+
+            calcularCosto();
+        }
+    </script>
 </body>
 </html>

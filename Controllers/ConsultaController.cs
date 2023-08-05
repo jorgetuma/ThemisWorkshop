@@ -72,7 +72,7 @@ namespace ThemisWorkshop.Controllers
             int idExpediente = int.Parse(Request.Form["idExpediente"].ToString());
             TimeOnly horaini = TimeOnly.Parse(Request.Form["horainicial"].ToString());
             TimeOnly horafin = TimeOnly.Parse(Request.Form["horafinal"].ToString());
-            decimal costo = decimal.Parse(Request.Form["costoHidden"].ToString());
+            decimal costo = decimal.Parse(Request.Form["costo"].ToString());
 
             var cita = _context.Cita.Find(idCita);
             cita.Realizado = true;
