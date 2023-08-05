@@ -14,7 +14,6 @@
     List<Cliente> clientes = FacturaController._temp.Clientes.ToList();
     List<Factura> facturasPendientes = Model.Where(factura => factura.MontoPorPagar > 0).ToList();
     List<Factura> facturasPagadas = Model.Where(factura => !facturasPendientes.Contains(factura)).ToList();
-
     Usuario usuario = FacturaController.usuario;
 }
 <html>
@@ -54,7 +53,7 @@
         {
             <div class="row my-3">
                 <div class="col-2">
-                    <select class="form-select" id="filter_combobox" onchange="filter_cards_2()">
+                    <select class="form-select" id="searchCombobox" onchange="filterCardsByEstado()">
                         @{
                             <option selected value="0">Pendientes</option>
                             if (!facturasPagadas.Count.Equals(0))
@@ -65,7 +64,14 @@
                     </select>
                 </div>
                 <div class="col ps-0">
-                    <input type="text" class="form-control" id="search_filter" placeholder="Escribe para buscar..." value="" required="" onkeyup="filter_cards()">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </span>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Escribe para buscar..." onkeyup="filterCards()">
+                    </div>
                 </div>
                 <div class="col-auto ps-0">
                     <a class="btn btn-positive" href="/Expediente/ListarExpedientes/1" role="button">Facturar</a>
@@ -329,8 +335,8 @@
         }
     }
     <script>
-        function filter_cards() {
-            var searchValue = document.getElementById('search_filter').value.toLowerCase();
+        function filterCards() {
+            var searchValue = document.getElementById('searchInput').value.toLowerCase();
             var cards = document.getElementsByClassName('card');
 
             for (var i = 0; i < cards.length; i++) {
@@ -348,8 +354,8 @@
         }
     </script>
     <script>
-        function filter_cards_2() {
-            var selectedOption = document.getElementById("filter_combobox").value;
+        function filterCardsByEstado() {
+            var selectedOption = document.getElementById("searchCombobox").value;
             var pendientesElements = document.querySelectorAll('[id="pendientes"]');
             var pagadosElements = document.querySelectorAll('[id="pagados"]');
 
@@ -382,7 +388,7 @@
         }
 
         window.addEventListener('load', function () {
-            filter_cards_2();
+            filterCardsByEstado();
         });
     </script>
 </body>
