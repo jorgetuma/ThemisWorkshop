@@ -253,7 +253,7 @@
                             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                         </svg>
                     </span>
-                    <input id="categoriaHidden" type="text" class="form-control" value="-2" oninput="handleInput()">
+                    <input hidden id="categoriaHidden" type="text" class="form-control" value="-2" oninput="handleInput()">
                 </div>
             </div>
             <div class="col-auto ps-0 paso1">
@@ -267,7 +267,7 @@
                         </svg>
                     </span>
                     <input readonly id="cliente" type="text" class="form-control" placeholder="No Seleccionado" value="">
-                    <input id="clienteHidden" type="text" class="form-control" value="">
+                    <input hidden id="clienteHidden" type="text" class="form-control" value="">
                 </div>
             </div>
             <div class="col-auto ps-0 paso2">
@@ -366,6 +366,9 @@
                                                 </svg>
                                             }
                                         }
+                                    </td>
+                                    <td hidden>
+                                        @cliente.Nombre @cliente.Apellido <br>
                                     </td>
                                     <td>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="@color" class="bi bi-circle-fill" viewBox="0 0 16 16">

@@ -20,6 +20,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .archivados {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="row mt-3 text-center">
@@ -66,8 +71,11 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-4 fw-bold">
+        <div class="col fw-bold activos">
             Expedientes Activos
+        </div>
+        <div class="col fw-bold archivados">
+            Expedientes Archivados
         </div>
     </div>
     <div class="row my-3">
@@ -83,7 +91,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col">
+        <div class="col activos">
             @{
                 if (expedientesActivos.Count.Equals(0))
                 {
@@ -135,7 +143,146 @@
                                                             {
                                                                 <tr>
                                                                     @{
-                                                                        if (miServicio.Facturado == true || servicio.Nombre == "Consulta")
+                                                                        if (miServicio.Facturado == true || servicio.IdServicio == 1)
+                                                                        {
+                                                                            <td style="width: 2.5%">
+                                                                                <small class="grey">@counter</small>
+                                                                            </td>
+                                                                            <td style="width: 100%" colspan="1">
+                                                                                @servicio.Nombre
+                                                                            </td>
+                                                                            <td style="width: 2.5%"></td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td style="width: 2.5%">
+                                                                                <small class="grey">@counter</small>
+                                                                            </td>
+                                                                            <td style="width: 100%">
+                                                                                @servicio.Nombre
+                                                                            </td>
+                                                                            <td style="width: 2.5%">
+                                                                                <a href="/Factura/GenerarFactura/@servicio.IdServicio&-1&@expediente.IdExpediente" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Facturar">
+                                                                                    <span class="badge" style="background-color: @color">
+                                                                                        Facturar
+                                                                                    </span>
+                                                                                </a>
+                                                                            </td>
+                                                                        }
+                                                                    }
+                                                                </tr>
+
+                                                                counter = counter + 1;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <div class="row">
+                                            <div class="col">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="my-light-black" class="bi bi-calendar4-week" viewBox="0 0 16 16">
+                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z" />
+                                                    <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                                                </svg>
+                                                <span class="badge" style="background-color: @color">
+                                                    @expediente.FechaApertura.ToShortDateString()
+                                                </span>
+                                            </div>
+                                            <div class="col-auto text-end">
+                                                <a href="/Expediente/ModificarExpediente/@expediente.IdExpediente" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Modificar">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#my-light-black" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                    </svg>
+                                                </a>
+                                                <!-- Trigger modal -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-archive" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#modal-@expediente.IdExpediente">
+                                                    <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                                                </svg>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="modal-@expediente.IdExpediente" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered d-flex align-items-center">
+                                                        <div class="modal-content text-center">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5 mx-auto" id="modalLabel">Archivar Expediente</h1>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                ¿Seguro que desea archivar este registro?<br>
+                                                                <b>@expediente.Asunto</b>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="input-group d-flex justify-content-center">
+                                                                    <button type="button" class="btn btn-negative" data-bs-dismiss="modal">Cancelar</button>
+                                                                    <a href="/Expediente/EliminarExpediente/@expediente.IdExpediente" class="btn btn-positive">Aceptar</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div class="col archivados">
+            @{
+                if (expedientesArchivados.Count.Equals(0))
+                {
+                    <div class="text-center">
+                        ¡No hay expedientes archivados!
+                    </div>
+                }
+                else
+                {
+                    color = "#B4D2E4";
+
+                    foreach (var expediente in expedientesArchivados)
+                    {
+                        counter = 1;
+
+                        <div class="card mb-3" style="border-color: @color;">
+                            <div class="card-body p-0">
+                                <div class="row g-0">
+                                    <div class="col-auto" style="background-color: @color;">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <div class="col p-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <b>@expediente.Asunto</b>
+                                            </div>
+                                            @{
+                                                if (expediente.Numeracion != 0)
+                                                {
+                                                    <div class="col-auto">
+                                                        <span class="badge" style="background-color: @color;">
+                                                            @expediente.Numeracion
+                                                        </span>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                        <small>@expediente.Descripcion</small><br>
+                                        <table class="table table-sm table-hover border mt-3">
+                                            <tbody>
+                                                @{
+                                                    foreach (var servicio in servicios)
+                                                    {
+                                                        var misServicios = @ExpedienteController._temp.Detalleservicio.Where(e => e.IdExpediente == expediente.IdExpediente).ToList();
+
+                                                        foreach (var miServicio in misServicios)
+                                                        {
+                                                            if (servicio.IdServicio == miServicio.IdServicio)
+                                                            {
+                                                                <tr>
+                                                                    @{
+                                                                        if (miServicio.Facturado == true || servicio.IdServicio == 1)
                                                                         {
                                                                             <td style="width: 2.5%">
                                                                                 <small class="grey">@counter</small>
@@ -237,6 +384,39 @@
                 } else {
                     card.style.display = 'none';
                 }
+            }
+        }
+    </script>
+    <script>
+        function filterCardsByEstado() {
+            var selectedOption = document.getElementById("filterCombobox").value;
+            var activos = document.querySelectorAll(".activos");
+            var archivados = document.querySelectorAll(".archivados");
+
+            if (selectedOption === "0") {
+                activos.forEach(function (card) {
+                    card.style.display = "block";
+                });
+
+                archivados.forEach(function (card) {
+                    card.style.display = "none";
+                });
+            } else if (selectedOption === "1") {
+                activos.forEach(function (card) {
+                    card.style.display = "none";
+                });
+
+                archivados.forEach(function (card) {
+                    card.style.display = "block";
+                });
+            } else if (selectedOption === "2") {
+                activos.forEach(function (card) {
+                    card.style.display = "block";
+                });
+
+                archivados.forEach(function (card) {
+                    card.style.display = "block";
+                });
             }
         }
     </script>
